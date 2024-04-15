@@ -91,9 +91,9 @@ const SingUp = () => {
             Sign up to your account
           </button>
           <div className="text-sm font-medium text-gray-500">
-            Not registered?{" "}
-            <Link to="#" className="text-blue-700 hover:underline">
-              Create account
+            Have an account?{" "}
+            <Link to="/sing-in" className="text-blue-700 hover:underline">
+              Sing In
             </Link>
           </div>
         </form>
