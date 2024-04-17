@@ -11,7 +11,7 @@ export const signup = async (req, res, next) => {
   try {
     await newUser.save();
     res.json(newUser);
-    res.status(201).json("User create seccessfully...");
+    res.status(201).json("User created seccessfully...");
   } catch (error) {
     next(errorHandler(error.status, error.message));
   }

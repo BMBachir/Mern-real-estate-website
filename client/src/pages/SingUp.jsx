@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { errorHandler } from "../../../api/utils/error";
+import { Link, useNavigate } from "react-router-dom";
 
 const SingUp = () => {
   const [formData, setFormData] = useState({});
-
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Corrected to useNavigate
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log(formData);
@@ -18,10 +19,21 @@ const SingUp = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      const data = await res.JSON();
-      consol.log(data);
+      const data = await res.json();
+      console.log(data);
+
+      if (data.success === false) {
+        // Use strict equality check (===) here
+        setLoading(false);
+        setError(data.message);
+        return;
+      }
+      setLoading(false);
+      setError(null);
+      navigate("/sing-in"); // Corrected to use navigate
     } catch (error) {
-      next(errorHandler(error.status, error.message));
+      setLoading(false);
+      setError(error.message);
     }
   };
 
@@ -85,43 +97,18 @@ const SingUp = () => {
               onChange={handleChange}
             />
           </div>
-          {/* <div className="flex items-start">
-             <div className="flex items-start">
-              <div className="flex items-center h-5">
-                <input
-                  id="remember"
-                  type="checkbox"
-                  value=""
-                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-                  required
-                />
-              </div>
-             
-              <label
-                htmlFor="remember"
-                className="ms-2 text-sm font-medium text-gray-900"
-              >
-                Remember me
-              </label>
-            </div>
-            <Link
-              to="#"
-              className="ms-auto text-sm text-blue-700 hover:underline"
-            >
-              Lost Password?
-            </Link>
-          </div>*/}
           <button
             type="submit"
             className="w-full text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
-            Sign up to your account
+            {loading ? "Loading..." : "Sign up to your account"}
           </button>
           <div className="text-sm font-medium text-gray-500">
             Have an account?{" "}
             <Link to="/sing-in" className="text-blue-700 hover:underline">
               Sing In
             </Link>
+            {error && <p className="text-red-500 ">{error}</p>}
           </div>
         </form>
       </div>
