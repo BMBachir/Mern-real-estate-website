@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { errorHandler } from "../../../api/utils/error";
+
 const SingUp = () => {
+  const [formData, setFormData] = useState({});
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(formData);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.JSON();
+      consol.log(data);
+    } catch (error) {
+      next(errorHandler(error.status, error.message));
+    }
+  };
+
   return (
     <div className="flex justify-center items-center my-24">
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
-        <form className="space-y-6" action="#">
+        <form onSubmit={handleSubmit} className="space-y-6" action="#">
           <h5 className="text-xl font-medium text-gray-900">
             Sign up to our platform
           </h5>
@@ -18,11 +42,12 @@ const SingUp = () => {
             </label>
             <input
               type="text"
-              name="Username"
-              id="Username"
+              name="username"
+              id="username"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="name"
+              placeholder="example"
               required
+              onChange={handleChange}
             />
           </div>
 
@@ -40,6 +65,7 @@ const SingUp = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="name@company.com"
               required
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -56,6 +82,7 @@ const SingUp = () => {
               placeholder="••••••••"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               required
+              onChange={handleChange}
             />
           </div>
           {/* <div className="flex items-start">
