@@ -30,7 +30,7 @@ const SingUp = () => {
       }
       setLoading(false);
       setError(null);
-      navigate("/sing-in"); // Corrected to use navigate
+      navigate("/sing-in");
     } catch (error) {
       setLoading(false);
       setError(error.message);
