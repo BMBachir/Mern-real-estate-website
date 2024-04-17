@@ -8,7 +8,7 @@ const SignIn = () => {
           <h5 className="text-xl font-medium text-gray-900">
             Sign In to our platform
           </h5>
-
+          {/* 
           <div>
             <label
               htmlFor="text"
@@ -24,7 +24,7 @@ const SignIn = () => {
               placeholder="name"
               required
             />
-          </div>
+          </div>*/}
 
           <div>
             <label
