@@ -1,12 +1,17 @@
 // Import necessary dependencies
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
 const SignIn = () => {
   // Define state variables
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   // Define event handler for form input change
@@ -18,6 +23,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -26,16 +32,13 @@ const SignIn = () => {
       const data = await res.json();
 
       if (data.success === false) {
-        setLoading(false);
-        setError(data.message);
+        dispatch(signInFailure(data.message));
         return;
       }
-      setLoading(false);
-      setError(null);
+      dispatch(signInSuccess(data.user));
       navigate("/");
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      dispatch(signInFailure(data.message));
     }
   };
 
@@ -83,6 +86,7 @@ const SignIn = () => {
           </div>
           <button
             type="submit"
+            disabled={loading}
             className="w-full text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
             {loading ? "Loading..." : "Sign In"}
@@ -93,6 +97,7 @@ const SignIn = () => {
               Create account
             </Link>
           </div>
+          {error && <p className="text-red-500 m">{error}</p>}
         </form>
       </div>
     </div>
