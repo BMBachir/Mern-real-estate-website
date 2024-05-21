@@ -89,7 +89,7 @@ const SignIn = () => {
           </button>
           <div className="text-sm font-medium text-gray-500">
             Not registered?{" "}
-            <Link to="/sign-up" className="text-blue-700 hover:underline">
+            <Link to="/sing-up" className="text-blue-700 hover:underline">
               Create account
             </Link>
           </div>
