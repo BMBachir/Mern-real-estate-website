@@ -46,11 +46,11 @@ const Header = () => {
           </button>
         </div>
         <div
-          className={`md:flex md:order-2 ${
+          className={` font-semibold  md:flex md:order-2 ${
             isMenuOpen ? "block" : "hidden"
           } mt-4 md:mt-0 w-full md:w-auto`}
         >
-          <ul className="flex flex-col md:flex-row md:space-x-8 rtl:space-x-reverse">
+          <ul className="flex flex-col md:flex-row md:space-x-8 ">
             <li>
               <Link
                 to="/"
