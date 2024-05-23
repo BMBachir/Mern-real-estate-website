@@ -7,6 +7,7 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 const SignIn = () => {
   // Define state variables
   const [formData, setFormData] = useState({});
@@ -91,6 +92,7 @@ const SignIn = () => {
           >
             {loading ? "Loading..." : "Sign In"}
           </button>
+          <OAuth />
           <div className="text-sm font-medium text-gray-500">
             Not registered?{" "}
             <Link to="/sing-up" className="text-blue-700 hover:underline">

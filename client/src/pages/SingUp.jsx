@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/OAuth";
 
 const SingUp = () => {
   const [formData, setFormData] = useState({});
@@ -103,6 +104,7 @@ const SingUp = () => {
           >
             {loading ? "Loading..." : "Sign up to your account"}
           </button>
+          <OAuth />
           <div className="text-sm font-medium text-gray-500">
             Have an account?{" "}
             <Link to="/sing-in" className="text-blue-700 hover:underline">
