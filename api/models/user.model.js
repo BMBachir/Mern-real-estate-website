@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 3,
     },
+    avatar: {
+      type: String,
+      default:
+        "https://img.freepik.com/vecteurs-premium/icone-compte-icone-utilisateur-graphiques-vectoriels_292645-552.jpg",
+    },
   },
   { timestamps: true }
 );
