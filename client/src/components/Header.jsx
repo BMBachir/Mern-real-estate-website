@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -10,18 +11,18 @@ const Header = () => {
   };
 
   return (
-    <nav className="bg-gray-900 shadow-md ">
+    <nav className="bg-[#878A91] shadow-md">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img className="w-[50px] h-[62px] " src={logo} />
+          <img className="w-[120px] h-[40px]" src={logo} alt="Logo" />
         </Link>
-        <div className="md:hidden  ">
+        <div className="md:hidden">
           <button
             onClick={toggleMenu}
-            className="ml-60 text-gray-500 dark:text-gray-400  focus:outline-none  focus:ring-gray-200 rounded-lg text-sm p-2.5 me-1"
+            className="text-gray-500 focus:outline-none rounded-lg text-sm p-2.5"
           >
             <svg
               className="w-5 h-5"
@@ -46,65 +47,27 @@ const Header = () => {
           </button>
         </div>
         <div
-          className={` font-semibold  md:flex md:order-2 ${
+          className={`font-semibold md:flex md:items-center w-full md:w-auto ${
             isMenuOpen ? "block" : "hidden"
-          } mt-4 md:mt-0 w-full md:w-auto`}
+          } mt-4 md:mt-0`}
         >
-          <ul className="flex flex-col md:flex-row md:space-x-8 ">
-            <li>
-              <Link
-                to="/"
-                onClick={toggleMenu}
-                className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                onClick={toggleMenu}
-                className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/sing-in"
-                onClick={toggleMenu}
-                className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0   "
-              >
-                Sign in
-              </Link>
-            </li>
+          <ul className="flex flex-col md:flex-row md:space-x-8">
+            {["Home", "Properties", "About", "Contact"].map((item) => (
+              <li key={item} className="relative">
+                <Link
+                  to="/"
+                  onClick={toggleMenu}
+                  className="block py-2 px-3 text-white rounded transition duration-300 ease-in-out hover:text-blue-500"
+                >
+                  {item}
+                  <span className="absolute left-0 bottom-0 w-full h-[2px] bg-blue-500 transform scale-x-0 transition-transform duration-300 ease-in-out origin-left hover:scale-x-100"></span>
+                </Link>
+              </li>
+            ))}
           </ul>
-          <div className="mt-4 md:mt-0">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FaSearch className=" md:hidden h-5 w-5 text-gray-400 dark:text-gray-600" />
-              </div>
-              <input
-                type="text"
-                id="mobile-search"
-                className="md:hidden block w-full pl-10 pr-4 py-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search..."
-              />
-            </div>
-          </div>
         </div>
-        <div className="flex md:order-3 md:ml-4">
-          <div className="relative hidden md:block">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaSearch className="h-5 w-5 text-gray-400 dark:text-gray-600" />
-            </div>
-            <input
-              type="text"
-              id="desktop-search"
-              className="block w-full pl-10 pr-4 py-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 focus:outline-none "
-              placeholder="Search..."
-            />
-          </div>
+        <div className="hidden md:block">
+          <button className="btn">Get Started</button>
         </div>
       </div>
     </nav>
