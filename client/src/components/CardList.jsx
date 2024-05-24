@@ -175,7 +175,9 @@ const CardList = () => {
             </div>
           </CardBody>
           <CardFooter className="pt-3">
-            <Button className=" btn w-full hover:opacity-95">Reserve</Button>
+            <Button className=" btn w-full hover:shadow-md hover:opacity-95">
+              Reserve
+            </Button>
           </CardFooter>
         </div>
       </Card>
