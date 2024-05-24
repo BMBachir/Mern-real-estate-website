@@ -9,6 +9,8 @@ import {
   Tooltip,
   IconButton,
 } from "@material-tailwind/react";
+import { FaBath } from "react-icons/fa";
+import { FaBed } from "react-icons/fa";
 const CardList = () => {
   return (
     <>
@@ -66,8 +68,23 @@ const CardList = () => {
               </Typography>
             </div>
             <Typography color="gray">
-              Enter a freshly updated and thoughtfully furnished peaceful home
-              surrounded by ancient trees, stone walls, and open meadows.
+              <div className="flex items-start gap-6  mb-3">
+                <div className="flex items-center gap-4">
+                  <div>
+                    <FaBath />
+                  </div>
+                  <div className="text_para"> 1 Bath</div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div>
+                    <FaBed />
+                  </div>
+                  <div className="text_para"> 2 Bedroom</div>
+                </div>
+              </div>
+            </Typography>
+            <Typography color="gray">
+              Enter a freshly updated and thoughtfully furnished peaceful.
             </Typography>
             <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
               <Tooltip content="$129 per night">
@@ -150,9 +167,9 @@ const CardList = () => {
                   </svg>
                 </span>
               </Tooltip>
-              <Tooltip content="And +20 more">
+              <Tooltip content="And +5 more">
                 <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                  +20
+                  +5
                 </span>
               </Tooltip>
             </div>
