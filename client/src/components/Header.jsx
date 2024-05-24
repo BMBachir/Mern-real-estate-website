@@ -11,7 +11,7 @@ const Header = () => {
   };
 
   return (
-    <nav className="bg-[#878A91] shadow-md">
+    <nav className="bg-[#878A91] sticky top-0 z-50">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to="/"
@@ -54,7 +54,7 @@ const Header = () => {
           <ul className="flex flex-col md:flex-row md:space-x-8">
             {[
               { text: "Home", link: "/" },
-              { text: "Properties", link: "/" },
+              { text: "Properties", link: "/properties" },
               { text: "About", link: "/about" },
               { text: "Contact", link: "/contact" },
             ].map((item) => (

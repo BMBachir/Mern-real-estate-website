@@ -155,7 +155,7 @@ const Home = () => {
           <div className="mt-10">
             <div className="relative w-full max-w-screen overflow-hidden">
               <div className="flex space-x-12 overflow-x-auto scrollbar-hide">
-                <div className="flex-none  rounded-lg bg-gray-100 p-6 sm:w-[400px]">
+                <div className="flex-none rounded-lg bg-gray-100 p-6 sm:w-[400px]">
                   <div className="flex items-center gap-4">
                     <div className="h-12 w-12 overflow-hidden rounded-full">
                       <img
