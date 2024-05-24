@@ -1,10 +1,12 @@
 import React from "react";
-import { IoHomeOutline } from "react-icons/io5";
-import { IoSearchOutline } from "react-icons/io5";
-import { FiBriefcase } from "react-icons/fi";
+import { GoHome } from "react-icons/go";
+import { FaRegBuilding } from "react-icons/fa";
+import { LiaMapMarkedSolid } from "react-icons/lia";
+import { FiActivity } from "react-icons/fi";
 import CardList from "../components/CardList";
 import homeImg from "../images/home.jpg";
-import aboutImg from "../images/aboutus.jpg";
+import aboutImg from "../images/aboutImg.jpg";
+import avatarImg from "../images/avatar.jpg";
 const Home = () => {
   return (
     <div className="flex flex-col min-h-[100dvh]">
@@ -51,145 +53,168 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="bg-gray-100 py-12 md:py-16 lg:py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                About Us
-              </h2>
-              <p className="mt-4 text-gray-500">
-                We are a leading real estate company dedicated to helping you
-                find your dream home. With years of experience and a team of
-                knowledgeable agents, we are committed to providing exceptional
-                service and finding the perfect property for you.
+      <>
+        <section className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
+            <img
+              alt="Hero Image"
+              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full"
+              height="600"
+              src={aboutImg}
+              width="800"
+            />
+            <div className="space-y-4">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                About Our Real Estate Company
+              </h1>
+              <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                We are a leading real estate company dedicated to providing
+                exceptional service and helping our clients achieve their
+                property goals. With years of experience and a team of
+                knowledgeable professionals, we strive to make the real estate
+                process seamless and rewarding.
               </p>
-              <button className="mt-6" variant="primary">
-                Learn More
-              </button>
             </div>
-            <div></div>
+          </div>
+        </section>
+      </>
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container grid max-w-5xl items-center justify-center gap-4 px-4 text-center md:gap-8 md:px-6 lg:grid-cols-2 lg:text-left xl:max-w-6xl xl:gap-10">
+          <div className="space-y-4 md:space-y-6">
+            <div className="space-y-3">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Our Great Services
+              </h2>
+              <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                Discover the perfect property for you with our comprehensive
+                real estate services.
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:gap-10">
+            <div className="rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md ">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ">
+                <GoHome className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+              </div>
+              <h3 className="mb-2 text-lg font-semibold">
+                Residential Properties
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Explore a wide range of single-family homes, condos, and
+                townhouses to find your perfect living space.
+              </p>
+            </div>
+            <div className="rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md ">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ">
+                <FaRegBuilding className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+              </div>
+              <h3 className="mb-2 text-lg font-semibold">
+                Commercial Properties
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Discover a range of commercial properties, including office
+                spaces, retail locations, and industrial facilities.
+              </p>
+            </div>
+            <div className="rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md ">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ">
+                <LiaMapMarkedSolid className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+              </div>
+              <h3 className="mb-2 text-lg font-semibold">Land and Lots</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Explore a variety of land and lot options, perfect for building
+                your dream home or investment property.
+              </p>
+            </div>
+            <div className="rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md ">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ">
+                <FiActivity className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+              </div>
+              <h3 className="mb-2 text-lg font-semibold">
+                Investment Properties
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Discover lucrative investment opportunities, from rental
+                properties to fixer-uppers, to grow your real estate portfolio.
+              </p>
+            </div>
           </div>
         </div>
       </section>
-      <section className="py-12 md:py-16 lg:py-20">
-        <div className="container mx-auto px-4">
-          <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Our Services
-            </h2>
-            <p className="mt-4 text-gray-500">
-              We offer a wide range of services to meet your real estate needs.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="bg-white rounded-md shadow-lg">
-              <div className="p-4">
-                <IoHomeOutline className="h-8 w-8 text-primary-500" />
-                <h3 className="mt-4 text-lg font-bold">Property Listing</h3>
-                <p className="mt-2 text-gray-500">
-                  List your property with us and reach a wide audience of
-                  potential buyers.
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-md shadow-lg">
-              <div className="p-4">
-                <IoSearchOutline className="h-8 w-8 text-primary-500" />
-                <h3 className="mt-4 text-lg font-bold">Property Search</h3>
-                <p className="mt-2 text-gray-500">
-                  Find your dream home with our comprehensive property search
-                  tools.
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-md shadow-lg">
-              <div className="p-4">
-                <FiBriefcase className="h-8 w-8 text-primary-500" />
-                <h3 className="mt-4 text-lg font-bold">
-                  Real Estate Consulting
-                </h3>
-                <p className="mt-2 text-gray-500">
-                  Get expert advice and guidance from our experienced real
-                  estate consultants.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="bg-gray-100 py-12 md:py-16 lg:py-20">
-        <div className="container mx-auto px-4">
-          <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="mx-auto max-w-3xl space-y-4 text-center">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               What Our Clients Say
             </h2>
-            <p className="mt-4 text-gray-500">
-              Hear from our satisfied clients about their experience with us.
+            <p className="text-gray-500 md:text-xl/relaxed">
+              Hear from our satisfied clients about their experience working
+              with us.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="bg-white rounded-md shadow-lg">
-              <div className="p-4">
-                <div className="flex items-center">
-                  <img
-                    alt="Client 1"
-                    className="h-12 w-12 rounded-full object-cover"
-                    src="/placeholder.svg"
-                  />
-                  <div className="ml-4">
-                    <h4 className="text-lg font-bold">John Doe</h4>
-                    <p className="text-gray-500">Homeowner</p>
+          <div className="mt-10">
+            <div className="relative w-full max-w-screen overflow-hidden">
+              <div className="flex space-x-12 overflow-x-auto scrollbar-hide">
+                <div className="flex-none  rounded-lg bg-gray-100 p-6 sm:w-[400px]">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 overflow-hidden rounded-full">
+                      <img
+                        alt="John Doe"
+                        className="h-full w-full object-cover"
+                        src={avatarImg}
+                      />
+                    </div>
+                    <div>
+                      <div className="font-semibold">John Doe</div>
+                      <div className="text-sm text-gray-500">Homeowner</div>
+                    </div>
                   </div>
+                  <blockquote className="mt-4 text-center text-lg font-semibold leading-snug md:text-xl">
+                    “The team at Real Estate Pros were incredibly helpful and
+                    made the home buying process a breeze. I highly recommend
+                    them!”
+                  </blockquote>
                 </div>
-                <p className="mt-4 text-gray-500">
-                  "The team at this real estate company was incredibly helpful
-                  and made the process of buying my first home a breeze. I
-                  highly recommend them to anyone looking to purchase a
-                  property."
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-md shadow-lg">
-              <div className="p-4">
-                <div className="flex items-center">
-                  <img
-                    alt="Client 2"
-                    className="h-12 w-12 rounded-full object-cover"
-                    src="/placeholder.svg"
-                  />
-                  <div className="ml-4">
-                    <h4 className="text-lg font-bold">Jane Smith</h4>
-                    <p className="text-gray-500">Investor</p>
+                <div className="flex-none snap-center rounded-lg bg-gray-100 p-6 sm:w-[400px]">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 overflow-hidden rounded-full">
+                      <img
+                        alt="Jane Smith"
+                        className="h-full w-full object-cover"
+                        src={avatarImg}
+                      />
+                    </div>
+                    <div>
+                      <div className="font-semibold">Jane Smith</div>
+                      <div className="text-sm text-gray-500">Homeowner</div>
+                    </div>
                   </div>
+                  <blockquote className="mt-4 text-center text-lg font-semibold leading-snug md:text-xl">
+                    “I was impressed by the attention to detail and
+                    professionalism of the Real Estate Pros team. They made the
+                    entire process seamless.”
+                  </blockquote>
                 </div>
-                <p className="mt-4 text-gray-500">
-                  "I've worked with this real estate company for several years
-                  and they've always provided excellent service and helped me
-                  find great investment properties. I highly recommend them to
-                  anyone looking to invest in real estate."
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-md shadow-lg">
-              <div className="p-4">
-                <div className="flex items-center">
-                  <img
-                    alt="Client 3"
-                    className="h-12 w-12 rounded-full object-cover"
-                    src="/placeholder.svg"
-                  />
-                  <div className="ml-4">
-                    <h4 className="text-lg font-bold">Michael Johnson</h4>
-                    <p className="text-gray-500">Homeowner</p>
+                <div className="flex-none snap-center rounded-lg bg-gray-100 p-6 sm:w-[400px]">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 overflow-hidden rounded-full">
+                      <img
+                        alt="Michael Johnson"
+                        className="h-full w-full object-cover"
+                        src={avatarImg}
+                      />
+                    </div>
+                    <div>
+                      <div className="font-semibold">Michael Johnson</div>
+                      <div className="text-sm text-gray-500">Homeowner</div>
+                    </div>
                   </div>
+                  <blockquote className="mt-4 text-center text-lg font-semibold leading-snug md:text-xl">
+                    “I was blown away by the level of service and expertise from
+                    the Real Estate Pros team. They truly went above and
+                    beyond.”
+                  </blockquote>
                 </div>
-                <p className="mt-4 text-gray-500">
-                  "I was incredibly impressed with the level of service and
-                  attention to detail provided by this real estate company. They
-                  helped me find the perfect home for my family and made the
-                  entire process stress-free."
-                </p>
               </div>
             </div>
           </div>
