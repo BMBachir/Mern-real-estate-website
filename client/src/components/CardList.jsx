@@ -27,7 +27,7 @@ const CardList = () => {
               size="sm"
               color="red"
               variant="text"
-              className="!absolute top-4 right-4 rounded-full"
+              className="!absolute top-4 right-8 rounded-full"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@ const CardList = () => {
               </Typography>
             </div>
             <Typography color="gray">
-              <div className="flex items-start gap-6  mb-3">
+              <div className="flex items-start gap-6  mb-2">
                 <div className="flex items-center gap-4">
                   <div>
                     <FaBath />
@@ -167,15 +167,15 @@ const CardList = () => {
                   </svg>
                 </span>
               </Tooltip>
-              <Tooltip content="And +5 more">
+              <Tooltip content="And +20 more">
                 <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                  +5
+                  +20
                 </span>
               </Tooltip>
             </div>
           </CardBody>
           <CardFooter className="pt-3">
-            <Button className="w-full hover:opacity-95">Reserve</Button>
+            <Button className=" btn w-full hover:opacity-95">Reserve</Button>
           </CardFooter>
         </div>
       </Card>
