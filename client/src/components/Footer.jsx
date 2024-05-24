@@ -6,10 +6,10 @@ import { FaInstagram } from "react-icons/fa";
 import { CiLinkedin } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { CiPhone } from "react-icons/ci";
-import { MdOutlineEmail } from "react-icons/md";
+import { CiMail } from "react-icons/ci";
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-12 md:py-16">
+    <footer className="bg-[#878A91] text-white py-12 md:py-16">
       <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
         <div className="flex flex-col items-start">
           <Link className="inline-flex items-center space-x-2 mb-4" to={"/"}>
@@ -17,15 +17,15 @@ const Footer = () => {
           </Link>
           <div className="space-y-2 text-sm">
             <div>
-              <CiPhone className="h-4 w-4 inline-block mr-2 text-gray-400" />
+              <CiPhone className="h-6 w-6 inline-block mr-2 text-gray-700" />
               <a href="#">+213 (000) 0000000</a>
             </div>
             <div>
-              <MdOutlineEmail className="h-4 w-4 inline-block mr-2 text-gray-400" />
+              <CiMail className="h-6 w-6 inline-block mr-2 text-gray-700" />
               <a href="#">info@KriDar.com</a>
             </div>
             <div>
-              <CiLocationOn className="h-4 w-4 inline-block mr-2 text-gray-400" />
+              <CiLocationOn className="h-6 w-6 inline-block mr-2 text-gray-700" />
               <span>Alger, Algeria</span>
             </div>
           </div>
@@ -65,7 +65,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 md:px-6 mt-8 md:mt-12 text-center text-sm text-gray-400">
+
+      <div className="container mx-auto px-4 md:px-6 mt-8 md:mt-12 text-center text-sm">
         © 2024 KriDar. All rights reserved.
       </div>
     </footer>
