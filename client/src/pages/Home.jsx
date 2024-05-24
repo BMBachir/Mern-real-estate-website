@@ -9,11 +9,7 @@ const Home = () => {
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <section className="relative w-full h-[80vh] overflow-hidden">
-        <img
-          alt="Hero Image"
-          className="absolute inset-0 w-full h-full object-cover"
-          src={homeImg}
-        />
+        <img alt="Hero Image" className="absolute " src={homeImg} />
         <div className="absolute inset-0 bg-gray-900/50" />
         <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">

@@ -22,7 +22,7 @@ const Header = () => {
         <div className="md:hidden">
           <button
             onClick={toggleMenu}
-            className="text-gray-500 focus:outline-none rounded-lg text-sm p-2.5"
+            className="text-gray-200 focus:outline-none rounded-lg text-sm p-2.5"
           >
             <svg
               className="w-5 h-5"
@@ -52,22 +52,33 @@ const Header = () => {
           } mt-4 md:mt-0`}
         >
           <ul className="flex flex-col md:flex-row md:space-x-8">
-            {["Home", "Properties", "About", "Contact"].map((item) => (
+            {[
+              { text: "Home", link: "/" },
+              { text: "Properties", link: "/" },
+              { text: "About", link: "/about" },
+              { text: "Contact", link: "/contact" },
+            ].map((item) => (
               <li key={item} className="relative">
                 <Link
-                  to="/"
+                  to={item.link}
                   onClick={toggleMenu}
-                  className="block py-2 px-3 text-white rounded transition duration-300 ease-in-out hover:text-blue-500"
+                  className="block py-2 px-3 text-white hover:text-gray-300"
                 >
-                  {item}
-                  <span className="absolute left-0 bottom-0 w-full h-[2px] bg-blue-500 transform scale-x-0 transition-transform duration-300 ease-in-out origin-left hover:scale-x-100"></span>
+                  {item.text}
                 </Link>
               </li>
             ))}
+            <div className="mt-4 md:hidden">
+              <Link to={"/sing-in"}>
+                <button className="btn hover:shadow-md">Get Started</button>
+              </Link>
+            </div>
           </ul>
         </div>
         <div className="hidden md:block">
-          <button className="btn">Get Started</button>
+          <Link to={"/sing-in"}>
+            <button className="btn hover:shadow-md">Get Started</button>
+          </Link>
         </div>
       </div>
     </nav>
