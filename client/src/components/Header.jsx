@@ -10,13 +10,13 @@ const Header = () => {
   };
 
   return (
-    <nav className="bg-white border-gray-200 ">
+    <nav className="bg-gray-900 shadow-md ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src={logo} />
+          <img className="w-[50px] h-[62px] " src={logo} />
         </Link>
         <div className="md:hidden  ">
           <button
@@ -55,7 +55,7 @@ const Header = () => {
               <Link
                 to="/"
                 onClick={toggleMenu}
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+                className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
               >
                 Home
               </Link>
@@ -64,7 +64,7 @@ const Header = () => {
               <Link
                 to="/about"
                 onClick={toggleMenu}
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+                className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
               >
                 About
               </Link>
@@ -73,7 +73,7 @@ const Header = () => {
               <Link
                 to="/sing-in"
                 onClick={toggleMenu}
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0   "
+                className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0   "
               >
                 Sign in
               </Link>
