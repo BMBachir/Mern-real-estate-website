@@ -62,33 +62,33 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <>
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
-            <img
-              alt="Hero Image"
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full"
-              height="600"
-              src={aboutImg}
-              width="800"
-            />
-            <div className="space-y-4">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                About Our Real Estate Company
-              </h1>
-              <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                We are a leading real estate company dedicated to providing
-                exceptional service and helping our clients achieve their
-                property goals. With years of experience and a team of
-                knowledgeable professionals, we strive to make the real estate
-                process seamless and rewarding.
-              </p>
-            </div>
-          </div>
-        </section>
-      </>
+
       <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container grid max-w-5xl items-center justify-center gap-4 px-4 text-center md:gap-8 md:px-6 lg:grid-cols-2 lg:text-left xl:max-w-6xl xl:gap-10">
+        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
+          <img
+            alt="Hero Image"
+            className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full"
+            height="600"
+            src={aboutImg}
+            width="800"
+          />
+          <div className="space-y-4">
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              About Our Real Estate Company
+            </h1>
+            <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              We are a leading real estate company dedicated to providing
+              exceptional service and helping our clients achieve their property
+              goals. With years of experience and a team of knowledgeable
+              professionals, we strive to make the real estate process seamless
+              and rewarding.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
           <div className="space-y-4 md:space-y-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -101,48 +101,48 @@ const Home = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:gap-10">
-            <div className="rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md ">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ">
-                <GoHome className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+            <div className="mx-auto w-full max-w-sm rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+                <GoHome className="h-6 w-6 text-gray-400" />
               </div>
               <h3 className="mb-2 text-lg font-semibold">
                 Residential Properties
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Explore a wide range of single-family homes, condos, and
                 townhouses to find your perfect living space.
               </p>
             </div>
-            <div className="rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md ">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ">
-                <FaRegBuilding className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+            <div className="mx-auto w-full max-w-sm rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+                <FaRegBuilding className="h-6 w-6 text-gray-400" />
               </div>
               <h3 className="mb-2 text-lg font-semibold">
                 Commercial Properties
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Discover a range of commercial properties, including office
                 spaces, retail locations, and industrial facilities.
               </p>
             </div>
-            <div className="rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md ">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ">
-                <LiaMapMarkedSolid className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+            <div className="mx-auto w-full max-w-sm rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+                <LiaMapMarkedSolid className="h-6 w-6 text-gray-400" />
               </div>
               <h3 className="mb-2 text-lg font-semibold">Land and Lots</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Explore a variety of land and lot options, perfect for building
                 your dream home or investment property.
               </p>
             </div>
-            <div className="rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md ">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ">
-                <FiActivity className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+            <div className="mx-auto w-full max-w-sm rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+                <FiActivity className="h-6 w-6 text-gray-400" />
               </div>
               <h3 className="mb-2 text-lg font-semibold">
                 Investment Properties
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Discover lucrative investment opportunities, from rental
                 properties to fixer-uppers, to grow your real estate portfolio.
               </p>
@@ -253,7 +253,7 @@ const Home = () => {
                       <div className="text-sm text-gray-500">Homeowner</div>
                     </div>
                   </div>
-                  <blockquote className="mt-4 text-center text-lg font-semibold leading-snug md:text-xl">
+                  <blockquote className="mt-4 text-center text-lg font-semibold leading md:text-xl">
                     “I was impressed by the attention to detail and
                     professionalism of the Real Estate Pros team. They made the
                     entire process seamless.”
