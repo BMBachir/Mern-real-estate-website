@@ -8,6 +8,17 @@ import homeImg from "../images/home.jpg";
 import aboutImg from "../images/aboutImg.jpg";
 import avatarImg from "../images/avatar.jpg";
 import { MdSearch } from "react-icons/md";
+import Marquee from "react-fast-marquee";
+import p1 from "../images/companies/one.png";
+import p2 from "../images/companies/two.png";
+import p3 from "../images/companies/three.png";
+import p4 from "../images/companies/four.png";
+import p5 from "../images/companies/five.png";
+import p6 from "../images/companies/six.png";
+import p7 from "../images/companies/seven.png";
+import p8 from "../images/companies/eight.png";
+import p9 from "../images/companies/nine.png";
+import p10 from "../images/companies/ten.png";
 const Home = () => {
   return (
     <div className="flex flex-col min-h-[100dvh]">
@@ -138,6 +149,61 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </section>
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="flex flex-col items-center justify-center ">
+          <div className="space-y-3 space-x-5 text-center mb-14">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              Our Technology Investors
+            </h2>
+            <p className="mx-auto max-w-[700px] text-gray-500 text-xl/relaxed dark:text-gray-400">
+              Discover the perfect property for you with our comprehensive real
+              estate services.
+            </p>
+          </div>
+        </div>
+
+        <Marquee gradient>
+          <div className="image_wrapper">
+            <img src={p1} alt="" />
+          </div>
+
+          <div className="image_wrapper">
+            <img src={p2} alt="" />
+          </div>
+
+          <div className="image_wrapper">
+            <img src={p3} alt="" />
+          </div>
+
+          <div className="image_wrapper">
+            <img src={p4} alt="" />
+          </div>
+
+          <div className="image_wrapper">
+            <img src={p5} alt="" />
+          </div>
+
+          <div className="image_wrapper">
+            <img src={p6} alt="" />
+          </div>
+
+          <div className="image_wrapper">
+            <img src={p7} alt="" />
+          </div>
+
+          <div className="image_wrapper">
+            <img src={p8} alt="" />
+          </div>
+
+          <div className="image_wrapper">
+            <img src={p9} alt="" />
+          </div>
+
+          <div className="image_wrapper">
+            <img src={p10} alt="" />
+          </div>
+        </Marquee>
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container mx-auto px-4 md:px-6">

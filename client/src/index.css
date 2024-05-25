@@ -16,6 +16,13 @@
   .text__para {
     @apply text-[18px] leading-[30px] font-[400] text-textColor mt-[18px];
   }
+
+  .image_wrapper {
+    margin: 0px 30px;
+  }
+  .image_wrapper img {
+    width: 80%;
+  }
 }
 
 @media only screen and (max-width: 768px) {
