@@ -19,9 +19,10 @@ import p7 from "../images/companies/seven.png";
 import p8 from "../images/companies/eight.png";
 import p9 from "../images/companies/nine.png";
 import p10 from "../images/companies/ten.png";
+
 const Home = () => {
   return (
-    <div className="flex flex-col min-h-[100dvh]">
+    <div className="">
       <section className="relative w-full h-[80vh] overflow-hidden">
         <img alt="Hero Image" className="absolute " src={homeImg} />
         <div className="absolute inset-0 bg-gray-900/50" />
@@ -57,7 +58,7 @@ const Home = () => {
               Discover the best properties on the market.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <CardList />
           </div>
         </div>
