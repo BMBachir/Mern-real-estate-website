@@ -7,6 +7,7 @@ import CardList from "../components/CardList";
 import homeImg from "../images/home.jpg";
 import aboutImg from "../images/aboutImg.jpg";
 import avatarImg from "../images/avatar.jpg";
+import { MdSearch } from "react-icons/md";
 const Home = () => {
   return (
     <div className="flex flex-col min-h-[100dvh]">
@@ -22,19 +23,16 @@ const Home = () => {
             estate search.
           </p>
           <div className="mt-8 w-full max-w-md">
-            <form className="flex items-center rounded-md bg-white shadow-lg">
+            <div className="flex items-center rounded-md bg-white shadow-lg">
               <input
-                className="flex-1 rounded-l-md border-none px-4 py-3 text-gray-700 focus:outline-none focus:ring-0"
+                className="flex-1 rounded-l-md border-none px-4 py-3 text-gray-700 focus:outline-none"
                 placeholder="Search for properties"
                 type="text"
               />
-              <button
-                className="rounded-r-md bg-primary-500 px-4 py-3 text-white hover:bg-primary-600 focus:outline-none focus:ring-0"
-                type="submit"
-              >
-                Search
-              </button>
-            </form>
+              <div className=" pr-4">
+                <MdSearch className="cursor-pointer h-6 w-6 text-gray-700" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
