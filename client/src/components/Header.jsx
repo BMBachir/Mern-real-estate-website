@@ -70,14 +70,18 @@ const Header = () => {
             ))}
             <div className="mt-4 md:hidden">
               <Link to={"/sing-in"}>
-                <button className="btn hover:shadow-md">Get Started</button>
+                <button className="bg-slate-100 text-[#878A91] hover:text-slate-100 hover:bg-gray-500 inline-flex items-center justify-center rounded-md  px-6 py-3 text-base font-medium shadow-sm transition-colors  focus:outline-none hover:shadow-md hover:shadow-md">
+                  Get Started
+                </button>
               </Link>
             </div>
           </ul>
         </div>
         <div className="hidden md:block">
           <Link to={"/sing-in"}>
-            <button className="btn hover:shadow-md">Get Started</button>
+            <button className=" bg-slate-100 text-[#878A91] hover:text-slate-100 hover:bg-gray-500 inline-flex items-center justify-center rounded-md  px-6 py-3 text-base font-medium shadow-sm transition-colors  focus:outline-none hover:shadow-md">
+              Get Started
+            </button>
           </Link>
         </div>
       </div>
