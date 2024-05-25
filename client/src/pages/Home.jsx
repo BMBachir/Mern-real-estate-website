@@ -163,7 +163,7 @@ const Home = () => {
           </div>
         </div>
 
-        <Marquee gradient>
+        <Marquee gradient pauseOnHover>
           <div className="image_wrapper">
             <img src={p1} alt="" />
           </div>
@@ -206,8 +206,8 @@ const Home = () => {
         </Marquee>
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="mx-auto max-w-3xl space-y-4 text-center">
+        <div className="container px-4 md:px-6">
+          <div className="  space-y-4 text-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               What Our Clients Say
             </h2>
@@ -217,9 +217,9 @@ const Home = () => {
             </p>
           </div>
           <div className="mt-10">
-            <div className="relative w-full max-w-screen overflow-hidden">
+            <div className="relative ">
               <div className="flex space-x-12 overflow-x-auto scrollbar-hide">
-                <div className="flex-none rounded-lg bg-gray-100 p-6 sm:w-[400px]">
+                <div className="flex-none rounded-lg bg-gray-100 p-6 w-[400px]">
                   <div className="flex items-center gap-4">
                     <div className="h-12 w-12 overflow-hidden rounded-full">
                       <img
@@ -229,17 +229,17 @@ const Home = () => {
                       />
                     </div>
                     <div>
-                      <div className="font-semibold">John Doe</div>
+                      <div className="font-semibold">John Snow</div>
                       <div className="text-sm text-gray-500">Homeowner</div>
                     </div>
                   </div>
-                  <blockquote className="mt-4 text-center text-lg font-semibold leading-snug md:text-xl">
+                  <p className="mt-4 text-center text-lg font-semibold  md:text-xl">
                     “The team at Real Estate Pros were incredibly helpful and
                     made the home buying process a breeze. I highly recommend
                     them!”
-                  </blockquote>
+                  </p>
                 </div>
-                <div className="flex-none snap-center rounded-lg bg-gray-100 p-6 sm:w-[400px]">
+                <div className="flex-none snap-center rounded-lg bg-gray-100 p-6 w-[400px] ">
                   <div className="flex items-center gap-4">
                     <div className="h-12 w-12 overflow-hidden rounded-full">
                       <img
@@ -249,17 +249,17 @@ const Home = () => {
                       />
                     </div>
                     <div>
-                      <div className="font-semibold">Jane Smith</div>
+                      <div className="font-semibold">will smith</div>
                       <div className="text-sm text-gray-500">Homeowner</div>
                     </div>
                   </div>
-                  <blockquote className="mt-4 text-center text-lg font-semibold leading md:text-xl">
+                  <p className="mt-4 text-center text-lg font-semibold  md:text-xl">
                     “I was impressed by the attention to detail and
                     professionalism of the Real Estate Pros team. They made the
                     entire process seamless.”
-                  </blockquote>
+                  </p>
                 </div>
-                <div className="flex-none snap-center rounded-lg bg-gray-100 p-6 sm:w-[400px]">
+                <div className="flex-none snap-center rounded-lg bg-gray-100 p-6 w-[400px]">
                   <div className="flex items-center gap-4">
                     <div className="h-12 w-12 overflow-hidden rounded-full">
                       <img
@@ -269,15 +269,15 @@ const Home = () => {
                       />
                     </div>
                     <div>
-                      <div className="font-semibold">Michael Johnson</div>
+                      <div className="font-semibold">dames favela</div>
                       <div className="text-sm text-gray-500">Homeowner</div>
                     </div>
                   </div>
-                  <blockquote className="mt-4 text-center text-lg font-semibold leading-snug md:text-xl">
+                  <p className="mt-4 text-center text-lg font-semibold  md:text-xl">
                     “I was blown away by the level of service and expertise from
                     the Real Estate Pros team. They truly went above and
                     beyond.”
-                  </blockquote>
+                  </p>
                 </div>
               </div>
             </div>
