@@ -1,13 +1,22 @@
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../images/logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const { currentUser } = useSelector((state) => state.user);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const getLinkClasses = (path) => {
+    const baseClasses = "block py-2 px-3 text-white hover:text-gray-300";
+    return location.pathname === path
+      ? `${baseClasses} text-gray-800 font-bold ` // Add a bottom border for active link
+      : baseClasses;
   };
 
   return (
@@ -58,31 +67,61 @@ const Header = () => {
               { text: "About", link: "/about" },
               { text: "Contact", link: "/contact" },
             ].map((item) => (
-              <li key={item} className="relative">
+              <li key={item.link} className="relative">
                 <Link
                   to={item.link}
                   onClick={toggleMenu}
-                  className="block py-2 px-3 text-white hover:text-gray-300"
+                  className={getLinkClasses(item.link)}
                 >
                   {item.text}
                 </Link>
               </li>
             ))}
-            <div className="mt-4 md:hidden">
-              <Link to={"/sing-in"}>
-                <button className="bg-slate-100 text-[#878A91] hover:text-slate-100 hover:bg-gray-500 inline-flex items-center justify-center rounded-md  px-6 py-3 text-base font-medium shadow-sm transition-colors  focus:outline-none hover:shadow-md ">
-                  Get Started
-                </button>
-              </Link>
-            </div>
+            <li className="mt-4 md:hidden">
+              {currentUser ? (
+                <Link to={"/profile"} className="flex items-center">
+                  <div className="relative rounded-full h-10 w-10 overflow-hidden">
+                    <img
+                      src={
+                        currentUser.avatar ||
+                        "https://img.freepik.com/vecteurs-premium/icone-compte-icone-utilisateur-graphiques-vectoriels_292645-552.jpg"
+                      }
+                      alt="User Avatar"
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                </Link>
+              ) : (
+                <Link to={"/sign-in"}>
+                  <button className="bg-slate-100 text-[#878A91] hover:text-slate-100 hover:bg-gray-500 inline-flex items-center justify-center rounded-md px-6 py-3 text-base font-medium shadow-sm transition-colors focus:outline-none hover:shadow-md">
+                    Get Started
+                  </button>
+                </Link>
+              )}
+            </li>
           </ul>
         </div>
-        <div className="hidden md:block">
-          <Link to={"/sing-in"}>
-            <button className=" bg-slate-100 text-[#878A91] hover:text-slate-100 hover:bg-gray-500 inline-flex items-center justify-center rounded-md  px-6 py-3 text-base font-medium shadow-sm transition-colors  focus:outline-none hover:shadow-md">
-              Get Started
-            </button>
-          </Link>
+        <div className="hidden md:flex items-center">
+          {currentUser ? (
+            <Link to={"/profile"}>
+              <div className="relative rounded-full h-12 w-12 overflow-hidden">
+                <img
+                  src={
+                    currentUser.avatar ||
+                    "https://img.freepik.com/vecteurs-premium/icone-compte-icone-utilisateur-graphiques-vectoriels_292645-552.jpg"
+                  }
+                  alt="User Avatar"
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </Link>
+          ) : (
+            <Link to={"/sign-in"}>
+              <button className="bg-slate-100 text-[#878A91] hover:text-slate-100 hover:bg-gray-500 inline-flex items-center justify-center rounded-md px-6 py-3 text-base font-medium shadow-sm transition-colors focus:outline-none hover:shadow-md">
+                Get Started
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </nav>
