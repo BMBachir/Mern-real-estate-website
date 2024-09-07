@@ -6,7 +6,7 @@ const SingUp = () => {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Corrected to useNavigate
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log(formData);
@@ -24,7 +24,6 @@ const SingUp = () => {
       console.log(data);
 
       if (data.success === false) {
-        // Use strict equality check (===) here
         setLoading(false);
         setError(data.message);
         return;

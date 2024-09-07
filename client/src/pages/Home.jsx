@@ -2,6 +2,7 @@ import React from "react";
 import { GoHome } from "react-icons/go";
 import { FaRegBuilding } from "react-icons/fa";
 import { LiaMapMarkedSolid } from "react-icons/lia";
+import { IoIosArrowRoundUp } from "react-icons/io";
 import { FiActivity } from "react-icons/fi";
 import CardList from "../components/CardList";
 import homeImg from "../images/home.jpg";
@@ -19,12 +20,33 @@ import p7 from "../images/companies/seven.png";
 import p8 from "../images/companies/eight.png";
 import p9 from "../images/companies/nine.png";
 import p10 from "../images/companies/ten.png";
-
+import { useRef } from "react";
 const Home = () => {
+  const headPage = useRef();
+
+  const moveDown = () => {
+    headPage.current.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="">
+      <div className="fixed bottom-8 right-8">
+        <div
+          onClick={moveDown}
+          className="cursor-pointer bg-gray-900 p-2 rounded-full "
+        >
+          <IoIosArrowRoundUp size={30} color="white" />
+        </div>
+      </div>
       <section className="relative w-full h-[80vh] overflow-hidden">
-        <img alt="Hero Image" className="absolute " src={homeImg} />
+        <img
+          ref={headPage}
+          alt="Hero Image"
+          className="absolute "
+          src={homeImg}
+        />
         <div className="absolute inset-0 bg-gray-900/50" />
         <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
