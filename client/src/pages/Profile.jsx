@@ -1,193 +1,145 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { IoPhonePortraitOutline } from "react-icons/io5";
-import { MdOutlineEmail } from "react-icons/md";
-import { MdMyLocation } from "react-icons/md";
-import { CiCalendar } from "react-icons/ci";
-const Profile = () => {
+import { FaCamera } from "react-icons/fa";
+import { MdSave } from "react-icons/md";
+const profile = () => {
   const { currentUser } = useSelector((state) => state.user);
+
   return (
-    <div className="w-full max-w-6xl mx-auto py-8 md:py-12 px-4 md:px-6">
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
-        <div className="flex-shrink-0">
-          <div className="w-20 h-20 md:w-24 md:h-24 ring-2 ring-primary rounded-full overflow-hidden">
+    <div className="container mx-auto max-w-4xl py-8 px-4 sm:px-6 lg:px-8 flex flex-col ">
+      <section id="property-info" className="mb-8">
+        <h1 className="text-2xl font-bold">Personal information</h1>
+        <img
+          src="https://picsum.photos/200/300/?blur"
+          alt=""
+          className="abselout w-full h-48 mt-4 bg-gray-200"
+        />
+        <div className="relative flex justify-center mt-[-50px]">
+          <div className="w-32 h-32 border-4 border-white rounded-full bg-gray-300 flex items-center justify-center relative">
             <img
-              src={
-                currentUser.avatar ||
-                "https://img.freepik.com/vecteurs-premium/icone-compte-icone-utilisateur-graphiques-vectoriels_292645-552.jpg"
-              }
-              alt="User Avatar"
-              className="object-cover w-full h-full"
+              src={currentUser.avatar}
+              alt="Profile"
+              className="w-full h-full object-cover rounded-full"
+            />
+            {/* Camera Icon Positioned Absolutely */}
+            <FaCamera className="absolute bottom-2 right-2 text-white bg-black p-2 rounded-full w-8 h-8 cursor-pointer opacity-75 hover:opacity-100" />
+          </div>
+        </div>
+      </section>
+
+      <section className="mb-8">
+        <h2 className="text-xl font-bold mb-4">Identity</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label
+              htmlFor="transaction-id"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Username*
+            </label>
+            <input
+              placeholder="Enter transaction ID"
+              defaultValue={currentUser.username}
+              className="mt-1 w-full border px-2 py-2 rounded"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Date of Transaction*
+            </label>
+            <input
+              placeholder="Enter transaction date"
+              defaultValue={currentUser.date}
+              className="mt-1 w-full border px-2 py-2  rounded"
             />
           </div>
         </div>
-        <div className="flex-1 space-y-2">
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl md:text-3xl font-bold">
-              {currentUser.username}
-            </h1>
-            <span className="bg-gray-200 text-gray-800 px-2 py-1 text-xs rounded">
-              Top Seller
-            </span>
+      </section>
+
+      <section>
+        <h2 className="text-xl font-bold mb-4">Contact Information</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Email Address
+            </label>
+            <input
+              placeholder="Enter your email address"
+              defaultValue={currentUser.email}
+              className="mt-1 w-full border px-2 py-2  rounded"
+            />
           </div>
-          <p className="text-gray-500">
-            Experienced real estate agent with a passion for helping clients
-            find their dream homes.
-          </p>
-        </div>
-      </div>
-      <div className="my-8 md:my-12 border-t border-gray-300" />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Active Listings</h2>
-          <div className="space-y-4">
-            <div className="border rounded-md overflow-hidden">
-              <div className="p-4 flex items-center gap-4">
-                <img
-                  src="/placeholder.svg"
-                  width={100}
-                  height={100}
-                  alt="Property Image"
-                  className="rounded-md"
-                  style={{ aspectRatio: "100/100", objectFit: "cover" }}
-                />
-                <div>
-                  <h3 className="text-lg font-semibold">
-                    Charming Townhouse in Downtown
-                  </h3>
-                  <p className="text-gray-500">
-                    3 Beds | 2 Baths | 1,500 sq ft
-                  </p>
-                  <p className="text-yellow-500 font-medium">$450,000</p>
-                </div>
-              </div>
-              <div className="border-t">
-                <button className="w-full px-4 py-2 border border-gray-300 rounded-md text-sm">
-                  View Listing
-                </button>
-              </div>
-            </div>
-            <div className="border rounded-md overflow-hidden">
-              <div className="p-4 flex items-center gap-4">
-                <img
-                  src="/placeholder.svg"
-                  width={100}
-                  height={100}
-                  alt="Property Image"
-                  className="rounded-md"
-                  style={{ aspectRatio: "100/100", objectFit: "cover" }}
-                />
-                <div>
-                  <h3 className="text-lg font-semibold">
-                    Spacious Family Home with Pool
-                  </h3>
-                  <p className="text-gray-500">
-                    4 Beds | 3 Baths | 2,200 sq ft
-                  </p>
-                  <p className="text-yellow-500 font-medium">$650,000</p>
-                </div>
-              </div>
-              <div className="border-t">
-                <button className="w-full px-4 py-2 border border-gray-300 rounded-md text-sm">
-                  View Listing
-                </button>
-              </div>
-            </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Phone Number
+            </label>
+            <input
+              placeholder="Enter your phone number"
+              defaultValue={currentUser.phone}
+              className="mt-1 w-full border px-2 py-2  rounded"
+            />
           </div>
         </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Sold Properties</h2>
-          <div className="space-y-4">
-            <div className="border rounded-md overflow-hidden">
-              <div className="p-4 flex items-center gap-4">
-                <img
-                  src="/placeholder.svg"
-                  width={100}
-                  height={100}
-                  alt="Property Image"
-                  className="rounded-md"
-                  style={{ aspectRatio: "100/100", objectFit: "cover" }}
-                />
-                <div>
-                  <h3 className="text-lg font-semibold">
-                    Cozy Bungalow in the Suburbs
-                  </h3>
-                  <p className="text-gray-500">2 Beds | 1 Bath | 1,200 sq ft</p>
-                  <p className="text-yellow-500 font-medium">$325,000</p>
-                </div>
-              </div>
-              <div className="border-t p-2">
-                <div className="flex items-center gap-2 text-gray-500 text-sm">
-                  <CiCalendar className="w-4 h-4" />
-                  <span>Sold on May 15, 2023</span>
-                </div>
-              </div>
-            </div>
-            <div className="border rounded-md overflow-hidden">
-              <div className="p-4 flex items-center gap-4">
-                <img
-                  src="/placeholder.svg"
-                  width={100}
-                  height={100}
-                  alt="Property Image"
-                  className="rounded-md"
-                  style={{ aspectRatio: "100/100", objectFit: "cover" }}
-                />
-                <div>
-                  <h3 className="text-lg font-semibold">
-                    Luxury Penthouse in the City
-                  </h3>
-                  <p className="text-gray-500">
-                    3 Beds | 2 Baths | 1,800 sq ft
-                  </p>
-                  <p className="text-yellow-500 font-medium">$850,000</p>
-                </div>
-              </div>
-              <div className="border-t p-2">
-                <div className="flex items-center gap-2 text-gray-500 text-sm">
-                  <CiCalendar className="w-4 h-4" />
-                  <span>Sold on March 22, 2023</span>
-                </div>
-              </div>
-            </div>
+      </section>
+
+      {/* Password Section */}
+      <section className="my-8">
+        <h2 className="text-xl font-bold mb-4">Change Password</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Current Password
+            </label>
+            <input
+              type="password"
+              placeholder="Enter current password"
+              className="mt-1 w-full border px-2 py-2 rounded"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              New Password
+            </label>
+            <input
+              type="password"
+              placeholder="Enter new password"
+              className="mt-1 w-full border px-2 py-2 rounded"
+            />
+          </div>
+          <div className="col-span-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Confirm New Password
+            </label>
+            <input
+              type="password"
+              placeholder="Confirm new password"
+              className="mt-1 w-full border px-2 py-2 rounded"
+            />
+          </div>
+          <div className="col-span-2 flex justify-end">
+            <button className="btn px-4 py-2 rounded flex gap-2 ">
+              <span>Save</span>
+              <MdSave />
+            </button>
           </div>
         </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Contact Information</h2>
-          <div className="border rounded-md overflow-hidden">
-            <div className="p-4 space-y-4">
-              <div className="flex items-center gap-4">
-                <IoPhonePortraitOutline className="w-6 h-6 text-gray-500" />
-                <div>
-                  <p className="text-gray-500">Phone</p>
-                  <p className="font-medium">(123) 456-7890</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <MdOutlineEmail className="w-6 h-6 text-gray-500" />
-                <div>
-                  <p className="text-gray-500">Email</p>
-                  <p className="font-medium">john.doe@example.com</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <MdMyLocation className="w-6 h-6 text-gray-500" />
-                <div>
-                  <p className="text-gray-500">Address</p>
-                  <p className="font-medium">123 Main St, Anytown USA</p>
-                </div>
-              </div>
-            </div>
-            <div className="border-t">
-              <button className="w-full px-4 py-2 border border-gray-300 rounded-md text-sm">
-                Contact Agent
-              </button>
-            </div>
-          </div>
+      </section>
+
+      {/* Delete or Deactivate Account Section */}
+      <section>
+        <h2 className="text-xl font-bold mb-4">Account Settings</h2>
+        <p className="mb-6 text-red-600">
+          Warning: Deleting your account is irreversible and will remove all
+          your data.
+        </p>
+        <div className="flex justify-between">
+          <button className="btn text-white px-4 py-2 rounded hover:bg-red-500">
+            Delete Account
+          </button>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
 
-export default Profile;
+export default profile;

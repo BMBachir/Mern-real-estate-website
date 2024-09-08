@@ -104,7 +104,7 @@ const Header = () => {
         <div className="hidden md:flex items-center">
           {currentUser ? (
             <Link to={"/profile"}>
-              <div className="relative rounded-full h-12 w-12 overflow-hidden">
+              <div className="relative rounded-full h-9 w-9 overflow-hidden">
                 <img
                   src={
                     currentUser.avatar ||
