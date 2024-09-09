@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signUpStart,
+  signUpSuccess,
+  signUpFailure,
+} from "../redux/user/userSlice.js";
 
-const SingUp = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.user);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(signUpStart());
     try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
@@ -21,33 +28,29 @@ const SingUp = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
 
       if (data.success === false) {
-        setLoading(false);
-        setError(data.message);
+        dispatch(signUpFailure(data.message));
         return;
       }
-      setLoading(false);
-      setError(null);
-      navigate("/sing-in");
+      dispatch(signUpSuccess(data));
+      navigate("/");
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      dispatch(signUpFailure(error.message));
     }
   };
 
   return (
     <div className="flex justify-center items-center my-24">
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
-        <form onSubmit={handleSubmit} className="space-y-6" action="#">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <h5 className="text-xl font-medium text-gray-900">
             Sign up to our platform
           </h5>
 
           <div>
             <label
-              htmlFor="text"
+              htmlFor="username"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               Your username
@@ -106,15 +109,15 @@ const SingUp = () => {
           <OAuth />
           <div className="text-sm font-medium text-gray-500">
             Have an account?{" "}
-            <Link to="/sing-in" className="text-blue-700 hover:underline">
-              Sing In
+            <Link to="/sign-in" className="text-blue-700 hover:underline">
+              Sign In
             </Link>
-            {error && <p className="text-red-500 ">{error}</p>}
           </div>
+          {error && <p className="text-red-500">{error}</p>}
         </form>
       </div>
     </div>
   );
 };
 
-export default SingUp;
+export default SignUp;

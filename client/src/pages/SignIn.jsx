@@ -1,4 +1,3 @@
-// Import necessary dependencies
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,25 +5,23 @@ import {
   signInStart,
   signInSuccess,
   signInFailure,
-} from "../redux/user/userSlice";
+} from "../redux/user/userSlice.js";
 import OAuth from "../components/OAuth";
+
 const SignIn = () => {
-  // Define state variables
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  // Define event handler for form input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Define event handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(signInStart());
     try {
-      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -43,7 +40,6 @@ const SignIn = () => {
     }
   };
 
-  // Render the sign-in form
   return (
     <div className="flex justify-center items-center my-24">
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
@@ -99,7 +95,7 @@ const SignIn = () => {
               Create account
             </Link>
           </div>
-          {error && <p className="text-red-500 m">{error}</p>}
+          {error && <p className="text-red-500">{error}</p>}
         </form>
       </div>
     </div>
