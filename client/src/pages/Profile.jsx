@@ -18,9 +18,8 @@ import {
   deleteUserFailure,
 } from "../redux/user/userSlice.js";
 import ReactLoading from "react-loading";
-import Loading from "react-loading";
 
-const profile = () => {
+const Profile = () => {
   const fileRef = useRef(null);
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
@@ -30,35 +29,32 @@ const profile = () => {
   const dispatch = useDispatch();
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
-  // useEffect to monitor file change and trigger upload
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
     }
-  }, [file]); // Added file as dependency to trigger on file change
+  }, [file]);
 
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
-    const fileName = new Date().getTime() + file.name; // Generate a unique file name
-    const storageRef = ref(storage, fileName); // Create a reference to Firebase Storage
-    const uploadTask = uploadBytesResumable(storageRef, file); // Start file upload
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        // Track upload progress
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setFilePerc(Math.round(progress)); // Update progress in state
+        setFilePerc(Math.round(progress));
       },
       (error) => {
-        console.error("File upload error:", error); // Log errors
+        console.error("File upload error:", error);
         setFileUploadError(error);
       },
       () => {
-        // Get the download URL once the upload is complete
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setFormData((prevData) => ({ ...prevData, avatar: downloadURL })); // Update form data with the new avatar URL
+          setFormData((prevData) => ({ ...prevData, avatar: downloadURL }));
         });
       }
     );
@@ -70,14 +66,14 @@ const profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("The User : ", currentUser);
     try {
       dispatch(updateUserStart());
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        credentials: "include", // Ensure cookies are sent
       });
       const data = await res.json();
       if (data.success === false) {
@@ -96,6 +92,10 @@ const profile = () => {
       dispatch(deleteUserStart());
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Ensure cookies are sent with the request
       });
       const data = await res.json();
       if (data.success === false) {
@@ -122,7 +122,9 @@ const profile = () => {
           <div className="relative flex justify-center mt-[-50px]">
             <div className="w-32 h-32 border-4 border-white rounded-full bg-gray-300 flex items-center justify-center relative">
               <img
-                src={formData.avatar || currentUser.avatar}
+                src={
+                  formData.avatar || currentUser.avatar || "default-avatar.png"
+                }
                 alt="Profile"
                 className="w-full h-full object-cover rounded-full"
               />
@@ -174,7 +176,7 @@ const profile = () => {
                 id="username"
                 placeholder="Enter username"
                 onChange={handleChange}
-                defaultValue={currentUser.username}
+                defaultValue={currentUser.username || ""}
                 className="mt-1 w-full border px-2 py-2 rounded"
               />
             </div>
@@ -189,7 +191,7 @@ const profile = () => {
                 id="dob"
                 placeholder="Enter date of birth"
                 onChange={handleChange}
-                defaultValue={currentUser.dob}
+                defaultValue={currentUser.dob || ""}
                 className="mt-1 w-full border px-2 py-2 rounded"
               />
             </div>
@@ -205,100 +207,76 @@ const profile = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
-                Email Address
+                Email*
               </label>
               <input
                 id="email"
-                placeholder="Enter your email address"
-                defaultValue={currentUser.email}
-                className="mt-1 w-full border px-2 py-2 rounded"
+                placeholder="Enter email"
                 onChange={handleChange}
+                defaultValue={currentUser.email || ""}
+                className="mt-1 w-full border px-2 py-2 rounded"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Phone Number
+              </label>
+              <input
+                id="phone"
+                placeholder="Enter phone number"
+                onChange={handleChange}
+                defaultValue={currentUser.phone || ""}
+                className="mt-1 w-full border px-2 py-2 rounded"
               />
             </div>
           </div>
         </section>
 
-        {/* Password Section */}
-        <section className="mt-8">
-          <h2 className="text-xl font-bold mb-4">Password</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                New Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                placeholder="Enter new password"
-                className="mt-1 w-full border px-2 py-2 rounded"
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Confirm Password
-              </label>
-              <input
-                id="confirmPassword"
-                type="password"
-                placeholder="Confirm new password"
-                className="mt-1 w-full border px-2 py-2 rounded"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </section>
-        {/* Error Handling  */}
-        <div>
-          <p className="text-red-700 mt-5">{error ? error : ""} </p>
-        </div>
-
-        {/* Save Button */}
-        <div className="mt-8">
+        {/* Submit Button */}
+        <div className="flex justify-between mt-8">
           <button
             type="submit"
-            className="btn bg-blue-500 text-white px-4 py-2 rounded flex gap-2 items-center justify-center hover:bg-blue-600"
-            aria-label="Save"
+            className="bg-blue-500 text-white px-4 py-2 rounded"
             disabled={loading}
           >
             {loading ? (
-              <ReactLoading height={24} width={24} />
+              <ReactLoading type="spin" color="#fff" height={24} width={24} />
             ) : (
-              <span className="flex items-center gap-2">
-                Save <MdSave />
-              </span>
+              "Save Changes"
+            )}
+          </button>
+          <button
+            onClick={handleDeleteUser}
+            className="bg-red-500 text-white px-4 py-2 rounded"
+            disabled={loading}
+          >
+            {loading ? (
+              <ReactLoading type="spin" color="#fff" height={24} width={24} />
+            ) : (
+              "Delete Account"
             )}
           </button>
         </div>
-        <div>
-          <p className="text-green-700 mt-5">
-            {updateSuccess ? "Profile updated successfully" : ""}{" "}
-          </p>
-        </div>
       </form>
-      {/* Delete Account Section */}
-      <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">Delete Account</h2>
-        <p className="mb-6 text-red-600">
-          <span className="">Warning: </span> Deleting your account is
-          irreversible and will remove all your data.
-        </p>
-        <button
-          onClick={handleDeleteUser}
-          className="btn bg-red-500 text-white px-4 py-2 rounded flex gap-2 hover:bg-red-600"
-        >
-          <span>Delete Account</span>
-          <MdDelete />
-        </button>
-      </div>
+
+      {/* Display success message */}
+      {updateSuccess && (
+        <div className="p-4 bg-green-100 text-green-700 border border-green-300 rounded">
+          Profile updated successfully!
+        </div>
+      )}
+
+      {/* Display error message */}
+      {error && (
+        <div className="p-4 bg-red-100 text-red-700 border border-red-300 rounded">
+          Error: {error.message}
+        </div>
+      )}
     </div>
   );
 };
 
-export default profile;
+export default Profile;
