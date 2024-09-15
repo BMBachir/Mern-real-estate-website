@@ -2,20 +2,53 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../images/logo.png";
+import {
+  Avatar,
+  Button,
+  Menu,
+  MenuHandler,
+  MenuItem,
+  MenuList,
+  Typography,
+} from "@material-tailwind/react";
+import { PowerIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+const handleSignOut = () => {
+  // Add your sign-out logic here
+  console.log("User signed out");
+  // Optionally navigate to a different page after signing out
+};
+
+// profile menu component
+const profileMenuItems = [
+  {
+    label: "My Profile",
+    icon: UserCircleIcon,
+    link: "/profile",
+  },
+
+  {
+    label: "Sign Out",
+    icon: PowerIcon,
+    onClick: handleSignOut,
+  },
+];
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Separate state for profile menu
   const location = useLocation();
   const { currentUser } = useSelector((state) => state.user);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const toggleNavMenu = () => {
+    setIsNavOpen(!isNavOpen);
   };
 
   const getLinkClasses = (path) => {
     const baseClasses = "block py-2 px-3 text-white hover:text-gray-300";
     return location.pathname === path
-      ? `${baseClasses} text-gray-800 font-bold ` // Add a bottom border for active link
+      ? `${baseClasses} text-gray-800 font-bold`
       : baseClasses;
   };
 
@@ -30,7 +63,7 @@ const Header = () => {
         </Link>
         <div className="md:hidden">
           <button
-            onClick={toggleMenu}
+            onClick={toggleNavMenu}
             className="text-gray-200 focus:outline-none rounded-lg text-sm p-2.5"
           >
             <svg
@@ -46,9 +79,7 @@ const Header = () => {
                 strokeLinejoin="round"
                 strokeWidth="2"
                 d={
-                  isMenuOpen
-                    ? "M6 18L18 6M6 6l12 12"
-                    : "M4 6h16M4 12h16M4 18h16"
+                  isNavOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"
                 }
               />
             </svg>
@@ -57,7 +88,7 @@ const Header = () => {
         </div>
         <div
           className={`font-semibold md:flex md:items-center w-full md:w-auto ${
-            isMenuOpen ? "block" : "hidden"
+            isNavOpen ? "block" : "hidden"
           } mt-4 md:mt-0`}
         >
           <ul className="flex flex-col md:flex-row md:space-x-8">
@@ -70,51 +101,93 @@ const Header = () => {
               <li key={item.link} className="relative">
                 <Link
                   to={item.link}
-                  onClick={toggleMenu}
+                  onClick={toggleNavMenu} // Close nav menu on click
                   className={getLinkClasses(item.link)}
                 >
                   {item.text}
                 </Link>
               </li>
             ))}
-            <li className="mt-4 md:hidden">
-              {currentUser ? (
-                <Link to={"/profile"} className="flex items-center">
-                  <div className="relative rounded-full h-10 w-10 overflow-hidden">
-                    <img
-                      src={
-                        currentUser.avatar ||
-                        "https://img.freepik.com/vecteurs-premium/icone-compte-icone-utilisateur-graphiques-vectoriels_292645-552.jpg"
-                      }
-                      alt="User Avatar"
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                </Link>
-              ) : (
-                <Link to={"/sign-in"}>
-                  <button className="bg-slate-100 text-[#878A91] hover:text-slate-100 hover:bg-gray-500 inline-flex items-center justify-center rounded-md px-6 py-3 text-base font-medium shadow-sm transition-colors focus:outline-none hover:shadow-md">
-                    Get Started
-                  </button>
-                </Link>
-              )}
-            </li>
           </ul>
         </div>
         <div className="hidden md:flex items-center">
           {currentUser ? (
-            <Link to={"/profile"}>
-              <div className="relative rounded-full h-9 w-9 overflow-hidden">
-                <img
-                  src={
-                    currentUser.avatar ||
-                    "https://img.freepik.com/vecteurs-premium/icone-compte-icone-utilisateur-graphiques-vectoriels_292645-552.jpg"
-                  }
-                  alt="User Avatar"
-                  className="object-cover w-full h-full"
-                />
-              </div>
-            </Link>
+            <Menu
+              open={isMenuOpen}
+              handler={setIsMenuOpen}
+              placement="bottom-end"
+            >
+              <MenuHandler>
+                <Button
+                  variant="text"
+                  color="blue-gray"
+                  className="flex items-center rounded-full p-0"
+                >
+                  <Avatar
+                    size="sm"
+                    alt="User Avatar"
+                    className="border-2 border-gray-400 rounded-full shadow-xl"
+                    src={
+                      currentUser.avatar ||
+                      "https://img.freepik.com/vecteurs-premium/icone-compte-icone-utilisateur-graphiques-vectoriels_292645-552.jpg"
+                    }
+                  />
+                </Button>
+              </MenuHandler>
+              <MenuList className="p-2 z-50 bg-white shadow-lg rounded-lg">
+                {profileMenuItems.map(({ label, icon, link, onClick }, key) => {
+                  const isLastItem = key === profileMenuItems.length - 1;
+
+                  return (
+                    <MenuItem
+                      key={label}
+                      onClick={onClick ? onClick : closeMenu} // Call function if available, otherwise close menu
+                      className={`flex items-center gap-2 rounded ${
+                        isLastItem
+                          ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                          : ""
+                      }`}
+                    >
+                      {link ? (
+                        <Link to={link} className="flex items-center gap-2">
+                          {React.createElement(icon, {
+                            className: `h-4 w-4 ${
+                              isLastItem ? "text-red-500" : ""
+                            }`,
+                            strokeWidth: 2,
+                          })}
+                          <Typography
+                            as="span"
+                            variant="small"
+                            className="font-normal"
+                            color={isLastItem ? "red" : "inherit"}
+                          >
+                            {label}
+                          </Typography>
+                        </Link>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          {React.createElement(icon, {
+                            className: `h-4 w-4 ${
+                              isLastItem ? "text-red-500" : ""
+                            }`,
+                            strokeWidth: 2,
+                          })}
+                          <Typography
+                            as="span"
+                            variant="small"
+                            className="font-normal"
+                            color={isLastItem ? "red" : "inherit"}
+                          >
+                            {label}
+                          </Typography>
+                        </div>
+                      )}
+                    </MenuItem>
+                  );
+                })}
+              </MenuList>
+            </Menu>
           ) : (
             <Link to={"/sign-in"}>
               <button className="bg-slate-100 text-[#878A91] hover:text-slate-100 hover:bg-gray-500 inline-flex items-center justify-center rounded-md px-6 py-3 text-base font-medium shadow-sm transition-colors focus:outline-none hover:shadow-md">
