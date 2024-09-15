@@ -59,11 +59,17 @@ export const signin = async (req, res, next) => {
     console.log("Generated Token:", token);
 
     // Send token as cookie
-    const { password: pass, ...rest } = newUser._doc; // Hide password in response
     res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+      }) // Use secure flag in production
       .status(200)
-      .json(rest);
+      .json({
+        message: "User logged in successfully",
+        ...validUser._doc,
+        password: undefined,
+      }); // Hide password in response
   } catch (error) {
     next(error);
   }
