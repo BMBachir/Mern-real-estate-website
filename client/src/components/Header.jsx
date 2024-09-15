@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../images/logo.png";
 import {
   Avatar,
@@ -12,32 +12,55 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { PowerIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-const handleSignOut = () => {
-  // Add your sign-out logic here
-  console.log("User signed out");
-  // Optionally navigate to a different page after signing out
-};
-
-// profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-    link: "/profile",
-  },
-
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-    onClick: handleSignOut,
-  },
-];
+import {
+  signOutUserStart,
+  signOutUserSuccess,
+  signOutUserFailure,
+} from "../redux/user/userSlice";
+import { persistor } from "../redux/store";
 
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Separate state for profile menu
   const location = useLocation();
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch(); // Moved inside the component
+
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch(`/api/auth/signout`);
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(signOutUserFailure(data.message));
+        return;
+      }
+
+      await persistor.purge(); // Clear persisted Redux state
+
+      // Sign-out success
+      dispatch(signOutUserSuccess());
+      navigate("/sign-in"); // Redirect to login page after sign out
+    } catch (error) {
+      dispatch(signOutUserFailure(error.message));
+    }
+  };
+
+  // profile menu component
+  const profileMenuItems = [
+    {
+      label: "My Profile",
+      icon: UserCircleIcon,
+      link: "/profile",
+    },
+    {
+      label: "Sign Out",
+      icon: PowerIcon,
+      onClick: handleSignOut,
+    },
+  ];
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -126,7 +149,7 @@ const Header = () => {
                   <Avatar
                     size="sm"
                     alt="User Avatar"
-                    className="border-2 border-gray-400 rounded-full shadow-xl"
+                    className="border-2 h-[40px] w-[40px] border-gray-400 rounded-full shadow-xl"
                     src={
                       currentUser.avatar ||
                       "https://img.freepik.com/vecteurs-premium/icone-compte-icone-utilisateur-graphiques-vectoriels_292645-552.jpg"
@@ -134,7 +157,7 @@ const Header = () => {
                   />
                 </Button>
               </MenuHandler>
-              <MenuList className="p-2 z-50 bg-white shadow-lg rounded-lg">
+              <MenuList className="p-5 z-50 bg-white shadow-lg rounded-lg">
                 {profileMenuItems.map(({ label, icon, link, onClick }, key) => {
                   const isLastItem = key === profileMenuItems.length - 1;
 
@@ -142,10 +165,10 @@ const Header = () => {
                     <MenuItem
                       key={label}
                       onClick={onClick ? onClick : closeMenu} // Call function if available, otherwise close menu
-                      className={`flex items-center gap-2 rounded ${
+                      className={`flex items-center gap-2 p-2 rounded-2xl ${
                         isLastItem
                           ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                          : ""
+                          : "hover:bg-gray-500/10"
                       }`}
                     >
                       {link ? (
@@ -159,7 +182,7 @@ const Header = () => {
                           <Typography
                             as="span"
                             variant="small"
-                            className="font-normal"
+                            className="font-normal p-1"
                             color={isLastItem ? "red" : "inherit"}
                           >
                             {label}
