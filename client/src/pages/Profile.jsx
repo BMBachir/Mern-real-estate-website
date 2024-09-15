@@ -13,6 +13,9 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
 } from "../redux/user/userSlice.js";
 import ReactLoading from "react-loading";
 import Loading from "react-loading";
@@ -24,7 +27,6 @@ const profile = () => {
   const [formData, setFormData] = useState({});
   const [fileUploadError, setFileUploadError] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
-
   const dispatch = useDispatch();
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
@@ -86,6 +88,23 @@ const profile = () => {
       setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error.message));
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -262,20 +281,22 @@ const profile = () => {
             {updateSuccess ? "Profile updated successfully" : ""}{" "}
           </p>
         </div>
-
-        {/* Delete Account Section */}
-        <div className="mt-8">
-          <h2 className="text-xl font-bold mb-4">Delete Account</h2>
-          <p className="mb-6 text-red-600">
-            <span className="">Warning: </span> Deleting your account is
-            irreversible and will remove all your data.
-          </p>
-          <button className="btn bg-red-500 text-white px-4 py-2 rounded flex gap-2 hover:bg-red-600">
-            <span>Delete Account</span>
-            <MdDelete />
-          </button>
-        </div>
       </form>
+      {/* Delete Account Section */}
+      <div className="mt-8">
+        <h2 className="text-xl font-bold mb-4">Delete Account</h2>
+        <p className="mb-6 text-red-600">
+          <span className="">Warning: </span> Deleting your account is
+          irreversible and will remove all your data.
+        </p>
+        <button
+          onClick={handleDeleteUser}
+          className="btn bg-red-500 text-white px-4 py-2 rounded flex gap-2 hover:bg-red-600"
+        >
+          <span>Delete Account</span>
+          <MdDelete />
+        </button>
+      </div>
     </div>
   );
 };
