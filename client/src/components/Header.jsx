@@ -11,7 +11,7 @@ import {
   MenuList,
   Typography,
 } from "@material-tailwind/react";
-import { PowerIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { PowerIcon, UserCircleIcon, PlusIcon } from "@heroicons/react/24/solid";
 import {
   signOutUserStart,
   signOutUserSuccess,
@@ -54,6 +54,11 @@ const Header = () => {
       label: "My Profile",
       icon: UserCircleIcon,
       link: "/profile",
+    },
+    {
+      label: "Create listing",
+      icon: PlusIcon,
+      link: "/create-listing",
     },
     {
       label: "Sign Out",
