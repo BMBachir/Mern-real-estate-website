@@ -6,10 +6,13 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import { MdImageNotSupported } from "react-icons/md";
 
 const CreateListing = () => {
   const [images, setImages] = useState([]);
   const [formData, setFormData] = useState({ imageUrls: [] });
+  const [imagesUploadError, setImagesUploadError] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const handleImageUpload = (event) => {
     const uploadedFiles = Array.from(event.target.files); // Convert FileList to an array
@@ -18,13 +21,19 @@ const CreateListing = () => {
     if (newImages.length <= 6) {
       setImages(newImages); // Ensure we don't exceed the maximum of 6 images
     } else {
-      alert("You can only upload a maximum of 6 images.");
+      setImagesUploadError("You can only upload a maximum of 6 images.");
+      setUploading(false);
     }
+  };
+
+  const handleImageDelete = (indexToDelete) => {
+    setImages(images.filter((_, index) => index !== indexToDelete));
   };
 
   const handleImageSubmit = () => {
     if (images.length > 0 && images.length <= 6) {
-      // Correcting the typo from Promis to Promise
+      setUploading(true);
+      setImagesUploadError(false);
       const promises = images.map((image) => storeImage(image));
 
       Promise.all(promises)
@@ -36,19 +45,23 @@ const CreateListing = () => {
           console.log("Images uploaded successfully:", urls);
         })
         .catch((err) => {
-          console.log("Error uploading images:", err);
+          setImagesUploadError("Image upload failed.(2mb max per image)");
+          setUploading(false);
         });
+      setImagesUploadError(false);
+      setUploading(false);
     } else {
-      alert("You can only upload a maximum of 6 images.");
+      setImagesUploadError("You can only upload a maximum of 6 images.)");
+      setUploading(false);
     }
   };
 
-  const storeImage = async (images) => {
+  const storeImage = async (image) => {
     return new Promise((resolve, reject) => {
       const storage = getStorage(app);
-      const fileName = new Date().getTime() + images.name;
+      const fileName = new Date().getTime() + image.name;
       const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, images);
+      const uploadTask = uploadBytesResumable(storageRef, image);
 
       uploadTask.on(
         "state_changed",
@@ -265,7 +278,7 @@ const CreateListing = () => {
             {images.map((image, index) => (
               <div
                 key={index}
-                className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center"
+                className="relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center"
               >
                 {image ? (
                   <img
@@ -278,27 +291,44 @@ const CreateListing = () => {
                     Image {index + 1}
                   </div>
                 )}
+                {/* Delete button */}
+                <div
+                  onClick={() => handleImageDelete(index)}
+                  className="absolute top-2 right-2 "
+                >
+                  <MdImageNotSupported className="w-6 h-6 hover:text-red-500  " />
+                </div>
               </div>
             ))}
           </div>
-          <div className="flex justify-between items-center">
+
+          <div className="flex justify-between items-center gap-4 mt-4">
             {/* File input for image upload */}
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleImageUpload}
-              className="mt-4 border rounded px-4 py-2"
-            />
+            <label className="relative cursor-pointer rounded-lg bg-white border-2 border-gray-300 p-2 flex items-center justify-center transition hover:border-blue-500">
+              <span className="text-gray-600">Select Images</span>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleImageUpload}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+            </label>
+
+            {/* Upload button */}
             <button
               onClick={handleImageSubmit}
-              className=" mt-4 bg-blue-500 text-white rounded px-4 py-2"
+              className="bg-blue-500 text-white font-semibold rounded-lg px-6 py-2 transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
             >
               Upload
             </button>
           </div>
+          {/* ERROR Section */}
+          <p className="text-red-700">
+            {imagesUploadError && imagesUploadError}
+          </p>
           {/* Button to create the listing */}
-          <button className="w-full mt-4 bg-blue-500 text-white rounded px-4 py-2">
+          <button className="w-full mt-4 bg-blue-500 text-white font-semibold rounded-lg px-6 py-2 transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50">
             Create Listing
           </button>
         </div>
