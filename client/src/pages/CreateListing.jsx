@@ -3,10 +3,17 @@ import React, { useState } from "react";
 const CreateListing = () => {
   const [images, setImages] = useState([]);
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    setImages(files.slice(0, 6));
+  const handleImageUpload = (event) => {
+    const uploadedFiles = Array.from(event.target.files); // Convert FileList to an array
+    const newImages = [...images, ...uploadedFiles]; // Append new files to existing images
+
+    if (newImages.length <= 6) {
+      setImages(newImages); // Ensure we don't exceed the maximum of 6 images
+    } else {
+      alert("You can only upload a maximum of 6 images.");
+    }
   };
+
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Create New Listing</h1>
@@ -58,7 +65,7 @@ const CreateListing = () => {
                 <input
                   id="regularPrice"
                   type="number"
-                  placeholder="250000"
+                  placeholder="2500$"
                   className="w-full border rounded px-3 py-2"
                 />
               </div>
@@ -67,12 +74,13 @@ const CreateListing = () => {
                   htmlFor="discountPrice"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Discount Price Per Month
+                  Discount Price{" "}
+                  <span className="text-[10px] text-gray-400 ">/month</span>
                 </label>
                 <input
                   id="discountPrice"
                   type="number"
-                  placeholder="240000"
+                  placeholder="24$"
                   className="w-full border rounded px-3 py-2"
                 />
               </div>
@@ -196,15 +204,17 @@ const CreateListing = () => {
           <p className="text-gray-500 mb-4">
             Upload images of your property (max 6)
           </p>
+
+          {/* Image preview grid */}
           <div className="grid grid-cols-2 gap-4">
-            {[...Array(6)].map((_, index) => (
+            {images.map((image, index) => (
               <div
                 key={index}
                 className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center"
               >
-                {images[index] ? (
+                {image ? (
                   <img
-                    src={URL.createObjectURL(images[index])}
+                    src={URL.createObjectURL(image)}
                     alt={`Property ${index + 1}`}
                     className="w-full h-32 object-cover rounded-lg"
                   />
@@ -216,13 +226,20 @@ const CreateListing = () => {
               </div>
             ))}
           </div>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageUpload}
-            className="mt-4 w-full border rounded px-3 py-2"
-          />
+          <div className="flex justify-between items-center">
+            {/* File input for image upload */}
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
+              className="mt-4 border rounded px-4 py-2"
+            />
+            <button className=" mt-4 bg-blue-500 text-white rounded px-4 py-2">
+              Upload
+            </button>
+          </div>
+          {/* Button to create the listing */}
           <button className="w-full mt-4 bg-blue-500 text-white rounded px-4 py-2">
             Create Listing
           </button>
