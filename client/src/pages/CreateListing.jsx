@@ -1,7 +1,15 @@
 import React, { useState } from "react";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { app } from "../firebase";
 
 const CreateListing = () => {
   const [images, setImages] = useState([]);
+  const [formData, setFormData] = useState({ imageUrls: [] });
 
   const handleImageUpload = (event) => {
     const uploadedFiles = Array.from(event.target.files); // Convert FileList to an array
@@ -12,6 +20,53 @@ const CreateListing = () => {
     } else {
       alert("You can only upload a maximum of 6 images.");
     }
+  };
+
+  const handleImageSubmit = () => {
+    if (images.length > 0 && images.length <= 6) {
+      // Correcting the typo from Promis to Promise
+      const promises = images.map((image) => storeImage(image));
+
+      Promise.all(promises)
+        .then((urls) => {
+          setFormData({
+            ...formData,
+            imageUrls: formData.imageUrls.concat(urls), // Save image URLs in state
+          });
+          console.log("Images uploaded successfully:", urls);
+        })
+        .catch((err) => {
+          console.log("Error uploading images:", err);
+        });
+    } else {
+      alert("You can only upload a maximum of 6 images.");
+    }
+  };
+
+  const storeImage = async (images) => {
+    return new Promise((resolve, reject) => {
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + images.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, images);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Uploaded successfully...");
+        },
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
   };
 
   return (
@@ -235,7 +290,10 @@ const CreateListing = () => {
               onChange={handleImageUpload}
               className="mt-4 border rounded px-4 py-2"
             />
-            <button className=" mt-4 bg-blue-500 text-white rounded px-4 py-2">
+            <button
+              onClick={handleImageSubmit}
+              className=" mt-4 bg-blue-500 text-white rounded px-4 py-2"
+            >
               Upload
             </button>
           </div>
