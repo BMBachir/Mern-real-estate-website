@@ -10,7 +10,20 @@ import { MdImageNotSupported } from "react-icons/md";
 
 const CreateListing = () => {
   const [images, setImages] = useState([]);
-  const [formData, setFormData] = useState({ imageUrls: [] });
+  const [formData, setFormData] = useState({
+    imageUrls: [],
+    name: "",
+    description: "",
+    address: "",
+    type: "rent",
+    bedrooms: 1,
+    bathrooms: 1,
+    regularPrice: 50,
+    discountPrice: 0,
+    offer: false,
+    parking: false,
+    furnished: false,
+  });
   const [imagesUploadError, setImagesUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
 
@@ -82,6 +95,27 @@ const CreateListing = () => {
     });
   };
 
+  const handleChange = async (e) => {
+    if (
+      e.target.id === "parking" ||
+      e.target.id === "furnished" ||
+      e.target.id === "offer"
+    ) {
+      setFormData({ ...formData, [e.target.id]: e.target.checked });
+    }
+    if (
+      e.target.type == "number" ||
+      e.target.type == "text" ||
+      e.target.tagName === "TEXTAREA" ||
+      e.target.tagName == "SELECT"
+    ) {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      });
+    }
+  };
+
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Create New Listing</h1>
@@ -95,13 +129,15 @@ const CreateListing = () => {
           <div className="space-y-4">
             <div className="space-y-2">
               <label
-                htmlFor="title"
+                htmlFor="name"
                 className="block text-sm font-medium text-gray-700"
               >
-                Title
+                Name
               </label>
               <input
-                id="title"
+                onChange={handleChange}
+                value={formData.name}
+                id="name"
                 placeholder="Cozy 3-bedroom apartment in downtown"
                 className="w-full border rounded px-3 py-2"
               />
@@ -115,6 +151,8 @@ const CreateListing = () => {
                 Description
               </label>
               <textarea
+                onChange={handleChange}
+                value={formData.description}
                 id="description"
                 placeholder="Describe your property..."
                 className="w-full border rounded px-3 py-2"
@@ -131,6 +169,8 @@ const CreateListing = () => {
                   Regular Price
                 </label>
                 <input
+                  onChange={handleChange}
+                  value={formData.regularPrice}
                   id="regularPrice"
                   type="number"
                   placeholder="2500$"
@@ -146,6 +186,8 @@ const CreateListing = () => {
                   <span className="text-[10px] text-gray-400 ">/month</span>
                 </label>
                 <input
+                  onChange={handleChange}
+                  value={formData.discountPrice}
                   id="discountPrice"
                   type="number"
                   placeholder="24$"
@@ -160,65 +202,76 @@ const CreateListing = () => {
                   htmlFor="type"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Property Type
-                </label>
-                <select id="type" className="w-full border rounded px-3 py-2">
-                  <option value="">Select type</option>
-                  <option value="apartment">Apartment</option>
-                  <option value="house">House</option>
-                  <option value="condo">Condo</option>
-                  <option value="townhouse">Townhouse</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Checkpoints for Sell/Rent, Furnished, Parking Spot */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label
-                  htmlFor="sellRent"
-                  className="block text-sm font-medium text-gray-700"
-                >
                   Sell or Rent
                 </label>
                 <select
-                  id="sellRent"
+                  onChange={handleChange}
+                  value={formData.type}
+                  id="type"
                   className="w-full border rounded px-3 py-2"
                 >
                   <option value="sell">Sell</option>
                   <option value="rent">Rent</option>
                 </select>
               </div>
-              <div className="space-y-2">
-                <label
-                  htmlFor="furnished"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Furnished
-                </label>
-                <select
-                  id="furnished"
-                  className="w-full border rounded px-3 py-2"
-                >
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
-              </div>
             </div>
-
             <div className="space-y-2">
               <label
-                htmlFor="parking"
+                htmlFor=""
                 className="block text-sm font-medium text-gray-700"
               >
-                Parking Spot Available
+                House advantages
               </label>
-              <select id="parking" className="w-full border rounded px-3 py-2">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </div>
+              {/* Checkpoints for Sell/Rent, Furnished, Parking Spot */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <div className="flex items-center">
+                    <input
+                      onChange={handleChange}
+                      checked={formData.furnished}
+                      type="checkbox"
+                      id="furnished"
+                      name="furnished"
+                      className="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out"
+                    />
+                    <label htmlFor="furnished" className="ml-2 text-gray-700">
+                      Furnished
+                    </label>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center">
+                    <input
+                      onChange={handleChange}
+                      checked={formData.parking}
+                      type="checkbox"
+                      id="parking"
+                      name="parking"
+                      className="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out"
+                    />
+                    <label htmlFor="parking" className="ml-2 text-gray-700">
+                      Parking Spot
+                    </label>
+                  </div>
+                </div>
+              </div>
 
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <input
+                    onChange={handleChange}
+                    checked={formData.offer}
+                    type="checkbox"
+                    id="offer"
+                    name="parking"
+                    className="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out"
+                  />
+                  <label htmlFor="parking" className="ml-2 text-gray-700">
+                    Offer
+                  </label>
+                </div>
+              </div>
+            </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label
@@ -228,6 +281,8 @@ const CreateListing = () => {
                   Bedrooms
                 </label>
                 <input
+                  onChange={handleChange}
+                  value={formData.bedrooms}
                   id="bedrooms"
                   type="number"
                   placeholder="3"
@@ -242,6 +297,8 @@ const CreateListing = () => {
                   Bathrooms
                 </label>
                 <input
+                  onChange={handleChange}
+                  value={formData.bathrooms}
                   id="bathrooms"
                   type="number"
                   placeholder="2"
@@ -258,6 +315,8 @@ const CreateListing = () => {
                 Address
               </label>
               <input
+                onChange={handleChange}
+                value={formData.address}
                 id="address"
                 placeholder="123 Main St, City, State, ZIP"
                 className="w-full border rounded px-3 py-2"
