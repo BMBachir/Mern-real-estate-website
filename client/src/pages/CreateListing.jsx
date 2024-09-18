@@ -6,6 +6,8 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { MdImageNotSupported } from "react-icons/md";
 
 const CreateListing = () => {
@@ -26,6 +28,12 @@ const CreateListing = () => {
   });
   const [imagesUploadError, setImagesUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+
+  const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const handleImageUpload = (event) => {
     const uploadedFiles = Array.from(event.target.files); // Convert FileList to an array
@@ -55,7 +63,7 @@ const CreateListing = () => {
             ...formData,
             imageUrls: formData.imageUrls.concat(urls), // Save image URLs in state
           });
-          console.log("Images uploaded successfully:", urls);
+          setUploadSuccess("Images uploaded successfully");
         })
         .catch((err) => {
           setImagesUploadError("Image upload failed.(2mb max per image)");
@@ -64,7 +72,7 @@ const CreateListing = () => {
       setImagesUploadError(false);
       setUploading(false);
     } else {
-      setImagesUploadError("You can only upload a maximum of 6 images.)");
+      setImagesUploadError("Upload a maximum of 6 images.");
       setUploading(false);
     }
   };
@@ -116,6 +124,36 @@ const CreateListing = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (formData.imageUrls.length < 1)
+        return setError("You must upload at least one image");
+      if (formData.regularPrice < formData.discountPrice)
+        return setError("Discount price cannot be bigger than regular price");
+      setLoading(true);
+      setError(false);
+
+      const res = await fetch("/api/listing/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...formData, userRef: currentUser._id }),
+      });
+      const data = await res.json();
+      setLoading(false);
+
+      if (data.success === false) {
+        setError(data.message);
+        return;
+      }
+      navigate(`/listing ${data._id}`);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Create New Listing</h1>
@@ -159,41 +197,20 @@ const CreateListing = () => {
               ></textarea>
             </div>
 
-            {/* Pricing Section */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label
-                  htmlFor="regularPrice"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Regular Price
-                </label>
-                <input
-                  onChange={handleChange}
-                  value={formData.regularPrice}
-                  id="regularPrice"
-                  type="number"
-                  placeholder="2500$"
-                  className="w-full border rounded px-3 py-2"
-                />
-              </div>
-              <div className="space-y-2">
-                <label
-                  htmlFor="discountPrice"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Discount Price{" "}
-                  <span className="text-[10px] text-gray-400 ">/month</span>
-                </label>
-                <input
-                  onChange={handleChange}
-                  value={formData.discountPrice}
-                  id="discountPrice"
-                  type="number"
-                  placeholder="24$"
-                  className="w-full border rounded px-3 py-2"
-                />
-              </div>
+            <div className="space-y-2">
+              <label
+                htmlFor="address"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Address
+              </label>
+              <input
+                onChange={handleChange}
+                value={formData.address}
+                id="address"
+                placeholder="123 Main St, City, State, ZIP"
+                className="w-full border rounded px-3 py-2"
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -307,20 +324,48 @@ const CreateListing = () => {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label
-                htmlFor="address"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Address
-              </label>
-              <input
-                onChange={handleChange}
-                value={formData.address}
-                id="address"
-                placeholder="123 Main St, City, State, ZIP"
-                className="w-full border rounded px-3 py-2"
-              />
+            {/* Pricing Section */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label
+                  htmlFor="regularPrice"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Regular Price
+                </label>
+                <input
+                  onChange={handleChange}
+                  value={formData.regularPrice}
+                  id="regularPrice"
+                  type="number"
+                  placeholder="2500$"
+                  className="w-full border rounded px-3 py-2"
+                />
+              </div>
+
+              {formData.offer && (
+                <div className="space-y-2">
+                  <label
+                    htmlFor="discountPrice"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Discount Price{" "}
+                    {formData.type === "rent" && (
+                      <span className="text-[10px] text-gray-400 ">
+                        $/per month
+                      </span>
+                    )}
+                  </label>
+                  <input
+                    onChange={handleChange}
+                    value={formData.discountPrice}
+                    id="discountPrice"
+                    type="number"
+                    placeholder="24$"
+                    className="w-full border rounded px-3 py-2"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -379,17 +424,29 @@ const CreateListing = () => {
               onClick={handleImageSubmit}
               className="bg-blue-500 text-white font-semibold rounded-lg px-6 py-2 transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
             >
-              Upload
+              {uploading ? "Uploading..." : "Upload Images"}
             </button>
           </div>
+
           {/* ERROR Section */}
           <p className="text-red-700">
             {imagesUploadError && imagesUploadError}
           </p>
+
+          {/* SUCCESS Section */}
+          <p className="text-green-700">{uploadSuccess && uploadSuccess}</p>
+
           {/* Button to create the listing */}
-          <button className="w-full mt-4 bg-blue-500 text-white font-semibold rounded-lg px-6 py-2 transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50">
-            Create Listing
-          </button>
+          <div className="mt-6">
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg"
+              disabled={loading}
+            >
+              {loading ? "Creating Listing..." : "Create Listing"}
+            </button>
+            {error && <p className="text-red-500 mt-4">{error}</p>}
+          </div>
         </div>
       </div>
     </div>
