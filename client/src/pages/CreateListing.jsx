@@ -38,7 +38,7 @@ const CreateListing = () => {
 
   console.log(formData);
 
-  const handleImageSubmit = (e) => {
+  const handleImageSubmit = async (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
       setImageUploadError(false);
@@ -47,19 +47,19 @@ const CreateListing = () => {
       for (let i = 0; i < files.length; i++) {
         promises.push(storeImage(files[i]));
       }
-      Promise.all(promises)
-        .then((urls) => {
-          setFormData({
-            ...formData,
-            imageUrls: formData.imageUrls.concat(urls),
-          });
-          setImageUploadError(false);
-          setUploading(false);
-        })
-        .catch((err) => {
-          setImageUploadError(err);
-          setUploading(false);
-        });
+
+      try {
+        const urls = await Promise.all(promises); // Await here
+        setFormData((prev) => ({
+          ...prev,
+          imageUrls: prev.imageUrls.concat(urls),
+        }));
+        setImageUploadError(false);
+      } catch (err) {
+        setImageUploadError(err);
+      } finally {
+        setUploading(false);
+      }
     } else {
       setImageUploadError("You can only upload 6 images per listing");
       setUploading(false);
@@ -133,6 +133,7 @@ const CreateListing = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await handleImageSubmit();
     try {
       if (formData.imageUrls.length < 1)
         return setError("You must upload at least one image");
