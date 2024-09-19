@@ -11,6 +11,8 @@ import Properties from "./pages/Properties";
 import Contact from "./pages/Contact";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
+import UserListings from "./pages/UserListings.jsx";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -21,7 +23,9 @@ const App = () => {
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-listing" element={<CreateListing />} />
+          <Route path="/user-listings" element={<UserListings />} />
         </Route>
+
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sing-up" element={<SingUp />} />
         <Route path="/properties" element={<Properties />} />
