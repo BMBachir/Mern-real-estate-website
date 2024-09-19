@@ -291,11 +291,10 @@ const CreateListing = () => {
               <div className="space-y-2">
                 <div className="flex items-center">
                   <input
-                    onChange={handleChange}
-                    checked={formData.offer}
                     type="checkbox"
                     id="offer"
-                    name="parking"
+                    checked={formData.offer}
+                    onChange={handleChange}
                     className="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out"
                   />
                   <label htmlFor="parking" className="ml-2 text-gray-700">
@@ -358,7 +357,7 @@ const CreateListing = () => {
                 />
               </div>
 
-              {formData.offer && (
+              {formData.offer === true && (
                 <div className="space-y-2">
                   <label
                     htmlFor="discountPrice"
