@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { MdImageNotSupported } from "react-icons/md";
 
 const CreateListing = () => {
-  const [images, setImages] = useState([]);
+  const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
@@ -26,7 +26,8 @@ const CreateListing = () => {
     parking: false,
     furnished: false,
   });
-  const [imagesUploadError, setImagesUploadError] = useState(false);
+
+  const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,61 +36,50 @@ const CreateListing = () => {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const handleImageUpload = (event) => {
-    const uploadedFiles = Array.from(event.target.files); // Convert FileList to an array
-    const newImages = [...images, ...uploadedFiles]; // Append new files to existing images
+  console.log(formData);
 
-    if (newImages.length <= 6) {
-      setImages(newImages); // Ensure we don't exceed the maximum of 6 images
-    } else {
-      setImagesUploadError("You can only upload a maximum of 6 images.");
-      setUploading(false);
-    }
-  };
-
-  const handleImageDelete = (indexToDelete) => {
-    setImages(images.filter((_, index) => index !== indexToDelete));
-  };
-
-  const handleImageSubmit = () => {
-    if (images.length > 0 && images.length <= 6) {
+  const handleImageSubmit = (e) => {
+    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
-      setImagesUploadError(false);
-      const promises = images.map((image) => storeImage(image));
+      setImageUploadError(false);
+      const promises = [];
 
+      for (let i = 0; i < files.length; i++) {
+        promises.push(storeImage(files[i]));
+      }
       Promise.all(promises)
         .then((urls) => {
           setFormData({
             ...formData,
-            imageUrls: formData.imageUrls.concat(urls), // Save image URLs in state
+            imageUrls: formData.imageUrls.concat(urls),
           });
-          setUploadSuccess("Images uploaded successfully");
+          setImageUploadError(false);
+          setUploading(false);
         })
         .catch((err) => {
-          setImagesUploadError("Image upload failed.(2mb max per image)");
+          setImageUploadError(err);
           setUploading(false);
         });
-      setImagesUploadError(false);
-      setUploading(false);
     } else {
-      setImagesUploadError("Upload a maximum of 6 images.");
+      setImageUploadError("You can only upload 6 images per listing");
       setUploading(false);
     }
   };
 
-  const storeImage = async (image) => {
+  const storeImage = async (file) => {
     return new Promise((resolve, reject) => {
       const storage = getStorage(app);
-      const fileName = new Date().getTime() + image.name;
+      const fileName = new Date().getTime() + file.name;
       const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, image);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
         "state_changed",
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Uploaded successfully...");
+          console.log(`Upload is ${progress}% done`);
+          setUploadSuccess(`Upload is ${progress}% done`);
         },
         (error) => {
           reject(error);
@@ -103,19 +93,36 @@ const CreateListing = () => {
     });
   };
 
-  const handleChange = async (e) => {
+  const handleRemoveImage = (index) => {
+    setFormData({
+      ...formData,
+      imageUrls: formData.imageUrls.filter((_, i) => i !== index),
+    });
+  };
+
+  const handleChange = (e) => {
+    if (e.target.id === "sale" || e.target.id === "rent") {
+      setFormData({
+        ...formData,
+        type: e.target.id,
+      });
+    }
+
     if (
       e.target.id === "parking" ||
       e.target.id === "furnished" ||
       e.target.id === "offer"
     ) {
-      setFormData({ ...formData, [e.target.id]: e.target.checked });
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.checked,
+      });
     }
+
     if (
       e.target.type == "number" ||
       e.target.type == "text" ||
-      e.target.tagName === "TEXTAREA" ||
-      e.target.tagName == "SELECT"
+      e.target.type == "textarea"
     ) {
       setFormData({
         ...formData,
@@ -129,8 +136,10 @@ const CreateListing = () => {
     try {
       if (formData.imageUrls.length < 1)
         return setError("You must upload at least one image");
-      if (formData.regularPrice < formData.discountPrice)
-        return setError("Discount price cannot be bigger than regular price");
+
+      if (+formData.regularPrice < +formData.discountPrice)
+        return setError("Discount price cannot be higher than regular price");
+
       setLoading(true);
       setError(false);
 
@@ -139,18 +148,23 @@ const CreateListing = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...formData, userRef: currentUser._id }),
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser._id,
+        }),
       });
+
       const data = await res.json();
       setLoading(false);
-
       if (data.success === false) {
         setError(data.message);
         return;
       }
-      navigate(`/listing ${data._id}`);
+
+      navigate(`/listing/${data._id}`);
     } catch (error) {
       setError(error.message);
+      setLoading(false);
     }
   };
 
@@ -379,14 +393,14 @@ const CreateListing = () => {
 
           {/* Image preview grid */}
           <div className="grid grid-cols-2 gap-4">
-            {images.map((image, index) => (
+            {formData.imageUrls.map((image, index) => (
               <div
                 key={index}
                 className="relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center"
               >
                 {image ? (
                   <img
-                    src={URL.createObjectURL(image)}
+                    src={image}
                     alt={`Property ${index + 1}`}
                     className="w-full h-32 object-cover rounded-lg"
                   />
@@ -397,10 +411,10 @@ const CreateListing = () => {
                 )}
                 {/* Delete button */}
                 <div
-                  onClick={() => handleImageDelete(index)}
+                  onClick={() => handleRemoveImage(index)}
                   className="absolute top-2 right-2 "
                 >
-                  <MdImageNotSupported className="w-6 h-6 hover:text-red-500  " />
+                  <MdImageNotSupported className="w-6 h-6 text-red-500 hover:text-red-900  " />
                 </div>
               </div>
             ))}
@@ -414,10 +428,14 @@ const CreateListing = () => {
                 type="file"
                 accept="image/*"
                 multiple
-                onChange={handleImageUpload}
+                onChange={(e) => setFiles(e.target.files)}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
             </label>
+
+            <div>
+              {files.length > 0 && <p>{files.length} image(s) selected</p>}
+            </div>
 
             {/* Upload button */}
             <button
@@ -429,9 +447,7 @@ const CreateListing = () => {
           </div>
 
           {/* ERROR Section */}
-          <p className="text-red-700">
-            {imagesUploadError && imagesUploadError}
-          </p>
+          <p className="text-red-700">{imageUploadError && imageUploadError}</p>
 
           {/* SUCCESS Section */}
           <p className="text-green-700">{uploadSuccess && uploadSuccess}</p>
