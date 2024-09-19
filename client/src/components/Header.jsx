@@ -11,14 +11,17 @@ import {
   MenuList,
   Typography,
 } from "@material-tailwind/react";
-import { PowerIcon, UserCircleIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { PowerIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import {
   signOutUserStart,
   signOutUserSuccess,
   signOutUserFailure,
 } from "../redux/user/userSlice";
 import { persistor } from "../redux/store";
-
+import { FaUserGear } from "react-icons/fa6";
+import { BsFillHouseAddFill } from "react-icons/bs";
+import { BsFillHousesFill } from "react-icons/bs";
+import { LiaSignOutAltSolid } from "react-icons/lia";
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Separate state for profile menu
@@ -52,17 +55,22 @@ const Header = () => {
   const profileMenuItems = [
     {
       label: "My Profile",
-      icon: UserCircleIcon,
+      icon: FaUserGear,
       link: "/profile",
     },
     {
       label: "Create listing",
-      icon: PlusIcon,
+      icon: BsFillHouseAddFill,
       link: "/create-listing",
     },
     {
+      label: "Your listings",
+      icon: BsFillHousesFill,
+      link: "/user-listings",
+    },
+    {
       label: "Sign Out",
-      icon: PowerIcon,
+      icon: LiaSignOutAltSolid,
       onClick: handleSignOut,
     },
   ];
@@ -141,6 +149,7 @@ const Header = () => {
         <div className="hidden md:flex items-center">
           {currentUser ? (
             <Menu
+              className="outline-none"
               open={isMenuOpen}
               handler={setIsMenuOpen}
               placement="bottom-end"
@@ -179,10 +188,9 @@ const Header = () => {
                       {link ? (
                         <Link to={link} className="flex items-center gap-2">
                           {React.createElement(icon, {
-                            className: `h-4 w-4 ${
+                            className: `h-5 w-5 ${
                               isLastItem ? "text-red-500" : ""
                             }`,
-                            strokeWidth: 2,
                           })}
                           <Typography
                             as="span"
@@ -196,10 +204,9 @@ const Header = () => {
                       ) : (
                         <div className="flex items-center gap-2">
                           {React.createElement(icon, {
-                            className: `h-4 w-4 ${
+                            className: `h-5 w-5 ${
                               isLastItem ? "text-red-500" : ""
                             }`,
-                            strokeWidth: 2,
                           })}
                           <Typography
                             as="span"
