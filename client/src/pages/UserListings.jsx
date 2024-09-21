@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+
 import yourListing from "../images/yourListing.png";
 import {
   Edit,
@@ -19,6 +19,8 @@ const UserListings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState("grid");
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState(false);
+  const [deletedSuccess, setDeletedSuccess] = useState(false);
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -54,7 +56,23 @@ const UserListings = () => {
       listing.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       listing.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  console.log("Filtered listings:", filteredListings);
+  const handleListingDelete = async (id) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        setError(data.message);
+      }
+
+      setListings(listings.filter((listing) => listing._id !== id));
+      setDeletedSuccess(true);
+      setDeletedSuccess("Listing deleted successfully");
+    } catch (error) {
+      setError(data.message);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -131,6 +149,7 @@ const UserListings = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-semibold">Your Listings</h2>
+
             <div className="flex space-x-4">
               <button
                 onClick={() => setViewMode("grid")}
@@ -153,6 +172,12 @@ const UserListings = () => {
               </button>
             </div>
           </div>
+          {deletedSuccess && (
+            <p className="p-4 bg-green-100 text-green-700 border border-green-300 rounded">
+              {" "}
+              {deletedSuccess}
+            </p>
+          )}
 
           {isLoading ? (
             <p>Loading...</p>
@@ -165,7 +190,7 @@ const UserListings = () => {
               }
             >
               {filteredListings.map((listing) => (
-                <motion.div
+                <div
                   key={listing._id}
                   className="bg-white shadow-md rounded-lg overflow-hidden"
                   initial={{ opacity: 0 }}
@@ -204,23 +229,32 @@ const UserListings = () => {
                     <p className="text-gray-600 mt-2">
                       <strong>Address:</strong> {listing.address}
                     </p>
-                    <p className="text-gray-600 mt-2">
-                      <strong>Bedrooms:</strong> {listing.bedrooms}
-                    </p>
+                    <div className="flex justify-start items-center gap-8">
+                      <p className="text-gray-600 mt-2">
+                        <strong>Bedrooms:</strong> {listing.bedrooms}
+                      </p>
+                      <p className="text-gray-600 mt-2">
+                        <strong>Bathrooms:</strong> {listing.bathrooms}
+                      </p>
+                    </div>
+
                     <p className="text-gray-600 mt-2">
                       <strong>Furnished:</strong>{" "}
                       {listing.furnished ? "Yes" : "No"}
                     </p>
-                    <div className="mt-4 flex space-x-4">
-                      <button className="text-blue-600 hover:underline">
+                    <div className=" mt-4 flex justify-between items-center">
+                      <button className="text-blue-600 hover:bg-blue-600 hover:text-white bg-gray-100 px-4 py-2 rounded">
                         <Edit className="h-5 w-5" />
                       </button>
-                      <button className="text-red-600 hover:underline">
+                      <button
+                        onClick={() => handleListingDelete(listing._id)}
+                        className="text-red-600 hover:bg-red-600 hover:text-white bg-gray-100 px-4 py-2 rounded"
+                      >
                         <Trash2 className="h-5 w-5" />
                       </button>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}

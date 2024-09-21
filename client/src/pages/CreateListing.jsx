@@ -101,13 +101,6 @@ const CreateListing = () => {
   };
 
   const handleChange = (e) => {
-    if (e.target.id === "sale" || e.target.id === "rent") {
-      setFormData({
-        ...formData,
-        type: e.target.id,
-      });
-    }
-
     if (
       e.target.id === "parking" ||
       e.target.id === "furnished" ||
@@ -122,6 +115,7 @@ const CreateListing = () => {
     if (
       e.target.type == "number" ||
       e.target.type == "text" ||
+      e.target.tagName === "SELECT" ||
       e.target.type == "textarea"
     ) {
       setFormData({
@@ -133,7 +127,6 @@ const CreateListing = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleImageSubmit();
     try {
       if (formData.imageUrls.length < 1)
         return setError("You must upload at least one image");
@@ -447,7 +440,11 @@ const CreateListing = () => {
           </div>
 
           {/* ERROR Section */}
-          <p className="text-red-700">{imageUploadError && imageUploadError}</p>
+          <p className="text-red-700">
+            {imageUploadError &&
+              typeof imageUploadError === "string" &&
+              imageUploadError}
+          </p>
 
           {/* SUCCESS Section */}
           <p className="text-green-700">{uploadSuccess && uploadSuccess}</p>
