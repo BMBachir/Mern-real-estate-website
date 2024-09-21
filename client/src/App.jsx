@@ -12,7 +12,7 @@ import Contact from "./pages/Contact";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
 import UserListings from "./pages/UserListings.jsx";
-
+import Listing from "./pages/Listing.jsx";
 const App = () => {
   return (
     <BrowserRouter>
@@ -20,6 +20,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/listing/:listingId" element={<Listing />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-listing" element={<CreateListing />} />

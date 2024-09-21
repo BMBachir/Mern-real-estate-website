@@ -110,3 +110,10 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+.swiper-pagination-bullet {
+  transition: background-color 0.3s ease;
+}
+
+.swiper-pagination-bullet:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}

@@ -13,6 +13,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const UserListings = () => {
   const [listings, setListings] = useState([]);
@@ -21,6 +22,7 @@ const UserListings = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(false);
   const [deletedSuccess, setDeletedSuccess] = useState(false);
+  const [editingListing, setEditingListing] = useState(null);
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -243,9 +245,12 @@ const UserListings = () => {
                       {listing.furnished ? "Yes" : "No"}
                     </p>
                     <div className=" mt-4 flex justify-between items-center">
-                      <button className="text-blue-600 hover:bg-blue-600 hover:text-white bg-gray-100 px-4 py-2 rounded">
+                      <Link
+                        to={`/listing/${listing._id}`}
+                        className="text-blue-600 hover:bg-blue-600 hover:text-white bg-gray-100 px-4 py-2 rounded"
+                      >
                         <Edit className="h-5 w-5" />
-                      </button>
+                      </Link>
                       <button
                         onClick={() => handleListingDelete(listing._id)}
                         className="text-red-600 hover:bg-red-600 hover:text-white bg-gray-100 px-4 py-2 rounded"
