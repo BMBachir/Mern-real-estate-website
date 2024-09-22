@@ -10,14 +10,20 @@ import { FaBed } from "react-icons/fa";
 import { FaSquareParking } from "react-icons/fa6";
 import { MdChair } from "react-icons/md";
 import { IoLocationSharp } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import Contact from "../components/Contact";
+
 const Listing = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [listing, setListing] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [contact, setContact] = useState(false);
 
+  const { currentUser } = useSelector((state) => state.user);
   SwiperCore.use([Navigation, Pagination]);
   const params = useParams();
+
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -41,6 +47,8 @@ const Listing = () => {
     fetchListing();
   }, [params.listingId]);
   console.log(listing);
+
+  const offer = listing?.regularPrice - listing?.discountPrice;
   return (
     <main>
       {loading && "Loading..."}
@@ -70,9 +78,9 @@ const Listing = () => {
           </Swiper>
 
           {/* Share Icon */}
-          <div className="absolute top-4 right-4 z-50 rounded-full bg-white p-3 shadow-md">
+          <div className="fixed bottom-4 right-4 z-50 rounded-full  transition-transform transform hover:scale-105 bg-indigo-500 p-4 shadow-lg">
             <IoIosShareAlt
-              className="text-gray-700 cursor-pointer"
+              className="text-white text-lg cursor-pointer"
               onClick={() => {
                 navigator.clipboard.writeText(window.location.href);
                 setCopied(true);
@@ -100,22 +108,25 @@ const Listing = () => {
                       <IoLocationSharp /> <p>{listing.address}</p>
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-md">
-                        for {listing.type}
+                      <span className="bg-gray-200 text-gray-700 px-7 py-1 rounded-md">
+                        {listing.type === "rent" ? "For Rent" : "For Sale"}
                       </span>
 
-                      {listing.offer ? (
-                        <span className="bg-green-200 text-gray-700 px-2 py-1 rounded-md">
-                          Discount
+                      {listing.offer && (
+                        <span className="bg-green-200 text-green-900 px-7 py-1 rounded-md">
+                          ${offer.toLocaleString()} Off
                         </span>
-                      ) : (
-                        ""
                       )}
                     </div>
                   </div>
-                  <button className="mt-4 md:mt-0 bg-gray-700 text-white py-2 px-4 rounded-md">
-                    Contact Agent
-                  </button>
+                  {currentUser && listing.userRef !== currentUser._id && (
+                    <button
+                      onClick={() => setContact(true)}
+                      className="mt-4 transition-transform transform hover:scale-105 bg-indigo-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-600  duration-300 ease-in-out"
+                    >
+                      Contact landlord
+                    </button>
+                  )}
                 </div>
                 <p className="text-gray-700 mb-6">
                   {" "}
@@ -175,6 +186,23 @@ const Listing = () => {
                   </p>
                 </div>
               </div>
+              {contact && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 rounded-lg">
+                  {/* Background Overlay with Blur */}
+                  <div
+                    className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+                    onClick={() => setContact(false)} // Clicking outside will close the modal
+                  ></div>
+
+                  {/* Popup Content */}
+                  <div className=" w-full max-w-lg p-8 relative ">
+                    {/* Contact Component */}
+                    <div className="bg-gray-100 rounded-lg">
+                      <Contact listing={listing} />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
