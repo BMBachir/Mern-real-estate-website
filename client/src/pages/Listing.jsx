@@ -91,7 +91,7 @@ const Listing = () => {
 
           {/* Notification for copying the link */}
           {copied && (
-            <div className="absolute top-16 right-4 z-50 bg-green-500 text-white px-4 py-2 rounded-md shadow-md">
+            <div className="fixed bottom-20 right-4 z-50 bg-indigo-500 text-white px-4 py-2 rounded-md shadow-md">
               Link copied!
             </div>
           )}

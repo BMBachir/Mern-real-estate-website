@@ -13,6 +13,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
 import UserListings from "./pages/UserListings.jsx";
 import Listing from "./pages/Listing.jsx";
+
 const App = () => {
   return (
     <BrowserRouter>

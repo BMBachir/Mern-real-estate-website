@@ -61,7 +61,7 @@ const Contact = ({ listing }) => {
             {/* Submit Button */}
             <div className="text-center">
               <Link
-                to={`mailto:${landlord.email}?subject=Regarding ${subject}&body=${message}`}
+                to={`mailto:${landlord.email}?subject=${subject}&body=${message}`}
               >
                 <div className="w-full transition-transform transform hover:scale-105 bg-indigo-500 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-600 duration-300 ease-in-out">
                   {" "}
