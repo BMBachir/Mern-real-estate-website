@@ -10,7 +10,7 @@ import { FaBed } from "react-icons/fa";
 import { FaSquareParking } from "react-icons/fa6";
 import { MdChair } from "react-icons/md";
 import { IoLocationSharp } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Contact from "../components/Contact";
 
 const Listing = () => {
