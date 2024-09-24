@@ -7,11 +7,13 @@ import {
   Button,
   Menu,
   MenuHandler,
-  MenuItem,
-  MenuList,
   Typography,
+  Collapse,
+  ListItem,
+  MenuList,
+  MenuItem,
 } from "@material-tailwind/react";
-import { PowerIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+
 import {
   signOutUserStart,
   signOutUserSuccess,
@@ -22,13 +24,17 @@ import { FaUserGear } from "react-icons/fa6";
 import { BsFillHouseAddFill } from "react-icons/bs";
 import { BsFillHousesFill } from "react-icons/bs";
 import { LiaSignOutAltSolid } from "react-icons/lia";
+import { IoIosArrowUp } from "react-icons/io";
+
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Separate state for profile menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpenAvatar, setIsMenuOpenAvatar] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
-  const dispatch = useDispatch(); // Moved inside the component
+  const dispatch = useDispatch();
 
   const handleSignOut = async () => {
     try {
@@ -51,7 +57,7 @@ const Header = () => {
     }
   };
 
-  // profile menu component
+  // Profile menu component
   const profileMenuItems = [
     {
       label: "My Profile",
@@ -75,32 +81,77 @@ const Header = () => {
     },
   ];
 
-  const closeMenu = () => setIsMenuOpen(false);
+  // Navigation menu items
+  const navListMenuItems = [
+    {
+      title: "Products",
+      description: "Find the perfect solution for your needs.",
+      icon: FaUserGear,
+      link: "/properties",
+    },
+    {
+      title: "Services",
+      description: "Learn how we can help you achieve your goals.",
+      icon: FaUserGear,
+      link: "/service",
+    },
+    {
+      title: "Contact",
+      description: "Get in touch with us.",
+      icon: FaUserGear,
+      link: "/contact",
+    },
+  ];
 
+  const closeMenu = () => setIsMenuOpen(false);
   const toggleNavMenu = () => {
-    setIsNavOpen(!isNavOpen);
+    setIsNavOpen((prev) => !prev);
   };
 
-  const getLinkClasses = (path) => {
-    const baseClasses = "block py-2 px-3 text-white hover:text-gray-300";
-    return location.pathname === path
-      ? `${baseClasses} text-gray-800 font-bold`
-      : baseClasses;
+  // Render menu items
+  const renderMenuItems = (items) => {
+    return items.map(({ icon, title, description, link }, key) => (
+      <a href={link} key={key}>
+        <MenuItem className="flex items-center gap-3 rounded-lg bg-gray-100/10 backdrop-blur-lg">
+          <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
+            {React.createElement(icon, {
+              strokeWidth: 2,
+              className: "h-6 text-gray-900 w-6",
+            })}
+          </div>
+          <div>
+            <Typography
+              variant="h6"
+              color="blue-gray"
+              className="flex items-center text-sm font-bold"
+            >
+              {title}
+            </Typography>
+            <Typography
+              variant="paragraph"
+              className="text-xs !font-medium text-blue-gray-500"
+            >
+              {description}
+            </Typography>
+          </div>
+        </MenuItem>
+      </a>
+    ));
   };
 
   return (
-    <nav className="bg-[#878A91] sticky top-0 z-50">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className="header bg-gray-100/10 backdrop-blur-lg sticky top-0 z-50 rounded-xl h-[70px] max-w-screen-xl mx-auto mt-4 shadow-lg border border-white/20">
+      <div className="flex flex-wrap items-center justify-between p-4">
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <img className="w-[120px] h-[40px]" src={logo} alt="Logo" />
         </Link>
-        <div className="md:hidden">
+        <div className="md:hidden ">
           <button
             onClick={toggleNavMenu}
-            className="text-gray-200 focus:outline-none rounded-lg text-sm p-2.5"
+            className="focus:outline-none rounded-lg text-sm p-2.5 text-gray-900"
           >
             <svg
               className="w-5 h-5"
@@ -124,34 +175,66 @@ const Header = () => {
         </div>
         <div
           className={`font-semibold md:flex md:items-center w-full md:w-auto ${
-            isNavOpen ? "block" : "hidden"
+            isNavOpen ? "hidden" : "hidden"
           } mt-4 md:mt-0`}
         >
-          <ul className="flex flex-col md:flex-row md:space-x-8">
-            {[
-              { text: "Home", link: "/" },
-              { text: "Properties", link: "/properties" },
-              { text: "About", link: "/about" },
-              { text: "Contact", link: "/contact" },
-            ].map((item) => (
-              <li key={item.link} className="relative">
-                <Link
-                  to={item.link}
-                  onClick={toggleNavMenu} // Close nav menu on click
-                  className={getLinkClasses(item.link)}
-                >
-                  {item.text}
-                </Link>
-              </li>
-            ))}
+          <ul className="flex flex-col md:flex-row md:space-x-8 items-center">
+            <li>
+              <Button
+                variant="text"
+                className="hover:bg-white hover:bg-opacity-30 normal-case font-semibold text-sm"
+              >
+                <Link to="/">Home</Link>
+              </Button>
+            </li>
+            <li>
+              <Button
+                variant="text"
+                className="hover:bg-white hover:bg-opacity-30 normal-case font-semibold text-sm "
+              >
+                <Link to="/about">About</Link>
+              </Button>
+            </li>
+            <Menu
+              open={isMenuOpen}
+              handler={setIsMenuOpen}
+              offset={{ mainAxis: 20 }}
+              placement="top"
+              allowHover={true}
+            >
+              <MenuHandler className="">
+                <Typography as="div" variant="small" className="text-semibold">
+                  <ListItem
+                    selected={isMenuOpen}
+                    onClick={() => setIsMenuOpen((cur) => !cur)}
+                    className="flex gap-2 items-center justify-center text-semibold text-gray-900 hover:bg-white hover:bg-opacity-30 normal-case font-semibold text-sm"
+                  >
+                    <span className="font-semibold">Pages</span>
+                    <div className="w-3 h-3">
+                      <IoIosArrowUp
+                        strokeWidth={2.5}
+                        className={`block h-3 w-3 transition-transform ${
+                          isMenuOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </div>
+                  </ListItem>
+                </Typography>
+              </MenuHandler>
+              <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
+                <ul className="grid grid-cols-3 gap-y-2 outline-none outline-0 hover:bg-white hover:bg-opacity-30 normal-case font-semibold text-sm ">
+                  {renderMenuItems(navListMenuItems)}
+                </ul>
+              </MenuList>
+            </Menu>
           </ul>
         </div>
         <div className="hidden md:flex items-center">
           {currentUser ? (
             <Menu
               className="outline-none"
-              open={isMenuOpen}
-              handler={setIsMenuOpen}
+              open={isMenuOpenAvatar}
+              handler={setIsMenuOpenAvatar}
               placement="bottom-end"
             >
               <MenuHandler>
@@ -163,7 +246,7 @@ const Header = () => {
                   <Avatar
                     size="sm"
                     alt="User Avatar"
-                    className="border-2 h-[40px] w-[40px] border-gray-400 rounded-full shadow-xl"
+                    className="border-2 h-[45px] w-[45px] border-gray-400 rounded-full shadow-xl"
                     src={
                       currentUser.avatar ||
                       "https://img.freepik.com/vecteurs-premium/icone-compte-icone-utilisateur-graphiques-vectoriels_292645-552.jpg"
@@ -171,67 +254,56 @@ const Header = () => {
                   />
                 </Button>
               </MenuHandler>
-              <MenuList className="p-5 z-50 bg-white shadow-lg rounded-lg">
-                {profileMenuItems.map(({ label, icon, link, onClick }, key) => {
-                  const isLastItem = key === profileMenuItems.length - 1;
-
-                  return (
-                    <MenuItem
-                      key={label}
-                      onClick={onClick ? onClick : closeMenu} // Call function if available, otherwise close menu
-                      className={`flex items-center gap-2 p-2 rounded-2xl ${
-                        isLastItem
-                          ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                          : "hover:bg-gray-500/10"
-                      }`}
-                    >
-                      {link ? (
-                        <Link to={link} className="flex items-center gap-2">
-                          {React.createElement(icon, {
-                            className: `h-5 w-5 ${
-                              isLastItem ? "text-red-500" : ""
-                            }`,
-                          })}
-                          <Typography
-                            as="span"
-                            variant="small"
-                            className="font-normal p-1"
-                            color={isLastItem ? "red" : "inherit"}
-                          >
-                            {label}
-                          </Typography>
-                        </Link>
-                      ) : (
-                        <div className="flex items-center gap-2">
-                          {React.createElement(icon, {
-                            className: `h-5 w-5 ${
-                              isLastItem ? "text-red-500" : ""
-                            }`,
-                          })}
-                          <Typography
-                            as="span"
-                            variant="small"
-                            className="font-normal"
-                            color={isLastItem ? "red" : "inherit"}
-                          >
-                            {label}
-                          </Typography>
-                        </div>
-                      )}
-                    </MenuItem>
-                  );
-                })}
+              <MenuList className="p-5 z-50 mt-2 ml-16 bg-white shadow-lg rounded-lg">
+                {profileMenuItems.map(({ label, icon, link, onClick }) => (
+                  <MenuItem
+                    key={label}
+                    className="flex items-center gap-3 rounded-lg hover:bg-blue-gray-100"
+                    onClick={onClick}
+                  >
+                    {React.createElement(icon, {
+                      className: "w-5 h-5",
+                    })}
+                    <Link to={link}>
+                      <Typography className="text-sm font-medium text-gray-900">
+                        {label}
+                      </Typography>
+                    </Link>
+                  </MenuItem>
+                ))}
               </MenuList>
             </Menu>
           ) : (
-            <Link to={"/sign-in"}>
-              <button className="bg-slate-100 text-[#878A91] hover:text-slate-100 hover:bg-gray-500 inline-flex items-center justify-center rounded-md px-6 py-3 text-base font-medium shadow-sm transition-colors focus:outline-none hover:shadow-md">
-                Get Started
-              </button>
+            <Link to="/sign-in">
+              <Button className="bg-blue-500 text-white hover:bg-blue-600 font-medium px-4 py-2 rounded-lg">
+                Sign In
+              </Button>
             </Link>
           )}
         </div>
       </div>
+      {/* Mobile Menu */}
+      <Collapse open={isNavOpen} className="md:hidden">
+        <ul className="flex flex-col gap-2 mt-4 bg-white rounded-lg shadow-lg">
+          <li>
+            <Button
+              variant="text"
+              className="normal-case font-semibold text-sm w-full text-left hover:bg-gray-100"
+            >
+              <Link to="/">Home</Link>
+            </Button>
+          </li>
+          <li>
+            <Button
+              variant="text"
+              className="normal-case font-semibold text-sm w-full text-left hover:bg-gray-100"
+            >
+              <Link to="/about">About</Link>
+            </Button>
+          </li>
+          {renderMenuItems(navListMenuItems)} {/* Render other nav items */}
+        </ul>
+      </Collapse>
     </nav>
   );
 };

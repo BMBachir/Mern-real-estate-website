@@ -135,7 +135,7 @@ const Properties = () => {
   return (
     <>
       <div className="min-h-screen bg-gray-100 relative">
-        <header className="bg-gradient-to-r from-primary/10 via-primary/5 to-background">
+        <header className="bg-gradient-to-r from-primary/10 via-primary/5 to-background pt-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="text-center mb-10">
               <h1 className="text-4xl font-extrabold text-primary mb-2 tracking-tight sm:text-5xl md:text-6xl">

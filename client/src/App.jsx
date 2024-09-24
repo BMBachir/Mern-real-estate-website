@@ -16,7 +16,7 @@ import Listing from "./pages/Listing.jsx";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter className="app">
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
