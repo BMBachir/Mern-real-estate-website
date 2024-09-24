@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Filter, Search, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Search, X } from "lucide-react";
 import {
   Checkbox,
   Card,
@@ -9,10 +10,13 @@ import {
   Typography,
   Tooltip,
   IconButton,
-  Radio,
   Select,
   Option,
   Button,
+  Tabs,
+  TabsHeader,
+  Tab,
+  Input,
 } from "@material-tailwind/react";
 
 import Pagination from "@mui/material/Pagination";
@@ -21,10 +25,9 @@ import { FaBath } from "react-icons/fa";
 import { RiParkingBoxFill } from "react-icons/ri";
 import { MdChair } from "react-icons/md";
 import { MdAttachMoney } from "react-icons/md";
-import { IoMdArrowDropright } from "react-icons/io";
-import { IoMdArrowDropleft } from "react-icons/io";
-
+import { LuSlidersHorizontal } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import { FiHome, FiMap, FiDollarSign } from "react-icons/fi";
 const Properties = () => {
   const navigate = useNavigate();
   // State for form values
@@ -42,26 +45,7 @@ const Properties = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showMore, setShowMore] = useState(false);
-  const [active, setActive] = useState(1);
 
-  const getItemProps = (index) => ({
-    variant: active === index ? "filled" : "text",
-    color: "gray",
-    onClick: () => setActive(index),
-  });
-
-  const next = () => {
-    if (active === 5) return;
-
-    setActive(active + 1);
-  };
-
-  const prev = () => {
-    if (active === 1) return;
-
-    setActive(active - 1);
-  };
   // Fetch listings from API
   useEffect(() => {
     const fetchListings = async () => {
@@ -82,14 +66,6 @@ const Properties = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const handelChange = (e) => {
     if (
-      e.target.id === "all" ||
-      e.target.id === "rent" ||
-      e.target.id === "sell"
-    ) {
-      setSideBarData({ ...sideBarData, type: e.target.id });
-    }
-
-    if (
       e.target.id === "parking" ||
       e.target.id === "furnished" ||
       e.target.id === "offer"
@@ -108,10 +84,6 @@ const Properties = () => {
 
       setSideBarData({ ...sideBarData, sort, order });
     }
-  };
-
-  const handelSubmit = (e) => {
-    e.preventDefault();
   };
 
   const filteredListings = listings.filter((listing) => {
@@ -163,31 +135,88 @@ const Properties = () => {
   return (
     <>
       <div className="min-h-screen bg-gray-100 relative">
-        <header className="bg-white shadow-md">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              Find Your Dream Home
-            </h1>
+        <header className="bg-gradient-to-r from-primary/10 via-primary/5 to-background">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="text-center mb-10">
+              <h1 className="text-4xl font-extrabold text-primary mb-2 tracking-tight sm:text-5xl md:text-6xl">
+                Find Your Dream Home
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Discover the perfect property that matches your lifestyle and
+                aspirations.
+              </p>
+            </div>
+
+            <Tabs value={sideBarData.type}>
+              <TabsHeader className="mb-6">
+                <Tab
+                  value="all"
+                  onClick={() =>
+                    setSideBarData({ ...sideBarData, type: "all" })
+                  }
+                >
+                  All
+                </Tab>
+                <Tab
+                  value="rent"
+                  onClick={() =>
+                    setSideBarData({ ...sideBarData, type: "rent" })
+                  }
+                >
+                  Rent
+                </Tab>
+                <Tab
+                  value="sell"
+                  onClick={() =>
+                    setSideBarData({ ...sideBarData, type: "sell" })
+                  }
+                >
+                  Sale
+                </Tab>
+              </TabsHeader>
+            </Tabs>
             <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-grow">
-                <input
+              <div className="relative flex-grow group">
+                <Input
                   type="text"
-                  placeholder="Search properties..."
+                  color="gray"
+                  placeholder="Enter property name, or keywords..."
                   value={searchTerm}
+                  labelProps={{
+                    className: "hidden",
+                  }}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-indigo-500 pr-10"
+                  containerProps={{ className: "min-w-[100px]" }}
+                  className="!border px-10 !border-gray-400 rounded-full text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 placeholder:opacity-100 focus:!border-gray-900 focus:!border-t-gray-900 focus:ring-gray-900/10"
                 />
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                  <Search className="h-5 w-5 text-gray-400" />
+
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <Search className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                 </div>
               </div>
-              <button
-                className="px-4 py-2 flex items-center justify-center gap-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-500"
+              <Button
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
+                variant="outline"
+                className="rounded-full px-6 py-3 flex items-center justify-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300 ease-in-out"
               >
-                <Filter className="h-4 w-4 mr-2" />
+                <LuSlidersHorizontal className="h-4 w-4" />
                 Filters
-              </button>
+              </Button>
+            </div>
+
+            <div className="flex justify-center space-x-6 text-sm mt-7">
+              <span className="flex items-center gap-1 text-muted-foreground">
+                <FiHome className="h-5 w-5 mr-2 text-primary" />{" "}
+                {listings.length}
+                <span>Listings</span>
+              </span>
+              <span className="flex items-center text-muted-foreground">
+                <FiMap className="h-5 w-5 mr-2 text-primary" /> Around The Word
+              </span>
+              <span className="flex items-center text-muted-foreground">
+                <FiDollarSign className="h-5 w-5 mr-2 text-primary" /> Best
+                Price Guarantee
+              </span>
             </div>
           </div>
         </header>
@@ -299,7 +328,7 @@ const Properties = () => {
 
                 <CardFooter>
                   <Button size="lg" fullWidth={true}>
-                    Reserve
+                    <Link to={`/listing/${listing._id}`}>Reserve</Link>
                   </Button>
                 </CardFooter>
               </Card>
@@ -325,7 +354,7 @@ const Properties = () => {
             isFilterOpen ? "translate-x-0" : "translate-x-full"
           } transition-transform duration-300 ease-in-out z-50`}
         >
-          <form onSubmit={handelSubmit} className="h-full flex flex-col">
+          <form className="h-full flex flex-col">
             <div className="p-6">
               <button
                 type="button"
@@ -343,31 +372,6 @@ const Properties = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Property Type
                   </label>
-
-                  <div className="flex flex-col ">
-                    <Radio
-                      id="all"
-                      label="All"
-                      name="type"
-                      onChange={handelChange}
-                      checked={sideBarData.type === "all"}
-                    />
-                    <Radio
-                      id="rent"
-                      label="Rent"
-                      name="type"
-                      onChange={handelChange}
-                      checked={sideBarData.type === "rent"}
-                    />
-
-                    <Radio
-                      id="sell"
-                      label="Sale"
-                      name="type"
-                      onChange={handelChange}
-                      checked={sideBarData.type === "sell"}
-                    />
-                  </div>
 
                   <div className="flex items-center">
                     <Checkbox
