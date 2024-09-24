@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DollarSign, MapPin, Filter, X } from "lucide-react";
+import { Filter, Search, X } from "lucide-react";
 import {
   Checkbox,
   Card,
@@ -7,21 +7,28 @@ import {
   CardBody,
   CardFooter,
   Typography,
-  Button,
   Tooltip,
   IconButton,
+  Radio,
+  Select,
+  Option,
+  Button,
 } from "@material-tailwind/react";
+
+import Pagination from "@mui/material/Pagination";
 import { FaBed } from "react-icons/fa";
 import { FaBath } from "react-icons/fa";
 import { RiParkingBoxFill } from "react-icons/ri";
 import { MdChair } from "react-icons/md";
 import { MdAttachMoney } from "react-icons/md";
+import { IoMdArrowDropright } from "react-icons/io";
+import { IoMdArrowDropleft } from "react-icons/io";
 
 import { useNavigate } from "react-router-dom";
 const Properties = () => {
   const navigate = useNavigate();
   // State for form values
-  const [searchTerm, setSearchTerm] = useState("");
+
   const [sideBarData, setSideBarData] = useState({
     type: "all",
     parking: false,
@@ -36,64 +43,50 @@ const Properties = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [active, setActive] = useState(1);
 
+  const getItemProps = (index) => ({
+    variant: active === index ? "filled" : "text",
+    color: "gray",
+    onClick: () => setActive(index),
+  });
+
+  const next = () => {
+    if (active === 5) return;
+
+    setActive(active + 1);
+  };
+
+  const prev = () => {
+    if (active === 1) return;
+
+    setActive(active - 1);
+  };
   // Fetch listings from API
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-
-    const typeFromUrl = urlParams.get("type");
-    const parkingFromUrl = urlParams.get("parking");
-    const furnishedFromUrl = urlParams.get("furnished");
-    const offerFromUrl = urlParams.get("offer");
-    const sortFromUrl = urlParams.get("sort");
-    const orderFromUrl = urlParams.get("order");
-
-    if (
-      typeFromUrl ||
-      parkingFromUrl ||
-      furnishedFromUrl ||
-      offerFromUrl ||
-      sortFromUrl ||
-      orderFromUrl
-    ) {
-      setSideBarData({
-        type: typeFromUrl || "all",
-        parking: parkingFromUrl === "true" ? true : false,
-        furnished: furnishedFromUrl === "true" ? true : false,
-        offer: offerFromUrl === "true" ? true : false,
-        sort: sortFromUrl || "created_at",
-        order: orderFromUrl || "desc",
-      });
-    }
-
     const fetchListings = async () => {
       setLoading(true);
 
-      const searchQuery = urlParams.toString();
-      const res = await fetch(`/api/listing/get?${searchQuery}`);
+      const res = await fetch("/api/listing/get");
       const data = await res.json();
-      if (data.length > 8) {
-        setShowMore(true);
-      } else {
+      if (data.success === false) {
+        res.status(500).console.log(data.message);
       }
       setListings(data);
       setLoading(false);
     };
 
     fetchListings();
-  }, [location.search]);
+  }, []);
 
+  const [searchTerm, setSearchTerm] = useState("");
   const handelChange = (e) => {
     if (
       e.target.id === "all" ||
       e.target.id === "rent" ||
-      e.target.id === "sale"
+      e.target.id === "sell"
     ) {
       setSideBarData({ ...sideBarData, type: e.target.id });
-    }
-
-    if (e.target.id === "searchTerm") {
-      setSideBarData({ ...sideBarData, searchTerm: e.target.value });
     }
 
     if (
@@ -116,34 +109,57 @@ const Properties = () => {
       setSideBarData({ ...sideBarData, sort, order });
     }
   };
-  console.log(sideBarData);
+
   const handelSubmit = (e) => {
     e.preventDefault();
-    const urlParams = new URLSearchParams();
-    urlParams.set("type", setSideBarData.type);
-    urlParams.set("parking", setSideBarData.parking);
-    urlParams.set("furnished", setSideBarData.furnished);
-    urlParams.set("offer", setSideBarData.offer);
-    urlParams.set("sort", setSideBarData.sort);
-    urlParams.set("order", setSideBarData.order);
-    const searchQuery = urlParams.toString();
-    navigate(`/properties?${searchQuery}`);
   };
 
-  const onShowMoreClick = async () => {
-    const numberOfListings = listings.length;
-    const startIndex = numberOfListings;
-    const urlParams = new URLSearchParams(location.search);
-    urlParams.set("startIndex", startIndex);
-    const searchQuery = urlParams.toString();
-    const res = await fetch(`/api/listing/get?${searchQuery}`);
-    const data = await res.json();
-    if (data.length < 9) {
-      setShowMore(false);
-    }
-    setListings([...listings, ...data]);
+  const filteredListings = listings.filter((listing) => {
+    // Check if the listing type matches the filter
+    const typeMatch =
+      sideBarData.type === "all" || listing.type === sideBarData.type;
+
+    // Check if parking matches the filter
+    const parkingMatch =
+      !sideBarData.parking || listing.parking === sideBarData.parking;
+
+    // Check if furnished matches the filter
+    const furnishedMatch =
+      !sideBarData.furnished || listing.furnished === sideBarData.furnished;
+
+    // Check if offer matches the filter
+    const offerMatch =
+      !sideBarData.offer || listing.offer === sideBarData.offer;
+
+    // Apply all filters (AND logic)
+    return (
+      (listing.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        listing.description.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      typeMatch &&
+      parkingMatch &&
+      furnishedMatch &&
+      offerMatch
+    );
+  });
+
+  const itemsPerPage = 9; // Set items per page to 9
+  const [current, setCurrent] = useState(1);
+
+  // Calculate the total number of pages based on items per page
+  const NbPage = Math.ceil(filteredListings.length / itemsPerPage);
+
+  // Calculate start and end indices for slicing the data
+  const startIndex = (current - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  // Slice the listings to get only the data for the current page
+  const DataPerPage = filteredListings.slice(startIndex, endIndex);
+
+  // Handle pagination change
+  const handlePaginationChange = (event, value) => {
+    setCurrent(value);
   };
-  console.log(listings);
+
   return (
     <>
       <div className="min-h-screen bg-gray-100 relative">
@@ -153,13 +169,18 @@ const Properties = () => {
               Find Your Dream Home
             </h1>
             <div className="flex flex-col sm:flex-row gap-4">
-              <input
-                type="text"
-                placeholder="Search properties..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-grow px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-indigo-500"
-              />
+              <div className="relative flex-grow">
+                <input
+                  type="text"
+                  placeholder="Search properties..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-indigo-500 pr-10"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <Search className="h-5 w-5 text-gray-400" />
+                </div>
+              </div>
               <button
                 className="px-4 py-2 flex items-center justify-center gap-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-500"
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -173,9 +194,9 @@ const Properties = () => {
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {listings.map((listing, index) => (
+            {DataPerPage.map((listing) => (
               <Card
-                key={index}
+                key={listing._id}
                 className="w-full max-w-[26rem] shadow-lg flex flex-col"
               >
                 <CardHeader floated={false} color="blue-gray">
@@ -284,6 +305,18 @@ const Properties = () => {
               </Card>
             ))}
           </div>
+          <div className="w-full bottom-2 flex items-center justify-center gap-4 mt-20 mb-20">
+            {" "}
+            <div className="flex items-center gap-2">
+              <Pagination
+                count={NbPage}
+                page={current}
+                onChange={handlePaginationChange}
+                variant="outlined"
+                size="large"
+              />
+            </div>
+          </div>
         </main>
 
         {/* Filter Sidebar */}
@@ -310,60 +343,42 @@ const Properties = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Property Type
                   </label>
-                  <div className="flex items-center">
-                    <Checkbox
+
+                  <div className="flex flex-col ">
+                    <Radio
                       id="all"
-                      type="checkbox"
-                      name="all"
+                      label="All"
+                      name="type"
                       onChange={handelChange}
                       checked={sideBarData.type === "all"}
-                      className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
                     />
-                    <label className="ml-2 block text-sm font-medium text-gray-700">
-                      Rent & Sale
-                    </label>
-                  </div>
-
-                  <div className="flex items-center">
-                    <Checkbox
+                    <Radio
                       id="rent"
-                      type="checkbox"
-                      name="rent"
+                      label="Rent"
+                      name="type"
                       onChange={handelChange}
                       checked={sideBarData.type === "rent"}
-                      className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
                     />
-                    <label className="ml-2 block text-sm font-medium text-gray-700">
-                      Rent
-                    </label>
-                  </div>
 
-                  <div className="flex items-center">
-                    <Checkbox
-                      id="sale"
-                      type="checkbox"
-                      name="sale"
+                    <Radio
+                      id="sell"
+                      label="Sale"
+                      name="type"
                       onChange={handelChange}
-                      checked={sideBarData.type === "sale"}
-                      className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
+                      checked={sideBarData.type === "sell"}
                     />
-                    <label className="ml-2 block text-sm font-medium text-gray-700">
-                      Sale
-                    </label>
                   </div>
 
                   <div className="flex items-center">
                     <Checkbox
                       id="offer"
                       type="checkbox"
+                      label="Offer"
                       name="offer"
                       onChange={handelChange}
                       checked={sideBarData.offer}
                       className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
                     />
-                    <label className="ml-2 block text-sm font-medium text-gray-700">
-                      Offer
-                    </label>
                   </div>
                 </div>
 
@@ -375,34 +390,30 @@ const Properties = () => {
                     <Checkbox
                       id="parking"
                       type="checkbox"
+                      label="Parking"
                       name="parking"
                       onChange={handelChange}
                       checked={sideBarData.parking}
                       className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
                     />
-                    <label className="ml-2 block text-sm font-medium text-gray-700">
-                      Parking
-                    </label>
                   </div>
                   <div className="flex items-center">
                     <Checkbox
                       id="furnished"
                       type="checkbox"
                       name="furnished"
+                      label="Furnished"
                       onChange={handelChange}
                       checked={sideBarData.furnished}
                       className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 focus:outline-none"
                     />
-                    <label className="ml-2 block text-sm font-medium text-gray-700">
-                      Furnished
-                    </label>
                   </div>
                 </div>
                 <div className="border-t border-gray-200 pt-4">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Sort by
                   </label>
-                  <select
+                  <Select
                     id="sort"
                     label="Select sort"
                     animate={{
@@ -412,24 +423,12 @@ const Properties = () => {
                     name="sort"
                     onChange={handelChange}
                     value={sideBarData.sort}
-                    className="block w-full px-4 py-2 pr-8 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none "
                   >
-                    <option value="price-high-to-low">Price high to low</option>
-                    <option value="price-low-to-high">Price low to high</option>
-                    <option value="latest">Latest</option>
-                    <option value="oldest">Oldest</option>
-                  </select>
+                    <Option value="price-high-to-low">Price high to low</Option>
+                    <Option value="price-low-to-high">Price low to high</Option>
+                  </Select>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-auto p-4">
-              <button
-                type="submit"
-                className="w-full rounded-lg px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              >
-                Search
-              </button>
             </div>
           </form>
         </aside>
