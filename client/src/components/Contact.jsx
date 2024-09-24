@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { Button } from "@material-tailwind/react";
 const Contact = ({ listing }) => {
   const [landlord, setLandlord] = useState(null);
   const [message, setMessage] = useState("");
@@ -63,10 +63,10 @@ const Contact = ({ listing }) => {
               <Link
                 to={`mailto:${landlord.email}?subject=${subject}&body=${message}`}
               >
-                <div className="w-full transition-transform transform hover:scale-105 bg-indigo-500 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-600 duration-300 ease-in-out">
+                <Button className="w-full transition-transform transform hover:scale-105 duration-300 ease-in-out">
                   {" "}
                   Send Message
-                </div>
+                </Button>
               </Link>
             </div>
           </form>
