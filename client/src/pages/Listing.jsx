@@ -65,7 +65,7 @@ const Listing = () => {
 
   const offer = listing?.regularPrice - listing?.discountPrice;
   return (
-    <main>
+    <main className="mt-[150px]">
       {loading && "Loading..."}
       {error && "Something went wrong"}
       {listing && !loading && !error && (
@@ -91,13 +91,12 @@ const Listing = () => {
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center gap-10 mb-10 mt-10 containerListingPage">
+          <div className=" grid grid-cols-1 md:grid-cols-2 items-center justify-center gap-10 mb-10 mt-10 containerListingPage">
             <div className="w-full ">
               <Swiper
                 className="rounded-lg"
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
                 spaceBetween={50}
-                navigation
                 scrollbar={{ draggable: true }}
               >
                 {listing.imageUrls.map((url) => (
