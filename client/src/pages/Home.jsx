@@ -6,9 +6,8 @@ import { IoIosArrowRoundUp } from "react-icons/io";
 import { FiActivity } from "react-icons/fi";
 import CardList from "../components/CardList";
 import homeImg from "../images/home.png";
-import aboutImg from "../images/aboutImg.jpg";
+import ChooseUs from "../images/ChooseUs.png";
 import avatarImg from "../images/avatar.jpg";
-import { MdSearch } from "react-icons/md";
 import Marquee from "react-fast-marquee";
 import p1 from "../images/companies/one.png";
 import p2 from "../images/companies/two.png";
@@ -22,67 +21,49 @@ import p9 from "../images/companies/nine.png";
 import p10 from "../images/companies/ten.png";
 import "@fontsource/montserrat/400.css";
 import "@fontsource/pacifico/400.css";
-import { useRef } from "react";
+import { DollarSign, TrendingUp, Users } from "lucide-react";
 import { Button } from "@material-tailwind/react";
+
 const Home = () => {
-  const headPage = useRef();
-
-  const moveDown = () => {
-    headPage.current.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
   return (
     <div className="">
-      <div className="fixed bottom-8 right-8">
-        <div
-          onClick={moveDown}
-          className="cursor-pointer bg-gray-900 p-2 rounded-full "
-        >
-          <IoIosArrowRoundUp size={30} color="white" />
-        </div>
-      </div>
-
       {/**************************************************************** */}
 
-      <section className="relative w-full rounded-b-[65px] bg-gray-100 h-[800px] overflow-hidden ">
+      <section className="relative w-full rounded-b-[45px] bg-gray-100 h-[630px] md:h-[800px] overflow-hidden">
         {/* Image part */}
-        <div className="absolute bottom-0 bg-gray-900 h-[125px] w-full"></div>
+        <div className="absolute bottom-0 bg-gray-200 h-[80px] md:h-[125px] w-full"></div>
 
-        <div className="flex gap-52 mt-16 justify-between ">
-          <div className="mt-20 ml-28 z-50">
+        <div className="flex flex-col items-center sm:flex-row gap-52 mt-16 justify-between">
+          {/* Hide image on small screens */}
+          <div className="mt-20 ml-28 z-50 hidden sm:block">
             <img src={homeImg} alt="" className="" />
           </div>
-          <div className="mt-28 relative z-10">
-            <h1 className="font-Montserrat font-extrabold text-4xl text-right text-gray-900 mr-20">
+          <div className="mt-28 relative z-10 text-center sm:text-right px-4 sm:px-0">
+            <h1 className="font-Montserrat font-extrabold text-3xl mb-2 md:mb-2 md:text-4xl md:mr-24 text-gray-900 ">
               Designing Dreams
             </h1>
 
-            <h1 className="font-Montserrat font-extrabold text-8xl text-right text-gray-900 mr-20">
+            <h1 className="font-Montserrat font-extrabold text-6xl mb-3 md:text-8xl md:mr-24 text-gray-900 ">
               YOUR <br /> DREAM HOME
             </h1>
-            <p className="mt-2 text-2xl text-right text-gray-700 mr-20">
+            <p className="mt-2 text-lg sm:text-2xl text-gray-700 md:mr-24">
               Find the ideal property to buy, sell, or rent with ease. <br />
               Start your real estate journey with us!
             </p>
-            <Button className="px-12 py-3 mt-[80px] ml-[444px] rounded-2xl shadow-lg bg-[#9e948a] transition duration-300 text-sm -tracking-tighter">
+            <Button className=" mt-10 px-12 py-2 md:mr-24 md:mt-[65px] hover:scale-105 font-normal lowercase transition duration-300 text-md -tracking-tighter">
               Start Book
             </Button>
-            <div className="flex gap-16 text-gray-400 mt-5 ">
-              <p className="">Algeria, Algiers</p>
-              <p className="">boubaidjabachir3@gmail.com</p>
-              <p className="">+213 675327207</p>
-            </div>
           </div>
         </div>
       </section>
 
       {/**************************************************************** */}
+
+      {/**************************************************************** */}
       <section className="py-12 md:py-16 lg:py-20 mt-16">
         <div className="container mx-auto px-4">
           <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className=" text-gray-900 font-bold tracking-tight text-4xl md:text-5xl">
               Featured Listings
             </h2>
             <p className="mt-4 text-gray-500">
@@ -95,26 +76,46 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
-          <img
-            alt="Hero Image"
-            className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full"
-            height="600"
-            src={aboutImg}
-            width="800"
-          />
-          <div className="space-y-4">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              About Our Real Estate Company
-            </h1>
-            <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              We are a leading real estate company dedicated to providing
-              exceptional service and helping our clients achieve their property
-              goals. With years of experience and a team of knowledgeable
-              professionals, we strive to make the real estate process seamless
-              and rewarding.
-            </p>
+      <section className="w-full mt-16 py-12 md:py-24 lg:py-32 bg-gray-200 text-primary-foreground">
+        <div className="container px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="text-gray-900">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">
+                Why You Should Choose KriDar Estates?
+              </h2>
+              <p className="text-xl mb-6">
+                Discover your dream property with KriDar Estates, offering
+                top-tier real estate services with a commitment to trust, value,
+                and personalized solutions.
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-center">
+                  <TrendingUp className="mr-2 h-5 w-5" />
+                  <span>
+                    Increased property value with eco-friendly features
+                  </span>
+                </li>
+                <li className="flex items-center">
+                  <DollarSign className="mr-2 h-5 w-5" />
+                  <span>Lower utility costs and potential tax incentives</span>
+                </li>
+                <li className="flex items-center">
+                  <Users className="mr-2 h-5 w-5" />
+                  <span>
+                    Join a community of environmentally conscious homeowners
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div className="relative h-[400px] rounded-lg overflow-hidden">
+              <img
+                alt="Eco-friendly home"
+                src={ChooseUs}
+                layout="fill"
+                objectFit="cover"
+                className="rounded-xl"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -196,7 +197,7 @@ const Home = () => {
         </div>
 
         <Marquee gradient pauseOnHover>
-          <div className="image_wrapper">
+          <div className="image_wrapper ">
             <img src={p1} alt="" />
           </div>
 

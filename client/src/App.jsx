@@ -6,7 +6,7 @@ import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 import SingUp from "./pages/SingUp";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
+import { Footer } from "./components/Footer";
 import Properties from "./pages/Properties";
 import Contact from "./pages/Contact";
 import PrivateRoute from "./components/PrivateRoute";
