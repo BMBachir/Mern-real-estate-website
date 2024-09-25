@@ -5,7 +5,7 @@ import { LiaMapMarkedSolid } from "react-icons/lia";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import { FiActivity } from "react-icons/fi";
 import CardList from "../components/CardList";
-import homeImg from "../images/home.jpg";
+import homeImg from "../images/home.png";
 import aboutImg from "../images/aboutImg.jpg";
 import avatarImg from "../images/avatar.jpg";
 import { MdSearch } from "react-icons/md";
@@ -20,7 +20,10 @@ import p7 from "../images/companies/seven.png";
 import p8 from "../images/companies/eight.png";
 import p9 from "../images/companies/nine.png";
 import p10 from "../images/companies/ten.png";
+import "@fontsource/montserrat/400.css";
+import "@fontsource/pacifico/400.css";
 import { useRef } from "react";
+import { Button } from "@material-tailwind/react";
 const Home = () => {
   const headPage = useRef();
 
@@ -40,37 +43,43 @@ const Home = () => {
           <IoIosArrowRoundUp size={30} color="white" />
         </div>
       </div>
-      <section className="relative w-full h-[80vh] overflow-hidden">
-        <img
-          ref={headPage}
-          alt="Hero Image"
-          className="absolute "
-          src={homeImg}
-        />
-        <div className="absolute inset-0 bg-gray-900/50" />
-        <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-            Find Your Dream Home
-          </h1>
-          <p className="mt-4 text-lg sm:text-xl lg:text-2xl">
-            Discover the perfect property for you with our comprehensive real
-            estate search.
-          </p>
-          <div className="mt-8 w-full max-w-md">
-            <div className="flex items-center rounded-md bg-white shadow-lg">
-              <input
-                className="flex-1 rounded-l-md border-none px-4 py-3 text-gray-700 focus:outline-none"
-                placeholder="Search for properties"
-                type="text"
-              />
-              <div className=" pr-4">
-                <MdSearch className="cursor-pointer h-6 w-6 text-gray-700" />
-              </div>
+
+      {/**************************************************************** */}
+
+      <section className="relative w-full rounded-b-[65px] bg-gray-100 h-[800px] overflow-hidden ">
+        {/* Image part */}
+        <div className="absolute bottom-0 bg-gray-900 h-[125px] w-full"></div>
+
+        <div className="flex gap-52 mt-16 justify-between ">
+          <div className="mt-20 ml-28 z-50">
+            <img src={homeImg} alt="" className="" />
+          </div>
+          <div className="mt-28 relative z-10">
+            <h1 className="font-Montserrat font-extrabold text-4xl text-right text-gray-900 mr-20">
+              Designing Dreams
+            </h1>
+
+            <h1 className="font-Montserrat font-extrabold text-8xl text-right text-gray-900 mr-20">
+              YOUR <br /> DREAM HOME
+            </h1>
+            <p className="mt-2 text-2xl text-right text-gray-700 mr-20">
+              Find the ideal property to buy, sell, or rent with ease. <br />
+              Start your real estate journey with us!
+            </p>
+            <Button className="px-12 py-3 mt-[80px] ml-[444px] rounded-2xl shadow-lg bg-[#9e948a] transition duration-300 text-sm -tracking-tighter">
+              Start Book
+            </Button>
+            <div className="flex gap-16 text-gray-400 mt-5 ">
+              <p className="">Algeria, Algiers</p>
+              <p className="">boubaidjabachir3@gmail.com</p>
+              <p className="">+213 675327207</p>
             </div>
           </div>
         </div>
       </section>
-      <section className="py-12 md:py-16 lg:py-20">
+
+      {/**************************************************************** */}
+      <section className="py-12 md:py-16 lg:py-20 mt-16">
         <div className="container mx-auto px-4">
           <div className="mb-8 text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">

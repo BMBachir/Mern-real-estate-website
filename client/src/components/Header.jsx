@@ -140,7 +140,7 @@ const Header = () => {
   };
 
   return (
-    <nav className="header bg-gray-100/10 backdrop-blur-lg sticky top-0 z-50 rounded-xl h-[70px] max-w-screen-xl mx-auto mt-4 shadow-lg border border-white/20">
+    <nav className="header bg-gray-100/10 backdrop-blur-lg sticky top-0 z-50 rounded-xl h-[70px] max-w-screen-2xl mx-auto mt-4 shadow-lg border border-white/20">
       <div className="flex flex-wrap items-center justify-between p-4">
         <Link
           to="/"
@@ -274,11 +274,18 @@ const Header = () => {
               </MenuList>
             </Menu>
           ) : (
-            <Link to="/sign-in">
-              <Button className="bg-blue-500 text-white hover:bg-blue-600 font-medium px-4 py-2 rounded-lg">
-                Sign In
-              </Button>
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link to="/sing-up">
+                <Button fullWidth variant="text" size="sm" className="">
+                  Sign Up
+                </Button>
+              </Link>
+              <Link to="/sign-in">
+                <Button fullWidth variant="gradient" size="sm" className="">
+                  Sign In
+                </Button>
+              </Link>
+            </div>
           )}
         </div>
       </div>
