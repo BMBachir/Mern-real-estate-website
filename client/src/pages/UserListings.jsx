@@ -85,7 +85,7 @@ const UserListings = () => {
           backgroundImage: `url(${yourListing})`,
         }}
       >
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 mt-16">
           <h1 className="text-4xl text-black font-bold mb-4">
             Manage Your Real Estate Listings
           </h1>

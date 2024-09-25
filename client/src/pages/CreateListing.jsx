@@ -9,8 +9,20 @@ import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { MdImageNotSupported } from "react-icons/md";
+import {
+  Button,
+  Checkbox,
+  Input,
+  Textarea,
+  Typography,
+} from "@material-tailwind/react";
+import { FaBath, FaBed } from "react-icons/fa";
+import { MdPriceChange } from "react-icons/md";
+import { MdDiscount } from "react-icons/md";
 
+import { MdOutlineCloudUpload } from "react-icons/md";
 const CreateListing = () => {
+  const [value, setValue] = useState(0);
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
@@ -35,8 +47,6 @@ const CreateListing = () => {
 
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-
-  console.log(formData);
 
   const handleImageSubmit = async (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -161,9 +171,33 @@ const CreateListing = () => {
       setLoading(false);
     }
   };
+  const CustomSelect = ({ options, label, value, onChange }) => {
+    return (
+      <div className="relative">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          {label}
+        </label>
+        <select
+          value={value}
+          onChange={onChange}
+          className="block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50 focus:ring-indigo-300 focus:border-indigo-300 py-2 px-3"
+        >
+          <option value="" disabled>
+            Select {label}
+          </option>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  };
+  console.log(formData);
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 mt-28">
       <h1 className="text-3xl font-bold mb-6">Create New Listing</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Property Details Card */}
@@ -174,45 +208,29 @@ const CreateListing = () => {
           </p>
           <div className="space-y-4">
             <div className="space-y-2">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Name
-              </label>
-              <input
+              <Input
+                label="Name"
                 onChange={handleChange}
                 value={formData.name}
                 id="name"
                 placeholder="Cozy 3-bedroom apartment in downtown"
-                className="w-full border rounded px-3 py-2"
+                className="w-full  rounded px-3 py-2"
               />
             </div>
 
             <div className="space-y-2">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Description
-              </label>
-              <textarea
+              <Textarea
+                label="Description"
                 onChange={handleChange}
                 value={formData.description}
                 id="description"
-                placeholder="Describe your property..."
                 className="w-full border rounded px-3 py-2"
-              ></textarea>
+              ></Textarea>
             </div>
 
             <div className="space-y-2">
-              <label
-                htmlFor="address"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Address
-              </label>
-              <input
+              <Input
+                label="Address"
                 onChange={handleChange}
                 value={formData.address}
                 id="address"
@@ -230,12 +248,15 @@ const CreateListing = () => {
                   Sell or Rent
                 </label>
                 <select
+                  label="Type"
                   onChange={handleChange}
                   value={formData.type}
                   id="type"
-                  className="w-full border rounded px-3 py-2"
+                  className="block w-full px-4 py-2 pr-8 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                 >
-                  <option value="sell">Sell</option>
+                  <option className="rounded-lg border-gray-800" value="sell">
+                    Sell
+                  </option>
                   <option value="rent">Rent</option>
                 </select>
               </div>
@@ -251,7 +272,7 @@ const CreateListing = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <div className="flex items-center">
-                    <input
+                    <Checkbox
                       onChange={handleChange}
                       checked={formData.furnished}
                       type="checkbox"
@@ -266,7 +287,7 @@ const CreateListing = () => {
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center">
-                    <input
+                    <Checkbox
                       onChange={handleChange}
                       checked={formData.parking}
                       type="checkbox"
@@ -283,7 +304,7 @@ const CreateListing = () => {
 
               <div className="space-y-2">
                 <div className="flex items-center">
-                  <input
+                  <Checkbox
                     type="checkbox"
                     id="offer"
                     checked={formData.offer}
@@ -296,65 +317,98 @@ const CreateListing = () => {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
               <div className="space-y-2">
-                <label
-                  htmlFor="bedrooms"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Bedrooms
-                </label>
-                <input
-                  onChange={handleChange}
-                  value={formData.bedrooms}
-                  id="bedrooms"
-                  type="number"
-                  placeholder="3"
-                  className="w-full border rounded px-3 py-2"
-                />
+                <div className="w-80">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="mb-1 font-medium"
+                  >
+                    Bedrooms
+                  </Typography>
+                  <div className="relative w-full">
+                    <FaBed className="absolute left-2 top-1/2 -translate-y-1/2" />
+                    <Input
+                      id="bedrooms"
+                      type="number"
+                      value={formData.bedrooms} // Use formData.bedrooms as the input value
+                      onChange={handleChange}
+                      className="!border-t-blue-gray-200 pl-10 placeholder:text-blue-gray-300 placeholder:opacity-100 focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      labelProps={{
+                        className: "before:content-none after:content-none",
+                      }}
+                      containerProps={{
+                        className: "min-w-0",
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
               <div className="space-y-2">
-                <label
-                  htmlFor="bathrooms"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Bathrooms
-                </label>
-                <input
-                  onChange={handleChange}
-                  value={formData.bathrooms}
-                  id="bathrooms"
-                  type="number"
-                  placeholder="2"
-                  className="w-full border rounded px-3 py-2"
-                />
+                <div className="w-80">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="mb-1 font-medium"
+                  >
+                    Bathrooms
+                  </Typography>
+                  <div className="relative w-full">
+                    <FaBath className="absolute left-2 top-1/2 -translate-y-1/2" />
+                    <Input
+                      id="bathrooms"
+                      type="number"
+                      value={formData.bathrooms} // Use formData.bedrooms as the input value
+                      onChange={handleChange}
+                      className="!border-t-blue-gray-200 pl-10 placeholder:text-blue-gray-300 placeholder:opacity-50 focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      labelProps={{
+                        className: "before:content-none after:content-none",
+                      }}
+                      containerProps={{
+                        className: "min-w-0",
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Pricing Section */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label
-                  htmlFor="regularPrice"
-                  className="block text-sm font-medium text-gray-700"
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="mb-1 font-medium"
                 >
                   Regular Price
-                </label>
-                <input
-                  onChange={handleChange}
-                  value={formData.regularPrice}
-                  id="regularPrice"
-                  type="number"
-                  placeholder="2500$"
-                  className="w-full border rounded px-3 py-2"
-                />
+                </Typography>
+                <div className="relative w-full">
+                  <MdPriceChange className="absolute left-2 top-1/2 -translate-y-1/2" />
+                  <Input
+                    onChange={handleChange}
+                    value={formData.regularPrice}
+                    id="regularPrice"
+                    type="number"
+                    placeholder="2500$"
+                    labelProps={{
+                      className: "before:content-none after:content-none",
+                    }}
+                    containerProps={{
+                      className: "min-w-0",
+                    }}
+                    className="!border-t-blue-gray-200 pl-10 placeholder:text-blue-gray-300 placeholder:opacity-50 focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  />
+                </div>
               </div>
 
               {formData.offer === true && (
                 <div className="space-y-2">
-                  <label
-                    htmlFor="discountPrice"
-                    className="block text-sm font-medium text-gray-700"
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="mb-1 font-medium"
                   >
                     Discount Price{" "}
                     {formData.type === "rent" && (
@@ -362,15 +416,24 @@ const CreateListing = () => {
                         $/per month
                       </span>
                     )}
-                  </label>
-                  <input
-                    onChange={handleChange}
-                    value={formData.discountPrice}
-                    id="discountPrice"
-                    type="number"
-                    placeholder="24$"
-                    className="w-full border rounded px-3 py-2"
-                  />
+                  </Typography>
+                  <div className="relative w-full">
+                    <MdDiscount className="absolute left-2 top-1/2 -translate-y-1/2" />
+                    <Input
+                      onChange={handleChange}
+                      value={formData.discountPrice}
+                      id="discountPrice"
+                      type="number"
+                      placeholder="24$"
+                      labelProps={{
+                        className: "before:content-none after:content-none",
+                      }}
+                      containerProps={{
+                        className: "min-w-0",
+                      }}
+                      className="!border-t-blue-gray-200 pl-10 placeholder:text-blue-gray-300 placeholder:opacity-50 focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    />
+                  </div>
                 </div>
               )}
             </div>
@@ -431,12 +494,14 @@ const CreateListing = () => {
             </div>
 
             {/* Upload button */}
-            <button
+            <Button
+              variant="gradient"
               onClick={handleImageSubmit}
-              className="bg-blue-500 text-white font-semibold rounded-lg px-6 py-2 transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+              className=" flex items-center justify-center gap-3 normal-case font-semibold px-4 py-2  "
             >
-              {uploading ? "Uploading..." : "Upload Images"}
-            </button>
+              <MdOutlineCloudUpload className="w-5 h-5" />
+              <span> {uploading ? "Uploading..." : "Upload Images"}</span>
+            </Button>
           </div>
 
           {/* ERROR Section */}
@@ -451,13 +516,9 @@ const CreateListing = () => {
 
           {/* Button to create the listing */}
           <div className="mt-6">
-            <button
-              onClick={handleSubmit}
-              className="w-full bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg"
-              disabled={loading}
-            >
+            <Button fullWidth onClick={handleSubmit} disabled={loading}>
               {loading ? "Creating Listing..." : "Create Listing"}
-            </button>
+            </Button>
             {error && <p className="text-red-500 mt-4">{error}</p>}
           </div>
         </div>
