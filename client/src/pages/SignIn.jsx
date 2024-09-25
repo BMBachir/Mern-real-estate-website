@@ -8,6 +8,7 @@ import {
 } from "../redux/user/userSlice.js";
 import OAuth from "../components/OAuth";
 
+import SignButton from "../components/SignButton";
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center my-24">
+    <div className="flex justify-center items-center my-24 mt-[150px] mb-[200px]">
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <h5 className="text-xl font-medium text-gray-900">
@@ -81,13 +82,12 @@ const SignIn = () => {
               onChange={handleChange}
             />
           </div>
-          <button
+          <SignButton
             type="submit"
             disabled={loading}
-            className="w-full text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            {loading ? "Loading..." : "Sign In"}
-          </button>
+            className="w-full"
+          ></SignButton>
+
           <OAuth />
           <div className="text-sm font-medium text-gray-500">
             Not registered?{" "}

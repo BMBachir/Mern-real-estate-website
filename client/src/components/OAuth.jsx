@@ -5,7 +5,7 @@ import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
-
+import { Button } from "@material-tailwind/react";
 const OAuth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,14 +36,20 @@ const OAuth = () => {
   };
 
   return (
-    <button
+    <Button
+      size="lg"
+      variant="outlined"
+      color="blue-gray"
+      className="flex items-center justify-center gap-3 w-full"
       onClick={handleGoogleClick}
-      className="flex items-center justify-center gap-2 w-full rounded-md bg-[#4285F4] px-4 py-2 text-white transition-colors hover:bg-[#3367D6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] focus-visible:ring-offset-2"
-      variant="primary"
     >
-      <BsGoogle />
+      <img
+        src="https://docs.material-tailwind.com/icons/google.svg"
+        alt="metamask"
+        className="h-6 w-6"
+      />
       Continue with Google
-    </button>
+    </Button>
   );
 };
 
