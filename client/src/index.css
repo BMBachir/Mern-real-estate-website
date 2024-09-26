@@ -205,3 +205,10 @@
 .main-content {
   padding-top: 50px;
 }
+
+.prompt-medium {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}

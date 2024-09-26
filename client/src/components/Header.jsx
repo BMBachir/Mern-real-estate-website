@@ -25,12 +25,29 @@ import { BsFillHouseAddFill } from "react-icons/bs";
 import { BsFillHousesFill } from "react-icons/bs";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { IoIosArrowUp } from "react-icons/io";
+import { MdOutlineRealEstateAgent } from "react-icons/md";
+import {
+  Home,
+  Info,
+  MapPinHouse,
+  Briefcase,
+  Mail,
+  User,
+  PlusCircle,
+  List,
+  LogOut,
+} from "lucide-react";
 
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuOpenAvatar, setIsMenuOpenAvatar] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [isPagesOpen, setIsPagesOpen] = useState(false);
 
+  const toggleNavMenu = () => {
+    setIsNavOpen((prev) => !prev); // Toggle the menu open/close state
+  };
   const location = useLocation();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
@@ -81,6 +98,133 @@ const Header = () => {
     },
   ];
 
+  const navListMenuItemsMobile = [
+    {
+      title: "Home",
+      description:
+        "Discover your ideal property solution and explore our offerings.",
+      icon: Home, // Home icon from lucide-react
+      link: "/",
+    },
+    {
+      title: "About Us",
+      description:
+        "Find out more about our mission, values, and how we support your goals.",
+      icon: Info, // Info icon from lucide-react
+      link: "/about",
+    },
+    {
+      title: "Properties",
+      description:
+        "Browse our wide range of properties to find the perfect fit for you.",
+      icon: MapPinHouse, // Package icon from lucide-react
+      link: "/properties",
+    },
+    {
+      title: "Services",
+      description:
+        "Explore our services tailored to meet your real estate needs.",
+      icon: Briefcase, // Briefcase icon from lucide-react
+      link: "/service",
+    },
+    {
+      title: "Contact",
+      description:
+        "Reach out to us for any inquiries or assistance you may need.",
+      icon: Mail, // Mail icon from lucide-react
+      link: "/contact",
+    },
+  ];
+
+  const renderMenuItemsMobile = (items) => {
+    return items.map(({ icon, title, description, link, onClick }, key) => (
+      <a href={link} key={key}>
+        <MenuItem className="flex items-center gap-3 rounded-lg bg-gray-100/10 ">
+          <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
+            {React.createElement(icon, {
+              strokeWidth: 2,
+              className: "h-6 text-gray-900 w-6",
+            })}
+          </div>
+          <div onClick={onClick}>
+            <Typography
+              variant="h6"
+              color="blue-gray"
+              className="flex items-center text-sm font-bold"
+            >
+              {title}
+            </Typography>
+            <Typography
+              variant="paragraph"
+              className="text-xs !font-medium text-blue-gray-500"
+            >
+              {description}
+            </Typography>
+          </div>
+        </MenuItem>
+      </a>
+    ));
+  };
+
+  const navListMenuAccountMobile = [
+    {
+      title: "Account",
+      description: "Manage your account settings and preferences easily.",
+      icon: User, // User icon from lucide-react
+      link: "/account",
+    },
+    {
+      title: "Create Listing",
+      description:
+        "Post your property listings and reach potential buyers or renters.",
+      icon: PlusCircle, // PlusCircle icon from lucide-react
+      link: "/create-listing",
+    },
+    {
+      title: "Your Listings",
+      description: "View and manage the properties you have listed with us.",
+      icon: List, // List icon from lucide-react
+      link: "/your-listings",
+    },
+    {
+      title: "Sign Out",
+      description:
+        "Log out of your account to ensure your information is secure.",
+      icon: LogOut, // LogOut icon from lucide-react
+      onClick: handleSignOut,
+    },
+  ];
+
+  const renderMenuAccount = (items) => {
+    return items.map(({ icon, title, description, link, onClick }, key) => (
+      <a href={link} key={key}>
+        <MenuItem className="flex items-center gap-3 rounded-lg bg-gray-100/10 backdrop-blur-lg">
+          <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
+            {React.createElement(icon, {
+              strokeWidth: 2,
+              className: "h-6 text-gray-900 w-6",
+            })}
+          </div>
+          <div onClick={onClick}>
+            <Typography
+              variant="h6"
+              color="blue-gray"
+              className="flex items-center text-sm font-bold"
+            >
+              {title}
+            </Typography>
+            <Typography
+              variant="paragraph"
+              className="text-xs !font-medium text-blue-gray-500"
+            >
+              {description}
+            </Typography>
+          </div>
+        </MenuItem>
+      </a>
+    ));
+  };
+
   // Navigation menu items
   const navListMenuItems = [
     {
@@ -102,11 +246,6 @@ const Header = () => {
       link: "/contact",
     },
   ];
-
-  const closeMenu = () => setIsMenuOpen(false);
-  const toggleNavMenu = () => {
-    setIsNavOpen((prev) => !prev);
-  };
 
   // Render menu items
   const renderMenuItems = (items) => {
@@ -290,25 +429,94 @@ const Header = () => {
         </div>
       </div>
       {/* Mobile Menu */}
-      <Collapse open={isNavOpen} className="md:hidden">
-        <ul className="flex flex-col gap-2 mt-4 bg-white rounded-lg shadow-lg">
-          <li>
-            <Button
-              variant="text"
-              className="normal-case font-semibold text-sm w-full text-left hover:bg-gray-100"
-            >
-              <Link to="/">Home</Link>
-            </Button>
-          </li>
-          <li>
-            <Button
-              variant="text"
-              className="normal-case font-semibold text-sm w-full text-left hover:bg-gray-100"
-            >
-              <Link to="/about">About</Link>
-            </Button>
-          </li>
-          {renderMenuItems(navListMenuItems)} {/* Render other nav items */}
+      <Collapse open={isNavOpen} className="md:hidden h-screen">
+        <ul className="flex flex-col gap-2 mt-4 bg-white rounded-lg shadow-lg p-4">
+          {currentUser ? (
+            <>
+              {/* Pages Collapse Section */}
+              <div>
+                <div
+                  onClick={() => setIsPagesOpen(!isPagesOpen)}
+                  className="flex items-center justify-between cursor-pointer p-3 hover:bg-gray-200 bg-gray-100 rounded-lg transition duration-300"
+                >
+                  <span className="text-md font-medium text-gray-900">
+                    Pages
+                  </span>
+                  <IoIosArrowUp
+                    className={`transition-transform duration-300 ${
+                      isPagesOpen ? "rotate-180" : "rotate-0"
+                    }`}
+                    size={20}
+                    color="gray"
+                  />
+                </div>
+                <Collapse open={isPagesOpen}>
+                  <ul>{renderMenuItemsMobile(navListMenuItemsMobile)}</ul>
+                </Collapse>
+              </div>
+
+              {/* Account Collapse Section */}
+              <div>
+                <div
+                  onClick={() => setIsAccountOpen(!isAccountOpen)}
+                  className="flex items-center justify-between cursor-pointer p-3 hover:bg-gray-200 bg-gray-100 rounded-lg transition duration-300"
+                >
+                  <span className="text-md font-medium text-gray-900">
+                    Account
+                  </span>
+                  <IoIosArrowUp
+                    className={`transition-transform duration-300 ${
+                      isAccountOpen ? "rotate-180" : "rotate-0"
+                    }`}
+                    size={20}
+                    color="gray"
+                  />
+                </div>
+                <Collapse open={isAccountOpen}>
+                  <ul>{renderMenuAccount(navListMenuAccountMobile)}</ul>
+                </Collapse>
+              </div>
+            </>
+          ) : (
+            <ul>
+              <li>
+                <div className="space-y-4">
+                  <div
+                    onClick={() => setIsPagesOpen(!isPagesOpen)}
+                    className="flex items-center justify-between cursor-pointer p-3 hover:bg-gray-200 bg-gray-100 rounded-lg transition duration-300"
+                  >
+                    <span className="text-md font-medium text-gray-900">
+                      Pages
+                    </span>
+                    <IoIosArrowUp
+                      className={`transition-transform duration-300 ${
+                        isPagesOpen ? "rotate-180" : "rotate-0"
+                      }`}
+                      size={20}
+                      color="gray"
+                    />
+                  </div>
+                  <Collapse open={isPagesOpen}>
+                    <ul>{renderMenuItemsMobile(navListMenuItemsMobile)}</ul>
+                  </Collapse>
+                </div>
+              </li>
+              <li>
+                <div className="flex items-center justify-center gap-4">
+                  <Link to="/sing-up">
+                    <Button fullWidth variant="text" size="sm" className="">
+                      Sign Up
+                    </Button>
+                  </Link>
+                  <Link to="/sign-in">
+                    <Button fullWidth variant="gradient" size="sm" className="">
+                      Sign In
+                    </Button>
+                  </Link>
+                </div>
+              </li>
+            </ul>
+          )}
         </ul>
       </Collapse>
     </nav>

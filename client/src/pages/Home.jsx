@@ -5,7 +5,7 @@ import { LiaMapMarkedSolid } from "react-icons/lia";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import { FiActivity } from "react-icons/fi";
 import CardList from "../components/CardList";
-import homeImg from "../images/home.png";
+import homeImg from "../images/hero.png";
 import ChooseUs from "../images/ChooseUs.png";
 import avatarImg from "../images/avatar.jpg";
 import Marquee from "react-fast-marquee";
@@ -19,51 +19,46 @@ import p7 from "../images/companies/seven.png";
 import p8 from "../images/companies/eight.png";
 import p9 from "../images/companies/nine.png";
 import p10 from "../images/companies/ten.png";
+
 import "@fontsource/montserrat/400.css";
 import "@fontsource/pacifico/400.css";
 import { DollarSign, TrendingUp, Users } from "lucide-react";
-import { Button } from "@material-tailwind/react";
 
 const Home = () => {
   return (
     <div className="">
       {/**************************************************************** */}
 
-      <section className="relative w-full rounded-b-[45px] bg-gray-100 h-[630px] md:h-[800px] overflow-hidden">
+      <section>
         {/* Image part */}
-        <div className="absolute bottom-0 bg-gray-200 h-[80px] md:h-[125px] w-full"></div>
+        <div
+          className="w-full rounded-b-[30px] md:rounded-b-[50px] bg-gray-100 h-[350px] md:h-[700px] overflow-hidden bg-cover bg-center"
+          style={{ backgroundImage: `url(${homeImg})` }}
+        ></div>
 
-        <div className="flex flex-col items-center sm:flex-row gap-52 mt-16 justify-between">
-          {/* Hide image on small screens */}
-          <div className="mt-20 ml-28 z-50 hidden sm:block">
-            <img src={homeImg} alt="" className="" />
-          </div>
-          <div className="mt-28 relative z-10 text-center sm:text-right px-4 sm:px-0">
-            <h1 className="font-Montserrat font-extrabold text-3xl mb-2 md:mb-2 md:text-4xl md:mr-24 text-gray-900 ">
-              Designing Dreams
+        <div className="flex flex-col items-center px-5 md:flex-row md:justify-between md:items-start md:px-10 py-5">
+          <div className="mb-4 md:mb-0">
+            <h1 className="prompt-medium text-[30px] leading-snug md:text-[60px] md:leading-tight text-blue-gray-900 text-center md:text-left">
+              Connect Buyers,
+              <br /> Sellers & Renters in One
             </h1>
-
-            <h1 className="font-Montserrat font-extrabold text-6xl mb-3 md:text-8xl md:mr-24 text-gray-900 ">
-              YOUR <br /> DREAM HOME
-            </h1>
-            <p className="mt-2 text-lg sm:text-2xl text-gray-700 md:mr-24">
-              Find the ideal property to buy, sell, or rent with ease. <br />
-              Start your real estate journey with us!
-            </p>
-            <Button className=" mt-10 px-12 py-2 md:mr-24 md:mt-[65px] hover:scale-105 font-normal lowercase transition duration-300 text-md -tracking-tighter">
-              Start Book
-            </Button>
           </div>
+          <p className="text-center md:text-left p-2 w-full md:w-[550px] leading-tight text-[16px] md:text-[18px]">
+            Whether you're looking to buy, sell, or rent, our platform offers
+            seamless connections between property owners and seekers. Explore
+            listings, showcase your property, or find your next home—all in one
+            convenient location.
+          </p>
         </div>
       </section>
 
-      {/**************************************************************** */}
-
-      {/**************************************************************** */}
-      <section className="py-12 md:py-16 lg:py-20 mt-16">
+      <div className="relative h-16 mt-10">
+        <div className="absolute inset-0 w-full h-full transform -skew-y-3 bg-gray-100"></div>
+      </div>
+      <section className="py-12 md:py-16 lg:py-20 mt-10">
         <div className="container mx-auto px-4">
           <div className="mb-8 text-center">
-            <h2 className=" text-gray-900 font-bold tracking-tight text-4xl md:text-5xl">
+            <h2 className=" text-blue-gray-900 font-bold tracking-tight text-4xl md:text-5xl">
               Featured Listings
             </h2>
             <p className="mt-4 text-gray-500">
@@ -75,6 +70,10 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <div className="relative h-16 mt-10">
+        <div className="absolute inset-0 w-full h-full transform skew-y-3 bg-gray-100"></div>
+      </div>
 
       <section className="w-full mt-16 py-12 md:py-24 lg:py-32 bg-gray-200 text-primary-foreground">
         <div className="container px-4 md:px-6">
