@@ -175,7 +175,7 @@ const CreateListing = () => {
   console.log(formData);
 
   return (
-    <div className=" h-[1100px] w-full p-6 bg-gray-100">
+    <div className=" w-full p-6 bg-gray-100">
       <div className=" text-center mb-10">
         <h1 className="mt-28 text-4xl font-bold text-center mb-3 text-gray-900">
           Create New Listing
@@ -185,9 +185,9 @@ const CreateListing = () => {
         </p>
       </div>
 
-      <div className=" container grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className=" container  grid grid-cols-1 md:grid-cols-2 justify-center gap-6">
         {/* Property Details Cad */}
-        <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+        <div className=" bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
             Property Images
           </h2>
@@ -334,7 +334,7 @@ const CreateListing = () => {
                   </div>
                 </div>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 flex">
                 <div className="w-[300px]">
                   <Typography
                     variant="small"
@@ -350,7 +350,7 @@ const CreateListing = () => {
                       type="number"
                       value={formData.bathrooms} // Use formData.bedrooms as the input value
                       onChange={handleChange}
-                      className="!border-t-blue-gray-200 pl-10 placeholder:text-blue-gray-300 placeholder:opacity-50 focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      className="!border-t-blue-gray-200 pl-10 placeholder:text-blue-gray-300 placeholder:opacity-100 focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       labelProps={{
                         className: "before:content-none after:content-none",
                       }}
@@ -365,7 +365,7 @@ const CreateListing = () => {
 
             {/* Pricing Section */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2 w-70">
+              <div className="space-y-2 w-70 ">
                 <Typography
                   variant="small"
                   color="blue-gray"
@@ -430,7 +430,7 @@ const CreateListing = () => {
         </div>
 
         {/* Images Card */}
-        <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl  transition-all duration-300">
+        <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
             Visual Showcase
           </h2>
@@ -439,7 +439,7 @@ const CreateListing = () => {
           </p>
 
           {/* Image preview grid */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
             {formData.imageUrls.map((image, index) => (
               <div
                 key={index}
@@ -467,9 +467,9 @@ const CreateListing = () => {
             ))}
           </div>
 
-          <div className="flex justify-between items-center gap-4 mt-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 mt-4">
             {/* File input for image upload */}
-            <label className="relative flex items-center justify-center w-full sm:w-auto flex-1 cursor-pointer rounded-lg bg-indigo-50 border-2 border-indigo-200 p-3 text-center text-indigo-700 transition hover:bg-indigo-100 hover:border-indigo-300">
+            <label className="relative flex items-center justify-center  sm:w-auto  cursor-pointer rounded-lg bg-indigo-50 border-2 border-indigo-200 p-3 text-center text-indigo-700 transition hover:bg-indigo-100 hover:border-indigo-300">
               <span>Select Images</span>
               <input
                 type="file"
