@@ -171,41 +171,30 @@ const CreateListing = () => {
       setLoading(false);
     }
   };
-  const CustomSelect = ({ options, label, value, onChange }) => {
-    return (
-      <div className="relative">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          {label}
-        </label>
-        <select
-          value={value}
-          onChange={onChange}
-          className="block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50 focus:ring-indigo-300 focus:border-indigo-300 py-2 px-3"
-        >
-          <option value="" disabled>
-            Select {label}
-          </option>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  };
+
   console.log(formData);
 
   return (
-    <div className="container mx-auto p-6 mt-28">
-      <h1 className="text-3xl font-bold mb-6">Create New Listing</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Property Details Card */}
-        <div className="border rounded-lg shadow p-4">
-          <h2 className="text-xl font-bold">Property Details</h2>
-          <p className="text-gray-500 mb-4">
+    <div className=" h-[1100px] w-full p-6 bg-gray-100">
+      <div className=" text-center mb-10">
+        <h1 className="mt-28 text-4xl font-bold text-center mb-3 text-gray-900">
+          Create New Listing
+        </h1>
+        <p className="text-gray-600 mb-6">
+          Enter the details and prperty Images of your property to get started
+        </p>
+      </div>
+
+      <div className=" container grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Property Details Cad */}
+        <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            Property Images
+          </h2>
+          <p className="text-gray-600 mb-6">
             Enter the details of your property
           </p>
+
           <div className="space-y-4">
             <div className="space-y-2">
               <Input
@@ -317,9 +306,9 @@ const CreateListing = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="space-y-2">
-                <div className="w-80">
+            <div className="flex flex-col md:flex-row md:gap-4">
+              <div className="space-y-2 flex ">
+                <div className="w-[300px]">
                   <Typography
                     variant="small"
                     color="blue-gray"
@@ -346,7 +335,7 @@ const CreateListing = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <div className="w-80">
+                <div className="w-[300px]">
                   <Typography
                     variant="small"
                     color="blue-gray"
@@ -376,7 +365,7 @@ const CreateListing = () => {
 
             {/* Pricing Section */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
+              <div className="space-y-2 w-70">
                 <Typography
                   variant="small"
                   color="blue-gray"
@@ -384,7 +373,7 @@ const CreateListing = () => {
                 >
                   Regular Price
                 </Typography>
-                <div className="relative w-full">
+                <div className="relative w-70">
                   <MdPriceChange className="absolute left-2 top-1/2 -translate-y-1/2" />
                   <Input
                     onChange={handleChange}
@@ -398,7 +387,7 @@ const CreateListing = () => {
                     containerProps={{
                       className: "min-w-0",
                     }}
-                    className="!border-t-blue-gray-200 pl-10 placeholder:text-blue-gray-300 placeholder:opacity-50 focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="!border-t-blue-gray-200 pl-10 w-70 placeholder:text-blue-gray-300 placeholder:opacity-50 focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
                 </div>
               </div>
@@ -441,10 +430,12 @@ const CreateListing = () => {
         </div>
 
         {/* Images Card */}
-        <div className="border rounded-lg shadow p-4">
-          <h2 className="text-xl font-bold">Images</h2>
-          <p className="text-gray-500 mb-4">
-            Upload images of your property (max 6)
+        <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl  transition-all duration-300">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            Visual Showcase
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Bring your property to life with up to 6 captivating images
           </p>
 
           {/* Image preview grid */}
@@ -478,8 +469,8 @@ const CreateListing = () => {
 
           <div className="flex justify-between items-center gap-4 mt-4">
             {/* File input for image upload */}
-            <label className="relative cursor-pointer rounded-lg bg-white border-2 border-gray-300 p-2 flex items-center justify-center transition hover:border-blue-500">
-              <span className="text-gray-600">Select Images</span>
+            <label className="relative flex items-center justify-center w-full sm:w-auto flex-1 cursor-pointer rounded-lg bg-indigo-50 border-2 border-indigo-200 p-3 text-center text-indigo-700 transition hover:bg-indigo-100 hover:border-indigo-300">
+              <span>Select Images</span>
               <input
                 type="file"
                 accept="image/*"
@@ -489,35 +480,38 @@ const CreateListing = () => {
               />
             </label>
 
-            <div>
-              {files.length > 0 && <p>{files.length} image(s) selected</p>}
-            </div>
-
             {/* Upload button */}
             <Button
               variant="gradient"
               onClick={handleImageSubmit}
-              className=" flex items-center justify-center gap-3 normal-case font-semibold px-4 py-2  "
+              className=" flex items-center justify-center gap-3 p-3 normal-case font-semibold  "
             >
               <MdOutlineCloudUpload className="w-5 h-5" />
               <span> {uploading ? "Uploading..." : "Upload Images"}</span>
             </Button>
           </div>
-
+          <div className="p-2 text-center">
+            {files.length > 0 && <p>{files.length} image(s) selected</p>}
+          </div>
           {/* ERROR Section */}
-          <p className="text-red-700">
-            {imageUploadError &&
-              typeof imageUploadError === "string" &&
-              imageUploadError}
-          </p>
+          {imageUploadError && (
+            <p className="text-red-700 p-2 text-center">imageUploadError</p>
+          )}
 
           {/* SUCCESS Section */}
-          <p className="text-green-700">{uploadSuccess && uploadSuccess}</p>
+          {uploadSuccess && (
+            <p className="text-green-700 p-2 text-center">uploadSuccess</p>
+          )}
 
           {/* Button to create the listing */}
-          <div className="mt-6">
-            <Button fullWidth onClick={handleSubmit} disabled={loading}>
-              {loading ? "Creating Listing..." : "Create Listing"}
+          <div className="mt-6 ">
+            <Button
+              fullWidth
+              onClick={handleSubmit}
+              disabled={loading}
+              className="p-3"
+            >
+              {loading ? " Listing Lunching..." : "Lunch My Listing"}
             </Button>
             {error && <p className="text-red-500 mt-4">{error}</p>}
           </div>
