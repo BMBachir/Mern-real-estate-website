@@ -55,6 +55,9 @@ const Home = () => {
       <div className="relative h-16 mt-10">
         <div className="absolute inset-0 w-full h-full transform -skew-y-3 bg-gray-100"></div>
       </div>
+      <div className="relative h-16 ">
+        <div className="absolute inset-0 w-full h-full transform -skew-y-3 bg-gray-100"></div>
+      </div>
       <section className="py-12 md:py-16 lg:py-20 mt-10">
         <div className="container mx-auto px-4">
           <div className="mb-8 text-center">
@@ -74,8 +77,11 @@ const Home = () => {
       <div className="relative h-16 mt-10">
         <div className="absolute inset-0 w-full h-full transform skew-y-3 bg-gray-100"></div>
       </div>
+      <div className="relative h-16 ">
+        <div className="absolute inset-0 w-full h-full transform skew-y-3 bg-gray-100"></div>
+      </div>
 
-      <section className="w-full mt-16 py-12 md:py-24 lg:py-32 bg-gray-200 text-primary-foreground">
+      <section className="w-full mt-16 py-12   md:py-24 lg:py-32  text-primary-foreground">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="text-gray-900">
@@ -106,18 +112,25 @@ const Home = () => {
                 </li>
               </ul>
             </div>
-            <div className="relative h-[400px] rounded-lg overflow-hidden">
+            <div className="relative rounded-lg overflow-hidden">
               <img
                 alt="Eco-friendly home"
                 src={ChooseUs}
                 layout="fill"
                 objectFit="cover"
-                className="rounded-xl"
+                className="rounded-xl "
               />
             </div>
           </div>
         </div>
       </section>
+
+      <div className="relative h-16 mt-10">
+        <div className="absolute inset-0 w-full h-full transform -skew-y-3 bg-gray-100"></div>
+      </div>
+      <div className="relative h-16 ">
+        <div className="absolute inset-0 w-full h-full transform -skew-y-3 bg-gray-100"></div>
+      </div>
 
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
@@ -182,6 +195,13 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <div className="relative h-16 mt-10">
+        <div className="absolute inset-0 w-full h-full transform skew-y-3 bg-gray-100"></div>
+      </div>
+      <div className="relative h-16 ">
+        <div className="absolute inset-0 w-full h-full transform skew-y-3 bg-gray-100"></div>
+      </div>
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="flex flex-col items-center justify-center ">
           <div className="space-y-3 space-x-5 text-center mb-14">
@@ -237,6 +257,13 @@ const Home = () => {
           </div>
         </Marquee>
       </section>
+
+      <div className="relative h-16 mt-10">
+        <div className="absolute inset-0 w-full h-full transform -skew-y-3 bg-gray-100"></div>
+      </div>
+      <div className="relative h-16 ">
+        <div className="absolute inset-0 w-full h-full transform -skew-y-3 bg-gray-100"></div>
+      </div>
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
           <div className="  space-y-4 text-center">
@@ -316,6 +343,12 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <div className="relative h-16 mt-10">
+        <div className="absolute inset-0 w-full h-full transform skew-y-3 bg-gray-100"></div>
+      </div>
+      <div className="relative h-16">
+        <div className="absolute inset-0 w-full h-full transform skew-y-3 bg-gray-100"></div>
+      </div>
     </div>
   );
 };
