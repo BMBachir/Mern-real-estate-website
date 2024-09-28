@@ -36,6 +36,15 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 
+// Set Content Security Policy
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; img-src 'self' https://firebasestorage.googleapis.com;"
+  );
+  next();
+});
+
 // Routes
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
