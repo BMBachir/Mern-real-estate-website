@@ -246,7 +246,7 @@ const UserListings = () => {
                     </p>
                     <div className=" mt-4 flex justify-between items-center">
                       <Link
-                        to={`/listing/${listing._id}`}
+                        to={`/update-listing/${listing._id}`}
                         className="text-blue-600 hover:bg-blue-600 hover:text-white bg-gray-100 px-4 py-2 rounded"
                       >
                         <Edit className="h-5 w-5" />
