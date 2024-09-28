@@ -19,8 +19,8 @@ import {
 import { FaBath, FaBed } from "react-icons/fa";
 import { MdPriceChange } from "react-icons/md";
 import { MdDiscount } from "react-icons/md";
-
 import { MdOutlineCloudUpload } from "react-icons/md";
+
 const CreateListing = () => {
   const [value, setValue] = useState(0);
   const [files, setFiles] = useState([]);

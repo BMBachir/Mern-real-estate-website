@@ -206,7 +206,7 @@ const Home = () => {
         <div className="flex flex-col items-center justify-center ">
           <div className="space-y-3 space-x-5 text-center mb-14">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Our Technology Investors
+              Our Investors
             </h2>
             <p className="mx-auto max-w-[700px] text-gray-500 text-xl/relaxed dark:text-gray-400">
               Discover the perfect property for you with our comprehensive real
@@ -215,46 +215,16 @@ const Home = () => {
           </div>
         </div>
 
-        <Marquee gradient pauseOnHover>
-          <div className="image_wrapper ">
-            <img src={p1} alt="" />
-          </div>
-
-          <div className="image_wrapper">
-            <img src={p2} alt="" />
-          </div>
-
-          <div className="image_wrapper">
-            <img src={p3} alt="" />
-          </div>
-
-          <div className="image_wrapper">
-            <img src={p4} alt="" />
-          </div>
-
-          <div className="image_wrapper">
-            <img src={p5} alt="" />
-          </div>
-
-          <div className="image_wrapper">
-            <img src={p6} alt="" />
-          </div>
-
-          <div className="image_wrapper">
-            <img src={p7} alt="" />
-          </div>
-
-          <div className="image_wrapper">
-            <img src={p8} alt="" />
-          </div>
-
-          <div className="image_wrapper">
-            <img src={p9} alt="" />
-          </div>
-
-          <div className="image_wrapper">
-            <img src={p10} alt="" />
-          </div>
+        <Marquee gradient={false} pauseOnHover>
+          {[p1, p2, p3, p4, p5].map((image, index) => (
+            <div key={index} className=" image_wrapper">
+              <img
+                src={image}
+                alt={`Image ${index + 1}`}
+                className="  object-cover pl-5 transition-transform duration-200 hover:scale-105 "
+              />
+            </div>
+          ))}
         </Marquee>
       </section>
 

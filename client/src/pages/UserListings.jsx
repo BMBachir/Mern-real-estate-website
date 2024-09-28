@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { Button } from "@material-tailwind/react";
 const UserListings = () => {
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +77,7 @@ const UserListings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 ">
       {/* Hero Section */}
       <section
         className="bg-cover bg-center text-white py-20"
@@ -147,7 +147,7 @@ const UserListings = () => {
       </section>
 
       {/* Listings Section */}
-      <section className="py-12">
+      <section className="py-12 space-y-6">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-semibold">Your Listings</h2>
@@ -168,9 +168,6 @@ const UserListings = () => {
                 }`}
               >
                 <List className="h-5 w-5" />
-              </button>
-              <button className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                <Plus className="h-5 w-5" />
               </button>
             </div>
           </div>
@@ -209,12 +206,15 @@ const UserListings = () => {
                       <p>No Image Available</p>
                     </div>
                   )}
-                  <div className="p-4">
+                  <div className="p-4 flex-grow flex flex-col">
                     <h3 className="text-xl font-semibold">{listing.name}</h3>
+
                     <p className="text-gray-600 mt-2">
                       {listing.offer ? (
                         <>
-                          ${listing.discountPrice.toLocaleString()}
+                          <span className="bg-gray-200 px-1 py-2 rounded-lg">
+                            ${listing.discountPrice.toLocaleString()}
+                          </span>
                           {listing.regularPrice > listing.discountPrice && (
                             <span className="text-gray-500 line-through ml-2">
                               ${listing.regularPrice.toLocaleString()}
@@ -222,15 +222,24 @@ const UserListings = () => {
                           )}
                         </>
                       ) : (
-                        <span className="text-gray-500 ml-2">
+                        <span className="text-gray-500 ml-2 bg-gray-200 px-1 py-2 rounded-lg">
                           ${listing.regularPrice.toLocaleString()}
                         </span>
                       )}
                     </p>
-                    <p className="text-gray-600 mt-2">{listing.description}</p>
-                    <p className="text-gray-600 mt-2">
-                      <strong>Address:</strong> {listing.address}
-                    </p>
+
+                    <div className="flex-grow flex flex-col">
+                      <p className="text-gray-600 mt-2 overflow-hidden h-16">
+                        {" "}
+                        {/* Fixed height for description */}
+                        {listing.description}
+                      </p>
+
+                      <p className="text-gray-600 mt-2">
+                        <strong>Address:</strong> {listing.address}
+                      </p>
+                    </div>
+
                     <div className="flex justify-start items-center gap-8">
                       <p className="text-gray-600 mt-2">
                         <strong>Bedrooms:</strong> {listing.bedrooms}
@@ -244,19 +253,31 @@ const UserListings = () => {
                       <strong>Furnished:</strong>{" "}
                       {listing.furnished ? "Yes" : "No"}
                     </p>
-                    <div className=" mt-4 flex justify-between items-center">
+
+                    <div className="mt-4 flex justify-between items-center">
                       <Link
                         to={`/update-listing/${listing._id}`}
-                        className="text-blue-600 hover:bg-blue-600 hover:text-white bg-gray-100 px-4 py-2 rounded"
+                        className="text-blue-600 hover:text-white px-4 py-2 rounded"
                       >
-                        <Edit className="h-5 w-5" />
+                        <Button
+                          color="blue"
+                          size="sm"
+                          className="flex justify-center items-center gap-2"
+                        >
+                          <Edit className="h-5 w-5" />
+                          <span>Edit</span>
+                        </Button>
                       </Link>
-                      <button
+
+                      <Button
+                        color="red"
+                        size="sm"
                         onClick={() => handleListingDelete(listing._id)}
-                        className="text-red-600 hover:bg-red-600 hover:text-white bg-gray-100 px-4 py-2 rounded"
+                        className="flex justify-center items-center gap-2"
                       >
                         <Trash2 className="h-5 w-5" />
-                      </button>
+                        <span>Delete</span>
+                      </Button>
                     </div>
                   </div>
                 </div>
