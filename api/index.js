@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-
+import path from "path";
 dotenv.config();
 
 // Check if environment variables are loaded
@@ -27,6 +27,8 @@ mongoose
     process.exit(1);
   });
 
+const __dirname = path.resolve();
+
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -38,6 +40,11 @@ app.use(morgan("dev"));
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
+app.use(express.static(path.join(__dirname, "client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/dist/index.html"));
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
