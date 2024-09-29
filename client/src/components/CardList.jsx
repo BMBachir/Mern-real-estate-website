@@ -57,9 +57,13 @@ const CardList = () => {
           key={listing._id}
           className="w-full max-w-[26rem] shadow-lg flex flex-col"
         >
-          <CardHeader floated={false} color="blue-gray">
+          <CardHeader
+            floated={false}
+            color="blue-gray"
+            className="hover:scale-105 transition-all duration-300"
+          >
             <img
-              className="rounded-xl h-56 w-full object-cover"
+              className="rounded-xl h-56 w-full object-cover hover:scale-105 transition-all duration-300"
               src={listing.imageUrls[0]}
               alt={listing.name}
             />

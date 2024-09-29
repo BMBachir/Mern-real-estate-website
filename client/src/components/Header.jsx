@@ -171,7 +171,7 @@ const Header = () => {
       title: "Account",
       description: "Manage your account settings and preferences easily.",
       icon: User, // User icon from lucide-react
-      link: "/account",
+      link: "/profile",
     },
     {
       title: "Create Listing",
@@ -184,7 +184,7 @@ const Header = () => {
       title: "Your Listings",
       description: "View and manage the properties you have listed with us.",
       icon: List, // List icon from lucide-react
-      link: "/your-listings",
+      link: "/user-listings",
     },
     {
       title: "Sign Out",
@@ -228,21 +228,21 @@ const Header = () => {
   // Navigation menu items
   const navListMenuItems = [
     {
-      title: "Products",
+      title: "Properties",
       description: "Find the perfect solution for your needs.",
-      icon: FaUserGear,
+      icon: MapPinHouse,
       link: "/properties",
     },
     {
       title: "Services",
       description: "Learn how we can help you achieve your goals.",
-      icon: FaUserGear,
+      icon: Briefcase,
       link: "/service",
     },
     {
       title: "Contact",
       description: "Get in touch with us.",
-      icon: FaUserGear,
+      icon: Mail,
       link: "/contact",
     },
   ];
