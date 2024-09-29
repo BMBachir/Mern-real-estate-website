@@ -257,6 +257,28 @@ const Profile = () => {
               />
             </div>
           </div>
+          {/* Password Update Section */}
+          <div className="bg-white p-6 rounded-lg border mt-5 border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Update Password
+            </h3>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              New Password*
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter New Password"
+              onChange={handleChange}
+              className="mt-1 w-full border px-4 py-3 rounded-md  focus:outline-none shadow-sm  transition duration-150 ease-in-out"
+            />
+            <p className="text-sm text-gray-500 mt-2">
+              Make sure your password is strong and easy to remember.
+            </p>
+          </div>
           <p className="text-sm text-gray-500 mt-4">* Required fields</p>
         </section>
       </form>
@@ -291,37 +313,14 @@ const Profile = () => {
       )}
 
       <section className="mt-8">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-          Privacy & Security
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Password Update Section */}
-          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              Update Password
-            </h3>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              New Password*
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Enter New Password"
-              onChange={handleChange}
-              className="mt-1 w-full border px-4 py-3 rounded-md  focus:outline-none shadow-sm  transition duration-150 ease-in-out"
-            />
-            <p className="text-sm text-gray-500 mt-2">
-              Make sure your password is strong and easy to remember.
-            </p>
-          </div>
-
+        <div className="grid grid-cols-1 gap-6">
           {/* Account Deletion Section */}
-          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-            <h3 className="text-lg font-semibold text-red-600 mb-2">
+
+          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 w-full">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              Advanced
+            </h2>
+            <h3 className="text-md font-semibold text-red-600 mb-2">
               Delete Account
             </h3>
             <p className="text-sm text-gray-600 mb-4">
