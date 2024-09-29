@@ -116,7 +116,7 @@ const Listing = () => {
             <div className=" px-4 py-8">
               <div className="bg-white shadow-md rounded-lg ">
                 <div className="p-6">
-                  <div className="flex flex-col md:flex-row justify-between items-start mb-6 ">
+                  <div className="flex flex-col md:flex-row justify-between items-start space-y-3 md:space-y-0 ">
                     <div className=" space-y-7">
                       <h1 className="text-3xl font-bold mb-2">
                         {listing.name}
@@ -136,7 +136,7 @@ const Listing = () => {
                       </div>
                     </div>
                     {!currentUser ? (
-                      <div>
+                      <div className="">
                         <Button onClick={handleOpen}>contact landloard</Button>
                         <Dialog open={open} handler={handleOpen}>
                           <DialogHeader>
@@ -176,8 +176,8 @@ const Listing = () => {
                         </Dialog>
                       </div>
                     ) : currentUser._id === listing.userRef ? (
-                      <div className="">
-                        <Button className="m transition-transform transform hover:scale-105 duration-300 ease-in-out">
+                      <div className="mt-6">
+                        <Button className=" transition-transform transform hover:scale-105 duration-300 ease-in-out">
                           You are the owner
                         </Button>
                       </div>
@@ -193,7 +193,7 @@ const Listing = () => {
                       </div>
                     )}
                   </div>
-                  <p className="text-gray-700 mb-6">
+                  <p className="text-gray-700 mb-6 mt-3 ">
                     <span className="font-bold">Description :</span>{" "}
                     {listing.description}
                   </p>
@@ -206,16 +206,30 @@ const Listing = () => {
                       <FaBath className="text-gray-600" />
                       <span>{listing.bathrooms} Baths</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <MdChair className="text-gray-600" />
-                      <span>
-                        {listing.furnished ? "Furnished" : "Not Furnished"}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FaSquareParking className="text-gray-600" />
-                      <span>{listing.parking ? "Parking" : "No Parking"}</span>
-                    </div>
+
+                    {listing.furnished ? (
+                      <div className="flex items-center gap-2">
+                        <MdChair className="text-gray-600" />
+                        <span>Furnished</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <MdChair className="text-red-600" />
+                        <span className="text-red-600"> Not furnished</span>
+                      </div>
+                    )}
+
+                    {listing.parking ? (
+                      <div className="flex items-center gap-2">
+                        <FaSquareParking className="text-gray-600" />
+                        <span>Parking </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <FaSquareParking className="text-red-600" />
+                        <span className="text-red-600">No parking </span>
+                      </div>
+                    )}
                   </div>
                   <div className="mb-6 flex">
                     <p className="text-xl bg-gray-200 text-gray-700 px-2 py-1 rounded-md">
