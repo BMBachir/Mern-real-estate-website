@@ -87,12 +87,16 @@ const Profile = () => {
     console.log("The User : ", currentUser);
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-        credentials: "include", // Ensure cookies are sent
-      });
+      const res = await fetch(
+        `
+/api/user/update/${currentUser._id}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+          credentials: "include", // Ensure cookies are sent
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
@@ -281,22 +285,21 @@ const Profile = () => {
           </div>
           <p className="text-sm text-gray-500 mt-4">* Required fields</p>
         </section>
+        {/* Submit Button */}
+        <div className="flex justify-between mt-8">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+            disabled={loading}
+          >
+            {loading ? (
+              <ReactLoading type="spin" color="#fff" height={24} width={24} />
+            ) : (
+              "Save Changes"
+            )}
+          </button>
+        </div>
       </form>
-
-      {/* Submit Button */}
-      <div className="flex justify-between mt-8">
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-          disabled={loading}
-        >
-          {loading ? (
-            <ReactLoading type="spin" color="#fff" height={24} width={24} />
-          ) : (
-            "Save Changes"
-          )}
-        </button>
-      </div>
 
       {/* Display success message */}
       {updateSuccess && (
