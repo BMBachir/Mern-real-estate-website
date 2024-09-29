@@ -41,7 +41,7 @@ app.use(morgan("dev"));
 app.use((req, res, next) => {
   res.setHeader(
     "Content-Security-Policy",
-    "default-src 'self'; script-src 'self' https://apis.google.com; connect-src 'self' https://firebasestorage.googleapis.com; img-src 'self' https://firebasestorage.googleapis.com https://docs.material-tailwind.com;"
+    "default-src 'self'; script-src 'self' https://apis.google.com; connect-src 'self' https://identitytoolkit.googleapis.com https://firebasestorage.googleapis.com; img-src 'self' https://firebasestorage.googleapis.com; frame-src https://mern-estate-6569d.firebaseapp.com;"
   );
   next();
 });
