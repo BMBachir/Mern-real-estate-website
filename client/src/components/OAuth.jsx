@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import { FcGoogle } from "react-icons/fc";
 const OAuth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,11 +44,7 @@ const OAuth = () => {
       className="flex items-center justify-center gap-3 w-full"
       onClick={handleGoogleClick}
     >
-      <img
-        src="https://docs.material-tailwind.com/icons/google.svg"
-        alt="metamask"
-        className="h-6 w-6"
-      />
+      <FcGoogle className="h-6 w-6" />
       Continue with Google
     </Button>
   );
