@@ -202,31 +202,6 @@ const Home = () => {
       <div className="relative h-16 ">
         <div className="absolute inset-0 w-full h-full transform skew-y-3 bg-gray-100"></div>
       </div>
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="flex flex-col items-center justify-center ">
-          <div className="space-y-3 space-x-5 text-center mb-14">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Our Investors
-            </h2>
-            <p className="mx-auto max-w-[700px] text-gray-500 text-xl/relaxed dark:text-gray-400">
-              Discover the perfect property for you with our comprehensive real
-              estate services.
-            </p>
-          </div>
-        </div>
-
-        <Marquee gradient={false} pauseOnHover>
-          {[p1, p2, p3, p4, p5].map((image, index) => (
-            <div key={index} className=" image_wrapper">
-              <img
-                src={image}
-                alt={`Image ${index + 1}`}
-                className="  object-cover pl-5 transition-transform duration-200 hover:scale-105 "
-              />
-            </div>
-          ))}
-        </Marquee>
-      </section>
 
       <div className="relative h-16 mt-10">
         <div className="absolute inset-0 w-full h-full transform -skew-y-3 bg-gray-100"></div>
