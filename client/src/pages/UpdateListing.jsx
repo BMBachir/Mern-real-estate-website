@@ -512,12 +512,12 @@ const UpdateListing = () => {
           </div>
           {/* ERROR Section */}
           {imageUploadError && (
-            <p className="text-red-700 p-2 text-center">imageUploadError</p>
+            <p className="text-red-700 p-2 text-center">{imageUploadError}</p>
           )}
 
           {/* SUCCESS Section */}
           {uploadSuccess && (
-            <p className="text-green-700 p-2 text-center">uploadSuccess</p>
+            <p className="text-green-700 p-2 text-center">{uploadSuccess}</p>
           )}
 
           {/* Button to create the listing */}

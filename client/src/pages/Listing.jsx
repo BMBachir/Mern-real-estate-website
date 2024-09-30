@@ -64,6 +64,7 @@ const Listing = () => {
   console.log(listing);
 
   const offer = listing?.regularPrice - listing?.discountPrice;
+  console.log(listing.imageUrls);
   return (
     <main className="mt-[150px]">
       {loading && "Loading..."}
@@ -92,7 +93,7 @@ const Listing = () => {
           </div>
 
           <div className=" grid grid-cols-1 md:grid-cols-2 items-center justify-center gap-10 mb-10 mt-10 containerListingPage">
-            <div className="w-full ">
+            <div className="w-full  h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] bg-center bg-no-repeat bg-cover">
               <Swiper
                 className="rounded-lg"
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -102,7 +103,7 @@ const Listing = () => {
                 {listing.imageUrls.map((url) => (
                   <SwiperSlide key={url}>
                     <div
-                      className="w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] bg-center bg-no-repeat bg-cover"
+                      className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] bg-center bg-no-repeat bg-cover"
                       style={{
                         backgroundImage: `url(${url})`,
                         backgroundSize: "cover",

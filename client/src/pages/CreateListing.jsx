@@ -78,6 +78,11 @@ const CreateListing = () => {
 
   const storeImage = async (file) => {
     return new Promise((resolve, reject) => {
+      const maxSize = 10 * 1024 * 1024; // 10MB
+
+      if (file.size > maxSize) {
+        return reject("File exceeds the size limit of 10MB");
+      }
       const storage = getStorage(app);
       const fileName = new Date().getTime() + file.name;
       const storageRef = ref(storage, fileName);
@@ -495,12 +500,12 @@ const CreateListing = () => {
           </div>
           {/* ERROR Section */}
           {imageUploadError && (
-            <p className="text-red-700 p-2 text-center">imageUploadError</p>
+            <p className="text-red-700 p-2 text-center">{imageUploadError}</p>
           )}
 
           {/* SUCCESS Section */}
           {uploadSuccess && (
-            <p className="text-green-700 p-2 text-center">uploadSuccess</p>
+            <p className="text-green-700 p-2 text-center">{uploadSuccess}</p>
           )}
 
           {/* Button to create the listing */}

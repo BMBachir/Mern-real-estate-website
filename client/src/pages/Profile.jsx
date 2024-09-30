@@ -54,6 +54,14 @@ const Profile = () => {
   }, [file]);
 
   const handleFileUpload = (file) => {
+    const maxSize = 10 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      console.error("File is too large");
+      setFileUploadError("File exceeds the size limit of 10MB");
+      return;
+    }
+
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
