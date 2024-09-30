@@ -32,7 +32,7 @@ const Home = () => {
       <section>
         {/* Image part */}
         <div
-          className="w-full rounded-b-[30px] md:rounded-b-[50px] bg-gray-100 h-[350px] md:h-[400px]  xl:h-[500px] 2xl:h-[700px] overflow-hidden bg-cover bg-center"
+          className="w-full rounded-b-[30px] md:rounded-b-[50px] bg-gray-100 h-[50vh] md:h-[60vh] lg:h-[70vh] xl:h-[75vh] overflow-hidden bg-cover bg-center"
           style={{ backgroundImage: `url(${homeImg})` }}
         ></div>
 
@@ -265,6 +265,13 @@ const Home = () => {
                 </div>
                 <div className="flex-none snap-center rounded-lg bg-gray-100 p-6 w-[400px]">
                   <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 overflow-hidden rounded-full">
+                      <img
+                        alt="Jane Smith"
+                        className="h-full w-full object-cover"
+                        src={avatarImg}
+                      />
+                    </div>
                     <div>
                       <div className="font-semibold">dames favela</div>
                       <div className="text-sm text-gray-500">Homeowner</div>

@@ -92,8 +92,8 @@ const Listing = () => {
             )}
           </div>
 
-          <div className=" grid grid-cols-1 md:grid-cols-2 items-center justify-center gap-10 mb-10 mt-10 containerListingPage">
-            <div className="w-full  h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] bg-center bg-no-repeat bg-cover">
+          <div className="grid grid-cols-1  2xl items-center justify-center gap-10 mb-10 mt-10 containerListingPage">
+            <div className="w-full h-auto min-h-[300px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[600px] xl:min-h-[700px] bg-center bg-no-repeat bg-cover">
               <Swiper
                 className="rounded-lg"
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -103,7 +103,7 @@ const Listing = () => {
                 {listing.imageUrls.map((url) => (
                   <SwiperSlide key={url}>
                     <div
-                      className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] bg-center bg-no-repeat bg-cover"
+                      className="w-full h-auto min-h-[300px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[500px] xl:min-h-[700px] bg-center bg-no-repeat bg-cover"
                       style={{
                         backgroundImage: `url(${url})`,
                         backgroundSize: "cover",
@@ -114,7 +114,7 @@ const Listing = () => {
               </Swiper>
             </div>
 
-            <div className=" px-4 py-8">
+            <div className="px-4 py-8 w-full max-w-[1200px] mx-auto">
               <div className="bg-white shadow-md rounded-lg ">
                 <div className="p-6">
                   <div className="flex flex-col md:flex-row justify-between items-start space-y-3 md:space-y-0 ">

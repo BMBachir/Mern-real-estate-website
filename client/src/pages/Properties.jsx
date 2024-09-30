@@ -358,9 +358,10 @@ const Properties = () => {
 
         {/* Filter Sidebar */}
         <aside
-          className={`fixed top-0 right-0 h-full w-64 bg-white shadow-lg transform ${
+          className={`fixed top-0 z-[9999] right-0 h-full bg-white shadow-lg transform ${
             isFilterOpen ? "translate-x-0" : "translate-x-full"
-          } transition-transform duration-300 ease-in-out z-50`}
+          } transition-transform duration-300 ease-in-out`}
+          style={{ width: "100%", maxWidth: "16rem" }} // Full width for small devices, max width for larger devices
         >
           <form className="h-full flex flex-col">
             <div className="p-6">

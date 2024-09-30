@@ -279,7 +279,8 @@ const Header = () => {
   };
 
   return (
-    <nav className="header bg-gray-100/10 backdrop-blur-lg sticky top-0 z-50 rounded-xl h-[70px] max-w-screen-2xl mx-auto mt-4 shadow-lg border border-white/20">
+    <nav className="header bg-gray-100/10 backdrop-blur-lg sticky top-0 z-50 rounded-xl h-[70px] max-w-screen-2xl mx-auto mt-4 shadow-lg border border-white/20 w-full px-4 sm:px-6 md:px-8 lg:px-10">
+      {/* Add your navigation content here */}
       <div className="flex flex-wrap items-center justify-between p-4">
         <Link
           to="/"
@@ -393,7 +394,7 @@ const Header = () => {
                   />
                 </Button>
               </MenuHandler>
-              <MenuList className="p-5 z-50 mt-2 ml-16 bg-white shadow-lg rounded-lg">
+              <MenuList className="p-5 z-50 mt-2 ml-12 bg-white shadow-lg rounded-lg">
                 {profileMenuItems.map(({ label, icon, link, onClick }) => (
                   <MenuItem
                     key={label}
