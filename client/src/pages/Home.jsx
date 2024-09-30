@@ -32,18 +32,18 @@ const Home = () => {
       <section>
         {/* Image part */}
         <div
-          className="w-full rounded-b-[30px] md:rounded-b-[50px] bg-gray-100 h-[350px] md:h-[700px] overflow-hidden bg-cover bg-center"
+          className="w-full rounded-b-[30px] md:rounded-b-[50px] bg-gray-100 h-[350px] md:h-[400px]  xl:h-[500px] 2xl:h-[700px] overflow-hidden bg-cover bg-center"
           style={{ backgroundImage: `url(${homeImg})` }}
         ></div>
 
         <div className="flex flex-col items-center px-5 md:flex-row md:justify-between md:items-start md:px-10 py-5">
           <div className="mb-4 md:mb-0">
-            <h1 className="prompt-medium text-[30px] leading-snug md:text-[60px] md:leading-tight text-blue-gray-900 text-center md:text-left">
+            <h1 className="prompt-medium text-[24px] md:text-[24px] lg:text-[60px] leading-snug md:leading-tight text-blue-gray-900 text-center md:text-left">
               Connect Buyers,
               <br /> Sellers & Renters in One
             </h1>
           </div>
-          <p className="text-center md:text-left p-2 w-full md:w-[550px] leading-tight text-[16px] md:text-[18px]">
+          <p className="text-center md:text-left p-2 w-full md:w-[330px] lg:w-[550px] leading-tight text-[14px] md:text-[16px] lg:text-[18px]">
             Whether you're looking to buy, sell, or rent, our platform offers
             seamless connections between property owners and seekers. Explore
             listings, showcase your property, or find your next home—all in one
