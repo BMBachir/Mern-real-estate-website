@@ -265,13 +265,6 @@ const Home = () => {
                 </div>
                 <div className="flex-none snap-center rounded-lg bg-gray-100 p-6 w-[400px]">
                   <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 overflow-hidden rounded-full">
-                      <img
-                        alt="Michael Johnson"
-                        className="h-full w-full object-cover"
-                        src={avatarImg}
-                      />
-                    </div>
                     <div>
                       <div className="font-semibold">dames favela</div>
                       <div className="text-sm text-gray-500">Homeowner</div>
