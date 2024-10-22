@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/logo.png";
 import {
   Avatar,
@@ -25,7 +25,6 @@ import { BsFillHouseAddFill } from "react-icons/bs";
 import { BsFillHousesFill } from "react-icons/bs";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { IoIosArrowUp } from "react-icons/io";
-import { MdOutlineRealEstateAgent } from "react-icons/md";
 import {
   Home,
   Info,
@@ -48,7 +47,7 @@ const Header = () => {
   const toggleNavMenu = () => {
     setIsNavOpen((prev) => !prev); // Toggle the menu open/close state
   };
-  const location = useLocation();
+
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();

@@ -9,17 +9,6 @@
   .container {
     @apply max-w-full w-[1440px] px-5 mx-auto;
   }
-  .btn {
-    @apply bg-gray-500 hover:bg-gray-600 inline-flex items-center justify-center rounded-md  px-6 py-3 text-base font-medium text-white shadow-sm transition-colors  focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2  dark:text-white  dark:focus:ring-gray-300;
-  }
-
-  .heading {
-    @apply text-[44px] leading-[54px] font-[700] text-headingColor;
-  }
-  .text__para {
-    @apply text-[18px] leading-[30px] font-[400] text-textColor mt-[18px];
-  }
-
   .image_wrapper {
     margin: 0px 30px;
   }
@@ -28,14 +17,6 @@
   }
 }
 
-@media only screen and (max-width: 768px) {
-  .heading {
-    @apply text-[26px] leading-[36px];
-  }
-  .text__para {
-    @apply text-[16px] leading-7 mt-3;
-  }
-}
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -196,12 +177,4 @@
   right: 0;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-.app {
-  position: relative;
-  padding-top: 60px;
-}
-
-.main-content {
-  padding-top: 50px;
 }
