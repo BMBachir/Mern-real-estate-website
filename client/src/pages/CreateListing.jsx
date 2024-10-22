@@ -22,7 +22,6 @@ import { MdDiscount } from "react-icons/md";
 import { MdOutlineCloudUpload } from "react-icons/md";
 
 const CreateListing = () => {
-  const [value, setValue] = useState(0);
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],

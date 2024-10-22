@@ -1,5 +1,4 @@
 import React from "react";
-import { BsGoogle } from "react-icons/bs";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";

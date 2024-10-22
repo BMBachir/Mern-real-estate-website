@@ -1,44 +1,36 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { GoHome } from "react-icons/go";
 import { FaRegBuilding } from "react-icons/fa";
 import { LiaMapMarkedSolid } from "react-icons/lia";
-import { IoIosArrowRoundUp } from "react-icons/io";
 import { FiActivity } from "react-icons/fi";
-import CardList from "../components/CardList";
-import homeImg from "../images/hero.png";
+import homeImg from "../images/hero.webm";
 import ChooseUs from "../images/ChooseUs.png";
 import avatarImg from "../images/avatar.jpg";
-import Marquee from "react-fast-marquee";
-import p1 from "../images/companies/one.png";
-import p2 from "../images/companies/two.png";
-import p3 from "../images/companies/three.png";
-import p4 from "../images/companies/four.png";
-import p5 from "../images/companies/five.png";
-import p6 from "../images/companies/six.png";
-import p7 from "../images/companies/seven.png";
-import p8 from "../images/companies/eight.png";
-import p9 from "../images/companies/nine.png";
-import p10 from "../images/companies/ten.png";
-
 import "@fontsource/montserrat/400.css";
 import "@fontsource/pacifico/400.css";
 import { DollarSign, TrendingUp, Users } from "lucide-react";
 
+const CardList = lazy(() => import("../components/CardList"));
 const Home = () => {
   return (
     <div className="">
       {/**************************************************************** */}
 
       <section>
-        {/* Image part */}
-        <div
-          className="w-full rounded-b-[30px] md:rounded-b-[50px] bg-gray-100 h-[50vh] md:h-[60vh] lg:h-[70vh] xl:h-[75vh] overflow-hidden bg-cover bg-center"
-          style={{ backgroundImage: `url(${homeImg})` }}
-        ></div>
+        {/* Video part */}
+        <div className="w-full rounded-b-[30px] md:rounded-b-[50px] bg-gray-100 h-[50vh] md:h-[60vh] lg:h-[70vh] xl:h-[75vh] overflow-hidden">
+          <video
+            className="w-full h-full object-cover"
+            src={homeImg}
+            autoPlay
+            loop
+            muted
+          />
+        </div>
 
         <div className="flex flex-col items-center px-5 md:flex-row md:justify-between md:items-start md:px-10 py-5">
           <div className="mb-4 md:mb-0">
-            <h1 className="prompt-medium text-[24px] md:text-[24px] lg:text-[60px] leading-snug md:leading-tight text-blue-gray-900 text-center md:text-left">
+            <h1 className="text-[14px] md:text-[14px] lg:text-[60px] leading-snug md:leading-tight text-blue-gray-900 text-center md:text-left">
               Connect Buyers,
               <br /> Sellers & Renters in One
             </h1>
@@ -81,7 +73,7 @@ const Home = () => {
         <div className="absolute inset-0 w-full h-full transform skew-y-3 bg-gray-100"></div>
       </div>
 
-      <section className="w-full mt-16 py-12   md:py-24 lg:py-32  text-primary-foreground">
+      <section className="w-full mt-16 py-12  md:py-24 lg:py-32  text-primary-foreground">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="text-gray-900">
@@ -117,6 +109,7 @@ const Home = () => {
                 alt="Eco-friendly home"
                 src={ChooseUs}
                 layout="fill"
+                loading="lazy"
                 objectFit="cover"
                 className="rounded-xl "
               />
@@ -229,6 +222,7 @@ const Home = () => {
                       <img
                         alt="John Doe"
                         className="h-full w-full object-cover"
+                        loading="lazy"
                         src={avatarImg}
                       />
                     </div>
@@ -248,6 +242,7 @@ const Home = () => {
                     <div className="h-12 w-12 overflow-hidden rounded-full">
                       <img
                         alt="Jane Smith"
+                        loading="lazy"
                         className="h-full w-full object-cover"
                         src={avatarImg}
                       />
@@ -268,6 +263,7 @@ const Home = () => {
                     <div className="h-12 w-12 overflow-hidden rounded-full">
                       <img
                         alt="Jane Smith"
+                        loading="lazy"
                         className="h-full w-full object-cover"
                         src={avatarImg}
                       />

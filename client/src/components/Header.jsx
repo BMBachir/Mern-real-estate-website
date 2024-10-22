@@ -415,7 +415,7 @@ const Header = () => {
             </Menu>
           ) : (
             <div className="flex items-center gap-4">
-              <Link to="/sing-up">
+              <Link to="/sign-up">
                 <Button fullWidth variant="text" size="sm" className="">
                   Sign Up
                 </Button>

@@ -17,8 +17,6 @@ import { MdChair } from "react-icons/md";
 import { Link } from "react-router-dom";
 const CardList = () => {
   const [listings, setListings] = useState([]); // Initialize as empty array
-
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

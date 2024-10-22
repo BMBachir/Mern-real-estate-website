@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-
 import yourListing from "../images/yourListing.png";
 import {
   Edit,
   Trash2,
   Search,
-  Plus,
   LayoutGrid,
   List,
   DollarSign,
@@ -15,6 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+
 const UserListings = () => {
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +21,6 @@ const UserListings = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(false);
   const [deletedSuccess, setDeletedSuccess] = useState(false);
-  const [editingListing, setEditingListing] = useState(null);
 
   const { currentUser } = useSelector((state) => state.user);
 

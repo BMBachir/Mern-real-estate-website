@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { FaCamera } from "react-icons/fa";
-import { MdSave, MdDelete } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import {
   getDownloadURL,
@@ -18,22 +17,6 @@ import {
   deleteUserFailure,
 } from "../redux/user/userSlice.js";
 import ReactLoading from "react-loading";
-import { Bell, Key, Lock, Mail, User } from "lucide-react";
-import {
-  Button,
-  Input,
-  Checkbox,
-  Radio,
-  Select,
-  Option,
-  Switch,
-  Tab,
-  Tabs,
-  Card,
-  CardBody,
-  CardHeader,
-  Typography,
-} from "@material-tailwind/react";
 
 const Profile = () => {
   const fileRef = useRef(null);
@@ -44,8 +27,6 @@ const Profile = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const dispatch = useDispatch();
   const { currentUser, loading, error } = useSelector((state) => state.user);
-
-  const [activeTab, setActiveTab] = useState("profile");
 
   useEffect(() => {
     if (file) {

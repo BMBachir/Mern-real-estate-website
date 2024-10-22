@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,14 +6,17 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice.js";
-import OAuth from "../components/OAuth";
-import SignButton from "../components/SignButton";
+
 import img1 from "../images/1.png";
 import img2 from "../images/2.png";
 import img3 from "../images/3.png";
 import img4 from "../images/4.png";
-import { Button, Input, Checkbox } from "@material-tailwind/react";
+import { Input, Checkbox } from "@material-tailwind/react";
 import { Mail, LockKeyhole } from "lucide-react";
+
+const SignButton = lazy(() => import("../components/SignButton"));
+const OAuth = lazy(() => import("../components/OAuth"));
+
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();

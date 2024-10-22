@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
@@ -15,7 +15,7 @@ import { MdChair } from "react-icons/md";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdWavingHand } from "react-icons/md";
 import { useSelector } from "react-redux";
-import Contact from "../components/Contact";
+
 import {
   Button,
   Dialog,
@@ -25,6 +25,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
+const Contact = lazy(() => import("../components/Contact"));
 const Listing = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -61,10 +62,9 @@ const Listing = () => {
 
     fetchListing();
   }, [params.listingId]);
-  console.log(listing);
 
   const offer = listing?.regularPrice - listing?.discountPrice;
-  console.log(listing.imageUrls);
+
   return (
     <main className="mt-[150px]">
       {loading && "Loading..."}

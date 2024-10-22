@@ -26,12 +26,9 @@ import { RiParkingBoxFill } from "react-icons/ri";
 import { MdChair } from "react-icons/md";
 import { MdAttachMoney } from "react-icons/md";
 import { LuSlidersHorizontal } from "react-icons/lu";
-import { useNavigate } from "react-router-dom";
 import { FiHome, FiMap, FiDollarSign } from "react-icons/fi";
 const Properties = () => {
-  const navigate = useNavigate();
   // State for form values
-
   const [sideBarData, setSideBarData] = useState({
     type: "all",
     parking: false,
@@ -43,7 +40,6 @@ const Properties = () => {
 
   const [listings, setListings] = useState([]); // Initialize as empty array
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   // Fetch listings from API
