@@ -41,7 +41,7 @@ app.use(morgan("dev"));
 app.use((req, res, next) => {
   res.setHeader(
     "Content-Security-Policy",
-    "default-src 'self'; connect-src 'self' https://firebasestorage.googleapis.com; img-src 'self' https://firebasestorage.googleapis.com;"
+    "default-src  'self'; connect-src 'self' https://firebasestorage.googleapis.com; img-src 'self' https://firebasestorage.googleapis.com; img-src 'self' https://example.com"
   );
   next();
 });
